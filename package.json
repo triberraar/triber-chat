@@ -1,0 +1,6 @@
+{
+  "name": "java-grunt",
+  "dependencies": {
+    "bower": "1.7.6"
+  }
+}
