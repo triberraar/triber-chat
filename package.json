@@ -1,5 +1,6 @@
 {
   "name": "java-grunt",
+  "description": "file to have heroku run bower aswell",
   "dependencies": {
     "bower": "1.7.6"
   },
