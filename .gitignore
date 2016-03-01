@@ -2,3 +2,5 @@
 .project
 .springBeans
 .settings
+src/main/resources/static/lib
+.classpath

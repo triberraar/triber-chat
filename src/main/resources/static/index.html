@@ -1,97 +1,51 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Hello WebSocket</title>
-    <script src="sockjs-0.3.4.js"></script>
-    <script src="stomp.js"></script>
-    <script type="text/javascript">
-        var stompClient = null;
-        
-        function setConnected(connected) {
-            document.getElementById('connect').disabled = connected;
-            document.getElementById('disconnect').disabled = !connected;
-            
-            document.getElementById('response').innerHTML = '';
-        }
-        
-        function connect() {
-            var socket = new SockJS('/questions'); // see endpoint in config
-            stompClient = Stomp.over(socket);            
-            stompClient.connect({}, function(frame) {
-                setConnected(true);
-                console.log('Connected: ' + frame);
-                stompClient.subscribe('/topic/brokerQuestions', function(greeting){ // broker destination
-                	console.log('from broker ' + greeting.body);
-                    showGreeting(greeting.body);
-                });
-                stompClient.subscribe('/topic/appQuestions', function(greeting){ // app destination
-                	console.log('from app ' + greeting.body);
-                    showGreeting(greeting.body);
-                });
-                stompClient.subscribe('/user/topic/private', function(greeting){ // user means user specific
-                	console.log('from private ' + greeting.body);
-                    showGreeting(greeting.body);
-                });
-            });
-        }
-        
-        function disconnect() {
-            if (stompClient != null) {
-                stompClient.disconnect();
-            }
-            setConnected(false);
-            console.log("Disconnected");
-        }
-        
-        function sendBroker() {
-            var message = document.getElementById('brokerMessage').value;
-            stompClient.send("/topic/brokerQuestions", {}, message);
-        }
-        function sendApp() {
-            var message = document.getElementById('appMessage').value;
-            stompClient.send("/app/appQuestions", {}, message); 
-        }
-        function sendPrivate() {
-            var message = document.getElementById('privateMessage').value;
-            var user = document.getElementById('privateMessageName').value;
-            stompClient.send("/user/"+ user +"/topic/private", {}, message); // user from user specific, /username from the principal, /topic from destination in config
-        }
-        
- /*        app destinations:
-        	* send /app/appQuestions: app from config appQuestions from messagemapping
-        	* server automagically sends it to /topic/appQuestions /topic from magic /appQuestions because it came in into appQuestions */
-        
-        function showGreeting(message) {
-            var response = document.getElementById('response');
-            var p = document.createElement('p');
-            p.style.wordWrap = 'break-word';
-            p.appendChild(document.createTextNode(message));
-            response.appendChild(p);
-        }
-    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Page title set in pageTitle directive -->
+    <title page-title></title>
+
+    <!-- Font awesome -->
+    <link href="lib/fontawesome/css/font-awesome.css" rel="stylesheet">
+
+    <!-- Bootstrap and Fonts -->
+    <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Main Inspinia CSS files -->
+    <link href="lib/animate.css/animate.css" rel="stylesheet">
+    <link id="loadBefore" href="css/style.css" rel="stylesheet">
+
+
 </head>
-<body onload="disconnect()">
-<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being enabled. Please enable
-    Javascript and reload this page!</h2></noscript>
-<div>
-    <div>
-        <button id="connect" onclick="connect();">Connect</button>
-        <button id="disconnect" disabled="disabled" onclick="disconnect();">Disconnect</button>
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+            <div>
+
+                <h1 class="logo-name">TC</h1>
+
+            </div>
+            <h3>Welcome to Triber-chat</h3>
+            <p>Login in. To see it in action.</p>
+            <form class="m-t" role="form" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Username" required="" name="username">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" placeholder="Password" required="" name="password">
+                </div>
+                <button type="submit" class="btn btn-primary block full-width m-b" value="Log In">Login</button>
+
+            </form>
+        </div>
     </div>
-    <div id="conversationDiv">
-        <label>broker message</label><input type="text" id="brokerMessage" placeholder="text" />
-        <button id="sendBroker" onclick="sendBroker();">Send to broker</button>
-        
-    </div>
-    <div id="conversationDiv">
-        <label>app message</label><input type="text" id="appMessage" placeholder="text"/>
-        <button id="sendApp" onclick="sendApp();">Send to broker</button>
-    </div>
-    <div id="conversationDiv">
-        <label>private message</label><input type="text" id="privateMessageName" placeholder="other user"/><input type="text" id="privateMessage" placeholder="text"/>
-        <button id="sendPrivate" onclick="sendPrivate();">Send private</button>
-    </div>
-    <p id="response"></p>
-</div>
+
+    <!-- Mainly scripts -->
+
 </body>
 </html>
