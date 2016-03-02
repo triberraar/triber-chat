@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Hello WebSocket</title>
-    <script src="js/sockjs-0.3.4.js"></script>
+    <script src="js/sockjs.js"></script>
     <script src="js/stomp.js"></script>
     <script type="text/javascript">
         var stompClient = null;
@@ -15,7 +15,7 @@
         }
         
         function connect() {
-            var socket = new SockJS('/chat'); // see endpoint in config
+            var socket = new SockJS('/chat?token=user'); // see endpoint in config
             stompClient = Stomp.over(socket);            
             stompClient.connect({}, function(frame) {
                 setConnected(true);

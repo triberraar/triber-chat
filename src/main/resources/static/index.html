@@ -6,46 +6,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-    <!-- Page title set in pageTitle directive -->
-    <title page-title></title>
-
+	<!--  CSS -->
     <!-- Font awesome -->
     <link href="lib/fontawesome/css/font-awesome.css" rel="stylesheet">
-
     <!-- Bootstrap and Fonts -->
     <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Main Inspinia CSS files -->
     <link href="lib/animate.css/animate.css" rel="stylesheet">
     <link id="loadBefore" href="css/style.css" rel="stylesheet">
 
 
 </head>
-<body class="gray-bg">
+<body class="gray-bg" ng-app="triber-chat-login">
 
-    <div class="middle-box text-center loginscreen animated fadeInDown">
-        <div>
-            <div>
+    <div ui-view></div>
 
-                <h1 class="logo-name">TC</h1>
-
-            </div>
-            <h3>Welcome to Triber-chat</h3>
-            <p>Login in. To see it in action.</p>
-            <form class="m-t" role="form" method="post">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Username" required="" name="username">
-                </div>
-                <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Password" required="" name="password">
-                </div>
-                <button type="submit" class="btn btn-primary block full-width m-b" value="Log In">Login</button>
-
-            </form>
-        </div>
-    </div>
-
-    <!-- Mainly scripts -->
-
+    <!-- Scripts -->
+    <!-- jQuery -->
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+	<!-- Angular -->
+	<script src="lib/angular/angular.js"></script>
+	<script src="lib/angular-sanitize/angular-sanitize.js"></script>
+	<script src="lib/angular-animate/angular-animate.js"></script>
+	<script src="lib/angular-resource/angular-resource.js"></script>
+	<script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
+	<script src="lib/angular-messages/angular-messages.js"></script>
+	<script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+	
+	<!-- Application -->
+	<script src="js/triber-chat-login/application.js"></script>
+	<script src="js/triber-chat-login/login/login.js"></script>
+	<script src="js/triber-chat-login/register/register.js"></script>
+	<script src="js/triber-chat-login/reset-password/reset-password.js"></script>
 </body>
 </html>
