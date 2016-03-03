@@ -2,7 +2,6 @@ package be.tribersoft.triber.chat.configuration;
 
 import javax.inject.Inject;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -11,9 +10,13 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import be.tribersoft.triber.chat.service.UserDetailsService;
+import be.tribersoft.triber.chat.security.StatelessAuthenticationFilter;
+import be.tribersoft.triber.chat.security.StatelessLoginFilter;
+import be.tribersoft.triber.chat.security.TokenAuthenticationService;
+import be.tribersoft.triber.chat.security.UserDetailsService;
 
 @Configuration
 @Order(SecurityProperties.ACCESS_OVERRIDE_ORDER)
@@ -41,8 +44,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// @formatter:on
 	}
 
-	@Autowired
-	public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService);
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
 	}
 }

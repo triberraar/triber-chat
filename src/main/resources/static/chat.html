@@ -15,7 +15,7 @@
         }
         
         function connect() {
-            var socket = new SockJS('/chat?token=user'); // see endpoint in config
+            var socket = new SockJS('/chat?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJleHAiOjE0NTcwNTM3NTEsInJvbGVzIjpbIkFETUlOIiwiVVNFUiJdLCJ1c2VybmFtZSI6ImdlZXJ0In0.HgAHEZJ96BZEWn7aCMsiD3n3cqnV9PJZ3TpRBSadInGPI60nJA3sYoMGAL34ZEcoJ3ST99WUJRpyiYDzf1MDFQ'); // see endpoint in config
             stompClient = Stomp.over(socket);            
             stompClient.connect({}, function(frame) {
                 setConnected(true);

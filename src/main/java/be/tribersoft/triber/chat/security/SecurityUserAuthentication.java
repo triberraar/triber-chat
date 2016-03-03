@@ -1,18 +1,16 @@
-package be.tribersoft.triber.chat.configuration;
+package be.tribersoft.triber.chat.security;
 
 import java.util.Collection;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 
-import be.tribersoft.triber.chat.domain.User;
+public class SecurityUserAuthentication implements Authentication {
 
-public class UserAuthentication implements Authentication {
-
-	private User user;
+	private SecurityUser user;
 	private boolean authenticated = true;
 
-	public UserAuthentication(User user) {
+	public SecurityUserAuthentication(SecurityUser user) {
 		this.user = user;
 	}
 
@@ -32,7 +30,7 @@ public class UserAuthentication implements Authentication {
 	}
 
 	@Override
-	public User getDetails() {
+	public SecurityUser getDetails() {
 		return user;
 	}
 

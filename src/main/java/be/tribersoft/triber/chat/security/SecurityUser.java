@@ -1,42 +1,38 @@
-package be.tribersoft.triber.chat.domain;
+package be.tribersoft.triber.chat.security;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-public class User implements UserDetails {
+import be.tribersoft.triber.chat.domain.user.api.User;
 
-	private String username;
-	private String password;
+public class SecurityUser implements UserDetails {
 
-	protected User() {
+	private User user;
+
+	protected SecurityUser() {
 
 	}
 
-	public User(String username) {
-		this.username = username;
-	}
-
-	public User(String username, String password) {
-		this.username = username;
-		this.password = password;
+	public SecurityUser(User user) {
+		this.user = user;
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Arrays.asList(new UserAuthority());
+		return user.getRoles().parallelStream().map(role -> new SecurityAuthority(role)).collect(Collectors.toSet());
 	}
 
 	@Override
 	public String getPassword() {
-		return password;
+		return user.getPassword();
 	}
 
 	@Override
 	public String getUsername() {
-		return username;
+		return user.getUsername();
 	}
 
 	@Override

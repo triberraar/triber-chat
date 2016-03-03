@@ -1,4 +1,4 @@
-package be.tribersoft.triber.chat.configuration;
+package be.tribersoft.triber.chat.security;
 
 import java.io.IOException;
 

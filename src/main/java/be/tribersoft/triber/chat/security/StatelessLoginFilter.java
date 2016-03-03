@@ -1,4 +1,4 @@
-package be.tribersoft.triber.chat.configuration;
+package be.tribersoft.triber.chat.security;
 
 import java.io.IOException;
 
@@ -17,9 +17,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import be.tribersoft.triber.chat.domain.User;
-import be.tribersoft.triber.chat.service.UserDetailsService;
-
 public class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter {
 
 	private UserDetailsService userDetailsService;
@@ -34,7 +31,7 @@ public class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
-		User user = new ObjectMapper().readValue(request.getInputStream(), User.class);
+		UserFromJson user = new ObjectMapper().readValue(request.getInputStream(), UserFromJson.class);
 		final UsernamePasswordAuthenticationToken loginToken = new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword());
 		return getAuthenticationManager().authenticate(loginToken);
 
@@ -45,8 +42,8 @@ public class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter
 
 		// Lookup the complete User object from the database and create an
 		// Authentication for it
-		final User authenticatedUser = userDetailsService.loadUserByUsername(authentication.getName());
-		final UserAuthentication userAuthentication = new UserAuthentication(authenticatedUser);
+		final SecurityUser authenticatedUser = userDetailsService.loadUserByUsername(authentication.getName());
+		final SecurityUserAuthentication userAuthentication = new SecurityUserAuthentication(authenticatedUser);
 
 		// Add the custom token as HTTP header to the response
 		tokenAuthenticationService.addAuthentication(response, userAuthentication);
