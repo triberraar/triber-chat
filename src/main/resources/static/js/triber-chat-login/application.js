@@ -1,4 +1,4 @@
-angular.module('triber-chat-login', [ 'ui.router', 'ngMessages', 'ngResource', 'login', 'register', 'resetPassword' ])
+angular.module('triber-chat-login', [ 'ui.router', 'ngMessages', 'ngResource', 'login', 'register', 'resetPassword', 'common' ])
 	.config(function($stateProvider, $urlRouterProvider) {
 		$urlRouterProvider.otherwise("/login");
 		$stateProvider
