@@ -13,8 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.Version;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import be.tribersoft.triber.chat.domain.user.api.Role;
 import be.tribersoft.triber.chat.domain.user.api.User;
@@ -30,23 +28,17 @@ public class UserEntity implements User {
 
 	@Version
 	@Column(nullable = false)
-	@NotEmpty
 	private Long version;
 
 	@Column(nullable = false, length = 256)
-	@NotEmpty
 	private String username;
 
 	@Column(nullable = false, length = 256)
-	@NotEmpty
 	private String password;
 
 	@Column(nullable = false, length = 512)
-	@Email
-	@NotEmpty
 	private String email;
 
-	@NotEmpty
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Enumerated(EnumType.STRING)
 	private Set<Role> roles;
@@ -62,6 +54,7 @@ public class UserEntity implements User {
 		this.roles = roles;
 	}
 
+	@Override
 	public String getEmail() {
 		return email;
 	}
