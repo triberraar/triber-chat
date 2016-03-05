@@ -8,7 +8,7 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <changeSet id="create user" author="tribersoft">
-    	<createTable tableName="user" >
+    	<createTable tableName="triberUser" >
     		<column name="id" type="varchar(255)">
     			<constraints primaryKey="true" nullable="false"/>
     		</column>
@@ -29,18 +29,18 @@
     		<column name="user_entity_id" type="varchar(255)"></column>
     		<column name="roles" type="varchar(255)"></column>
     	</createTable>
-    	<addForeignKeyConstraint constraintName="user_entity_roles" referencedTableName="user" baseColumnNames="user_entity_id" baseTableName="user_entity_roles" referencedColumnNames="id"/>
+    	<addForeignKeyConstraint constraintName="user_entity_roles" referencedTableName="triberUser" baseColumnNames="user_entity_id" baseTableName="user_entity_roles" referencedColumnNames="id"/>
     </changeSet>
     
     <changeSet id="insert users" author="tribersoft">
-    	<insert tableName="user">
+    	<insert tableName="triberUser">
     		<column name="id" value="1"></column>
     		<column name="version" value="0"></column>
     		<column name="password" value="$2a$10$MENm5lVP/GPtt8tGievarO.3hvk7Ofao6aK45F6oD6CTEWj03ebvO"></column>
     		<column name="username" value="admin"></column>
     		<column name="email" value="admin@admin.com"></column>
     	</insert>
-    	<insert tableName="user">
+    	<insert tableName="triberUser">
     		<column name="id" value="2"></column>
     		<column name="version" value="0"></column>
     		<column name="password" value="$2a$10$0y5Pl/5Z8Qqafa8ukdvxCOgG5jLY4Xc0ZTU2zfTmKORqyoPaduViS"></column>

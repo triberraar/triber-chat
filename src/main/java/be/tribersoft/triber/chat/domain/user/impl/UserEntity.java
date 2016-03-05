@@ -19,7 +19,7 @@ import org.hibernate.validator.constraints.NotEmpty;
 import be.tribersoft.triber.chat.domain.user.api.Role;
 import be.tribersoft.triber.chat.domain.user.api.User;
 
-@Entity(name = "user")
+@Entity(name = "triberUser")
 public class UserEntity implements User {
 
 	@Id
