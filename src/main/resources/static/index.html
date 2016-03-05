@@ -11,6 +11,8 @@
     <link href="lib/fontawesome/css/font-awesome.css" rel="stylesheet">
     <!-- Bootstrap and Fonts -->
     <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- libraries -->
+    <link href="lib/AngularJS-Toaster/toaster.min.css" rel="stylesheet">
     <!-- Main Inspinia CSS files -->
     <link href="lib/animate.css/animate.css" rel="stylesheet">
     <link id="loadBefore" href="css/style.css" rel="stylesheet">
@@ -18,7 +20,7 @@
 
 </head>
 <body class="gray-bg" ng-app="triber-chat-login">
-
+	<toaster-container toaster-options="{'close-button': true, 'time-out': 2500 }"></toaster-container>
     <div ui-view></div>
 
     <!-- Scripts -->
@@ -31,12 +33,18 @@
 	<script src="lib/angular-resource/angular-resource.js"></script>
 	<script src="lib/angular-ui-router/release/angular-ui-router.js"></script>
 	<script src="lib/angular-messages/angular-messages.js"></script>
+	
+	<!-- Libraries -->
 	<script src="lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+	<script src="lib/AngularJS-Toaster/toaster.js"></script>
+	<script src="lib/AngularJS-Toaster/toaster.js"></script>
+	<script src="lib/angular-jwt/dist/angular-jwt.js"></script>
 	
 	<!-- Application -->
 	<script src="js/triber-chat-login/application.js"></script>
 	<script src="js/triber-chat-login/common/common.js"></script>
 	<script src="js/triber-chat-login/common/local-storage.js"></script>
+	<script src="js/triber-chat-login/common/jwt.js"></script>
 	<script src="js/triber-chat-login/login/login.js"></script>
 	<script src="js/triber-chat-login/register/register.js"></script>
 	<script src="js/triber-chat-login/reset-password/reset-password.js"></script>

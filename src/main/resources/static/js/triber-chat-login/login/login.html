@@ -7,17 +7,18 @@
 		</div>
 		<h3>Welcome to Triber-chat</h3>
 		<p>Login in. To see it in action.</p>
-		<form class="m-t" name="loginForm" novalidate ng-submit="loginCtrl.login()">
-			<div class="form-group" ng-class="{ 'has-error': loginForm.username.$error &&  (loginForm.username.$touched || loginCtrl.submitAttempted)}">
+		<form class="m-t" name="loginCtrl.loginForm" novalidate ng-submit="loginCtrl.login()">
+			<div class="form-group" ng-class="{ 'has-error' : loginCtrl.loginForm.username.$invalid  && ( loginCtrl.loginForm.username.$touched || loginCtrl.submitAttempted ) }">
 				<input type="text" class="form-control" placeholder="Username" name="username" ng-model="loginCtrl.username" required>
-				<div class="help-block" ng-messages="loginForm.username.$error" ng-if="loginForm.username.$touched || loginCtrl.submitAttempted">
+				<div class="help-block" ng-messages="loginCtrl.loginForm.username.$error" ng-if="loginCtrl.loginForm.username.$touched || loginCtrl.submitAttempted">
+					<div ng-messages-include="js/triber-chat-login/messages.html"></div>
 				</div>
 			</div>
 			
-			<div class="form-group" ng-class="{ 'has-error': loginForm.password.$error && (loginForm.password.$touched || loginCtrl.submitAttempted)}">
+			<div class="form-group" ng-class="{ 'has-error': loginCtrl.loginForm.password.$invalid  && ( loginCtrl.loginForm.password.$touched || loginCtrl.submitAttempted ) }">
 				<input type="password" class="form-control" placeholder="Password" name="password" ng-model="loginCtrl.password" required ng-minlenth="6">
-				<div ng-messages="loginForm.password.$error" ng-if="loginForm.password.$touched || loginCtrl.submitAttempted">
-					<p ng-message="required">Field is requried.</p>
+				<div class="help-block" ng-messages="loginCtrl.loginForm.password.$error" ng-if="loginCtrl.loginForm.password.$touched || loginCtrl.submitAttempted">
+					<div ng-messages-include="js/triber-chat-login/messages.html"></div>
 				</div>
 			</div>
 			<button type="submit" class="btn btn-primary block full-width m-b" value="Log In">Login</button>

@@ -1,1 +1,1 @@
-angular.module('common', ['localStorage']);
+angular.module('common', ['localStorage', 'jwt']);
