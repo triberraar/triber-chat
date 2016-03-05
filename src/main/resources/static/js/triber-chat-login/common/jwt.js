@@ -1,4 +1,6 @@
-angular.module('jwt', ['angular-jwt', 'localStorage'])
+var jsFiles = [ '/js/triber-chat-login/common/local-storage.js' ];
+
+angular.module('jwt', ['angular-jwt', 'localStorage', jsFiles ])
 	.factory('jwt', function(jwtHelper, $localStorage) {
 		return {
 			isValid: function() {
