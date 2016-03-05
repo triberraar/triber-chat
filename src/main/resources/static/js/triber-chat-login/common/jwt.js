@@ -1,3 +1,5 @@
+'use strict';
+
 var jsFiles = [ '/js/triber-chat-login/common/local-storage.js' ];
 
 angular.module('jwt', ['angular-jwt', 'localStorage', jsFiles ])
@@ -12,6 +14,9 @@ angular.module('jwt', ['angular-jwt', 'localStorage', jsFiles ])
 			},
 			save: function(token) {
 				$localStorage.set('jwt', token);
-			}
+			},
+            clear: function() {
+                localStorage.removeItem('jwt');
+            }
 		}
 	});

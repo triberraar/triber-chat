@@ -1,3 +1,5 @@
+'use strict';
+
 var jsFiles = [ '/js/triber-chat-login/common/jwt.js', '/js/triber-chat-login/common/local-storage.js' ];
 
 angular.module('login', [ 'ngResource', 'jwt', jsFiles ]).factory('LoginFactory', function($resource) {
@@ -5,7 +7,7 @@ angular.module('login', [ 'ngResource', 'jwt', jsFiles ]).factory('LoginFactory'
 		login : {
 			method : 'POST',
 			transformResponse : function(data, headers) {
-				response = {};
+				var response = {};
 				response.data = data;
 				response.headers = headers();
 				return response;
@@ -13,27 +15,29 @@ angular.module('login', [ 'ngResource', 'jwt', jsFiles ]).factory('LoginFactory'
 		}
 	});
 }).controller('LoginController', function(LoginFactory, $window, jwt, toaster) {
-	var _this = this;
-	_this.submitAttempted = false;
+	var vm = this;
+	vm.submitAttempted = false;
 
-	_this.init = function() {
+	vm.init = function() {
 		if (jwt.isValid()) {
 			$window.location.href = '/chat.html';
+		} else {
+			jwt.clear();
 		}
-	}
+	};
 
-	_this.login = function() {
+	vm.login = function() {
 		toaster.clear(undefined, 'loginFailedToastId');
-		_this.submitAttempted = true;
-		if (_this.loginForm.$invalid) {
+		vm.submitAttempted = true;
+		if (vm.loginForm.$invalid) {
 			toaster.pop({
 				type : 'warning',
 				body : 'Please correct the login form.'
 			});
 		} else {
 			LoginFactory.login({
-				username : _this.username,
-				password : _this.password
+				username : vm.username,
+				password : vm.password
 			}).$promise.then(function(data) {
 				var token = data.headers.authorization.substr(7, jwt.length);
 				jwt.save(token);
@@ -47,7 +51,7 @@ angular.module('login', [ 'ngResource', 'jwt', jsFiles ]).factory('LoginFactory'
 				});
 			})
 		}
-	}
+	};
 
-	_this.init();
+	vm.init();
 });

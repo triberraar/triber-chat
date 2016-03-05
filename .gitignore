@@ -5,3 +5,4 @@
 src/main/resources/static/lib
 .classpath
 node_modules
+npm-debug.log

@@ -1,3 +1,5 @@
+'use strict';
+
 angular.module('localStorage', [])
 .factory('$localStorage', function($window) {
 	return {
@@ -8,10 +10,10 @@ angular.module('localStorage', [])
 			return $window.localStorage[key];
 		},
 		setObject: function(key, value) {
-			set(key, JSON.stringify(value));
+			set(key, angular.fromJson(value));
 		},
 		getObject: function(key) {
-			return JSON.parse(get(key));
+			return angular.toJson(get(key));
 		}
 	}
-})
+});
