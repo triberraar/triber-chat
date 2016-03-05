@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="create user" author="tribersoft">
+    	<createTable tableName="user" >
+    		<column name="id" type="varchar(255)">
+    			<constraints primaryKey="true" nullable="false"/>
+    		</column>
+    		<column name="version" type="BIGINT">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="password" type="varchar(255)">
+    			<constraints nullable="false"/>
+    		</column>
+    		<column name="username" type="varchar(255)">
+    			<constraints nullable="false" unique="true" />
+    		</column>
+    		<column name="email" type="varchar(511)">
+    			<constraints  nullable="false" unique="true"/>
+    		</column>
+    	</createTable>
+    	<createTable tableName="user_entity_roles">
+    		<column name="user_entity_id" type="varchar(255)"></column>
+    		<column name="roles" type="varchar(255)"></column>
+    	</createTable>
+    	<addForeignKeyConstraint constraintName="user_entity_roles" referencedTableName="user" baseColumnNames="user_entity_id" baseTableName="user_entity_roles" referencedColumnNames="id"/>
+    </changeSet>
+    
+    <changeSet id="insert users" author="tribersoft">
+    	<insert tableName="user">
+    		<column name="id" value="1"></column>
+    		<column name="version" value="0"></column>
+    		<column name="password" value="$2a$10$MENm5lVP/GPtt8tGievarO.3hvk7Ofao6aK45F6oD6CTEWj03ebvO"></column>
+    		<column name="username" value="admin"></column>
+    		<column name="email" value="admin@admin.com"></column>
+    	</insert>
+    	<insert tableName="user">
+    		<column name="id" value="2"></column>
+    		<column name="version" value="0"></column>
+    		<column name="password" value="$2a$10$0y5Pl/5Z8Qqafa8ukdvxCOgG5jLY4Xc0ZTU2zfTmKORqyoPaduViS"></column>
+    		<column name="username" value="user"></column>
+    		<column name="email" value="user@user.com"></column>
+    	</insert>
+    	<insert tableName="user_entity_roles">
+    		<column name="user_entity_id" value="1"></column>
+    		<column name="roles" value="ADMIN"></column>
+    		<column name="roles" value="USER"></column>
+    	</insert>
+    	<insert tableName="user_entity_roles">
+    		<column name="user_entity_id" value="2"></column>
+    		<column name="roles" value="USER"></column>
+    	</insert>
+    </changeSet>
+
+</databaseChangeLog>
