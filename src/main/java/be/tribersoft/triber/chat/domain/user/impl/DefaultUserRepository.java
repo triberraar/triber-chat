@@ -31,7 +31,7 @@ public class DefaultUserRepository implements UserRepository {
 	}
 
 	@Override
-	public Optional<? extends User> findActivatedByUsername(String username) {
-		return userJpaRepository.findByUsernameAndActivated(username, true);
+	public Optional<? extends User> findActivatedAndValidatedByUsername(String username) {
+		return userJpaRepository.findByUsernameAndActivatedAndValidated(username, true, true);
 	}
 }

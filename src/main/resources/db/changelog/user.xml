@@ -27,6 +27,9 @@
     		<column name="activated" type="BOOLEAN">
     			<constraints  nullable="false" />
     		</column>
+    		<column name="validated" type="BOOLEAN">
+    			<constraints  nullable="false" />
+    		</column>
     	</createTable>
     	<createTable tableName="user_entity_roles">
     		<column name="user_entity_id" type="varchar(256)"></column>
@@ -43,6 +46,7 @@
     		<column name="username" value="admin"></column>
     		<column name="email" value="admin@admin.com"></column>
     		<column name="activated" value="true"></column>
+    		<column name="validate" value="true"></column>
     	</insert>
     	<insert tableName="triber_user">
     		<column name="id" value="2"></column>
@@ -51,14 +55,7 @@
     		<column name="username" value="user"></column>
     		<column name="email" value="user2@user.com"></column>
     		<column name="activated" value="true"></column>
-    	</insert>
-    	<insert tableName="triber_user">
-    		<column name="id" value="3"></column>
-    		<column name="version" value="0"></column>
-    		<column name="password" value="$2a$10$0y5Pl/5Z8Qqafa8ukdvxCOgG5jLY4Xc0ZTU2zfTmKORqyoPaduViS"></column>
-    		<column name="username" value="user2"></column>
-    		<column name="email" value="user@user.com"></column>
-    		<column name="activated" value="false"></column>
+    		<column name="validate" value="true"></column>
     	</insert>
     	<insert tableName="user_entity_roles">
     		<column name="user_entity_id" value="1"></column>
@@ -67,10 +64,6 @@
     	</insert>
     	<insert tableName="user_entity_roles">
     		<column name="user_entity_id" value="2"></column>
-    		<column name="roles" value="USER"></column>
-    	</insert>
-    	<insert tableName="user_entity_roles">
-    		<column name="user_entity_id" value="3"></column>
     		<column name="roles" value="USER"></column>
     	</insert>
     </changeSet>

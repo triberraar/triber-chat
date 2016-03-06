@@ -46,6 +46,9 @@ public class UserEntity implements User {
 	@Column(nullable = false)
 	private boolean activated;
 
+	@Column(nullable = false)
+	private boolean validated;
+
 	protected UserEntity() {
 
 	}
@@ -56,6 +59,7 @@ public class UserEntity implements User {
 		this.email = email;
 		this.roles = roles;
 		this.activated = false;
+		this.validated = false;
 	}
 
 	@Override
@@ -80,5 +84,9 @@ public class UserEntity implements User {
 
 	public void activate() {
 		this.activated = true;
+	}
+
+	public void validate() {
+		this.validated = true;
 	}
 }

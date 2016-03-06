@@ -6,6 +6,6 @@ public interface UserRepository {
 
 	Optional<? extends User> findByUsername(String username);
 
-	Optional<? extends User> findActivatedByUsername(String username);
+	Optional<? extends User> findActivatedAndValidatedByUsername(String username);
 
 }
