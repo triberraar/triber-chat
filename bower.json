@@ -25,7 +25,8 @@
     "oclazyload": "~1.0.9",
     "lodash": "~4.6.1",
     "ng-password-strength": "~0.2.1",
-    "angular-recaptcha": "~2.5.0"
+    "angular-recaptcha": "~2.5.0",
+    "angular-ladda": "~0.3.4"
   },
   "resolutions": {
     "jquery": "~2.1.4",

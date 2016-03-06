@@ -8,7 +8,8 @@ var dependencies = [
                      'ngAnimate', 
                      'oc.lazyLoad',
                      'ngPasswordStrength',
-                     'vcRecaptcha'];
+                     'vcRecaptcha',
+                     'angular-ladda'];
 
 angular.module('triber-chat-login', dependencies).config(function($stateProvider, $urlRouterProvider) {
 	$urlRouterProvider.otherwise('/login');

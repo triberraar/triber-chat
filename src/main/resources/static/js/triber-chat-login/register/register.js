@@ -16,6 +16,7 @@ angular.module('register', ['vcRecaptcha', jsFiles])
 .controller('RegisterController', function(vcRecaptchaService, toaster, RegisterResource, _) {
 		var vm = this;
 	vm.submitAttempted = false;
+	vm.registering = false;
 	
 	vm.register = function() {
 		vm.submitAttempted = true;
@@ -26,6 +27,7 @@ angular.module('register', ['vcRecaptcha', jsFiles])
 			});
 			return;
 		}
+		vm.registering = true;
 		var registration = {
 				username: vm.username,
 				email: vm.email,
@@ -37,7 +39,9 @@ angular.module('register', ['vcRecaptcha', jsFiles])
 				type: 'success',
 				body: 'Registration successful, you will receive an email.'
 			});
+			vm.registering = false;
 		}, function(data){
+			vm.registering = false;
 			vm.refreshRecaptcha();
 			var toasterBody = "";
 			if(data.data.errors) {
