@@ -43,6 +43,9 @@ public class UserEntity implements User {
 	@Enumerated(EnumType.STRING)
 	private Set<Role> roles;
 
+	@Column(nullable = false)
+	private boolean activated;
+
 	protected UserEntity() {
 
 	}
@@ -52,6 +55,7 @@ public class UserEntity implements User {
 		this.password = password;
 		this.email = email;
 		this.roles = roles;
+		this.activated = false;
 	}
 
 	@Override
@@ -72,5 +76,9 @@ public class UserEntity implements User {
 	@Override
 	public String getUsername() {
 		return username;
+	}
+
+	public void activate() {
+		this.activated = true;
 	}
 }

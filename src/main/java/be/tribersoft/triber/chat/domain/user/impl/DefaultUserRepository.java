@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import be.tribersoft.triber.chat.domain.user.api.User;
 import be.tribersoft.triber.chat.domain.user.api.UserRepository;
 
 @Named
@@ -27,5 +28,10 @@ public class DefaultUserRepository implements UserRepository {
 
 	public UserEntity save(UserEntity userEntity) {
 		return userJpaRepository.save(userEntity);
+	}
+
+	@Override
+	public Optional<? extends User> findActivatedByUsername(String username) {
+		return userJpaRepository.findByUsernameAndActivated(username, true);
 	}
 }
