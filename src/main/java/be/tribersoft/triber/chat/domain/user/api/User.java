@@ -18,4 +18,6 @@ public interface User extends UserMessage {
 	@Override
 	String getEmail();
 
+	String getId();
+
 }

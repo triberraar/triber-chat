@@ -33,7 +33,10 @@ angular.module('register', ['vcRecaptcha', jsFiles])
 				captcha: vm.recaptcha
 		}
 		RegisterResource.register(registration).$promise.then(function(data){
-			
+			toaster.pop({
+				type: 'success',
+				body: 'Registration successful, you will receive an email.'
+			});
 		}, function(data){
 			vm.refreshRecaptcha();
 			var toasterBody = "";
@@ -41,6 +44,8 @@ angular.module('register', ['vcRecaptcha', jsFiles])
 				angular.forEach(data.data.errors, function(error) {
 					toasterBody = toasterBody + error + "<br>";
 				});
+			} else {
+				toasterBody = "Unknown error"
 			}
 			toaster.pop({
 				type: 'error',

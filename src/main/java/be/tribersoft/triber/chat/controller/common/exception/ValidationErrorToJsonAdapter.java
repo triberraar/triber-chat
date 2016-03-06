@@ -1,4 +1,4 @@
-package be.tribersoft.triber.chat.controller.common;
+package be.tribersoft.triber.chat.controller.common.exception;
 
 import java.util.HashSet;
 import java.util.Set;

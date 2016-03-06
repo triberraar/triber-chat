@@ -4,4 +4,6 @@ import be.tribersoft.triber.chat.domain.user.api.UserMessage;
 
 public interface RegisterService {
 	void register(UserMessage userMessage);
+
+	void activate(String userId, String password);
 }

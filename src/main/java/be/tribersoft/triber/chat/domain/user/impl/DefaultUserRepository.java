@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import be.tribersoft.triber.chat.domain.user.api.User;
+import be.tribersoft.triber.chat.domain.user.api.UserNotFoundException;
 import be.tribersoft.triber.chat.domain.user.api.UserRepository;
 
 @Named
@@ -28,6 +29,14 @@ public class DefaultUserRepository implements UserRepository {
 
 	public UserEntity save(UserEntity userEntity) {
 		return userJpaRepository.save(userEntity);
+	}
+
+	public UserEntity getNotActivatedById(String id) {
+		Optional<UserEntity> user = userJpaRepository.findByIdAndActivated(id, false);
+		if (!user.isPresent()) {
+			throw new UserNotFoundException();
+		}
+		return user.get();
 	}
 
 	@Override

@@ -28,4 +28,10 @@ public class DefaultUserFacade implements UserFacade {
 		return defaultUserRepository.save(userFactory.create(userMessage));
 	}
 
+	@Override
+	public void activate(String userId, String password) {
+		UserEntity userEntity = defaultUserRepository.getNotActivatedById(userId);
+		userEntity.activate(password);
+	}
+
 }

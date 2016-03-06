@@ -13,7 +13,9 @@ import javax.persistence.Id;
 import javax.persistence.Version;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import be.tribersoft.triber.chat.domain.user.api.CanNotActivateUserException;
 import be.tribersoft.triber.chat.domain.user.api.Role;
 import be.tribersoft.triber.chat.domain.user.api.User;
 
@@ -63,6 +65,11 @@ public class UserEntity implements User {
 	}
 
 	@Override
+	public String getId() {
+		return id;
+	}
+
+	@Override
 	public String getEmail() {
 		return email;
 	}
@@ -82,8 +89,12 @@ public class UserEntity implements User {
 		return username;
 	}
 
-	public void activate() {
-		this.activated = true;
+	public void activate(String password) {
+		if (new BCryptPasswordEncoder().matches(password, this.password)) {
+			this.activated = true;
+		} else {
+			throw new CanNotActivateUserException();
+		}
 	}
 
 	public void validate() {

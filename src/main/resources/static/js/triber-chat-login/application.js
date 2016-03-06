@@ -32,7 +32,18 @@ angular.module('triber-chat-login', dependencies).config(function($stateProvider
 				return $ocLazyLoad.load( '/js/triber-chat-login/register/register.js');
 			}
 		}
-	}).state('reset-password', {
+	}).state('activate-registration', {
+		url: '/activate-registration/:userId',
+		templateUrl: 'js/triber-chat-login/activate-registration/activate-registration.html',
+		controller: 'ActivateRegistrationController',
+		controllerAs: 'activateRegistrationCtrl',
+		resolve: {
+			lazyLoad: function($ocLazyLoad){
+				return $ocLazyLoad.load('js/triber-chat-login/activate-registration/activate-registration.js');
+			}
+		}
+	})
+	.state('reset-password', {
 		url : '/reset-password',
 		templateUrl : 'js/triber-chat-login/reset-password/reset-password.html'
 	});

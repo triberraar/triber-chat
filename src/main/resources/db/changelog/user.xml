@@ -46,7 +46,7 @@
     		<column name="username" value="admin"></column>
     		<column name="email" value="admin@admin.com"></column>
     		<column name="activated" value="true"></column>
-    		<column name="validate" value="true"></column>
+    		<column name="validated" value="true"></column>
     	</insert>
     	<insert tableName="triber_user">
     		<column name="id" value="2"></column>
@@ -55,7 +55,7 @@
     		<column name="username" value="user"></column>
     		<column name="email" value="user2@user.com"></column>
     		<column name="activated" value="true"></column>
-    		<column name="validate" value="true"></column>
+    		<column name="validated" value="true"></column>
     	</insert>
     	<insert tableName="user_entity_roles">
     		<column name="user_entity_id" value="1"></column>
