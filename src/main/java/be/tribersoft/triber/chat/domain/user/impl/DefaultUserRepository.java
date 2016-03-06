@@ -16,4 +16,16 @@ public class DefaultUserRepository implements UserRepository {
 	public Optional<UserEntity> findByUsername(String username) {
 		return userJpaRepository.findByUsername(username);
 	}
+
+	public boolean existsByUsername(String username) {
+		return userJpaRepository.findByUsername(username).isPresent();
+	}
+
+	public boolean existsByEmail(String email) {
+		return userJpaRepository.findByEmail(email).isPresent();
+	}
+
+	public UserEntity save(UserEntity userEntity) {
+		return userJpaRepository.save(userEntity);
+	}
 }

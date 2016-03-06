@@ -2,7 +2,8 @@
 
 var jsFiles = [ '/js/triber-chat-login/common/jwt.js', '/js/triber-chat-login/common/local-storage.js' ];
 
-angular.module('login', [ 'ngResource', 'jwt', jsFiles ]).factory('LoginFactory', function($resource) {
+angular.module('login', [ 'ngResource', 'jwt', jsFiles ])
+.factory('LoginResource', function($resource) {
 	return $resource('/login', {}, {
 		login : {
 			method : 'POST',
@@ -14,7 +15,7 @@ angular.module('login', [ 'ngResource', 'jwt', jsFiles ]).factory('LoginFactory'
 			}
 		}
 	});
-}).controller('LoginController', function(LoginFactory, $window, jwt, toaster) {
+}).controller('LoginController', function(LoginResource, $window, jwt, toaster) {
 	var vm = this;
 	vm.submitAttempted = false;
 
@@ -35,7 +36,7 @@ angular.module('login', [ 'ngResource', 'jwt', jsFiles ]).factory('LoginFactory'
 				body : 'Please correct the login form.'
 			});
 		} else {
-			LoginFactory.login({
+			LoginResource.login({
 				username : vm.username,
 				password : vm.password
 			}).$promise.then(function(data) {

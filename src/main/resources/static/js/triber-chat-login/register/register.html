@@ -7,7 +7,7 @@
 		<p>Create account to see it in action.</p>
 		<form class="m-t" role="form" name="registerCtrl.registerForm" novalidate ng-submit="registerCtrl.register()">
 			<div class="form-group" ng-class="{ 'has-error' : registerCtrl.registerForm.username.$invalid  && ( registerCtrl.registerForm.username.$touched || registerCtrl.submitAttempted ) }">
-				<input type="text" name="username" class="form-control" placeholder="Username" required ng-model="registerCtrl.username" ng-minlength="6" ng-maxlength="256">
+				<input type="text" name="username" class="form-control" placeholder="Username" required ng-model="registerCtrl.username" ng-minlength="4" ng-maxlength="256">
 				<div class="help-block" ng-messages="registerCtrl.registerForm.username.$error" ng-if="registerCtrl.registerForm.username.$touched || registerCtrl.submitAttempted">
 					<div ng-messages-include="js/triber-chat-login/messages.html"></div>
 				</div>
@@ -24,10 +24,10 @@
 					<div ng-messages-include="js/triber-chat-login/messages.html"></div>
 				</div>
 				<div
-                            ng-password-strength="registerCtrl.password"
-                            strength="registerCtrl.passwordStrength"
-                          	inner-class="progress-bar"
-                            inner-class-prefix="progress-bar-"></div>
+                       ng-password-strength="registerCtrl.password"
+                       strength="registerCtrl.passwordStrength"
+                       inner-class="progress-bar"
+                       inner-class-prefix="progress-bar-"></div>
 				</div>
 			<div class="form-group" ng-class="{ 'has-error' : registerCtrl.registerForm.confirmPassword.$invalid  && ( registerCtrl.registerForm.confirmPassword.$touched || registerCtrl.submitAttempted ) }">
 				<input type="password" name="confirmPassword" class="form-control" placeholder="Password" required ng-model="registerCtrl.confirmPassword" password-compare="registerCtrl.password" ng-minlength="6" ng-maxlength="256">
@@ -35,7 +35,11 @@
 					<div ng-messages-include="js/triber-chat-login/messages.html"></div>
 				</div>
 			</div>
-			<div class="form-group" vc-recaptcha key="'6Ld1BxoTAAAAACY6VoYvOG2oFct5N1vxTYQ4O-f4'" on-create="registerCtrl.recaptchaCreated(widgetId)" ng-model="registerCtrl.recaptcha">
+			<div class="form-group" ng-class="{ 'has-error' : registerCtrl.registerForm.recaptcha.$invalid  && (registerCtrl.submitAttempted ) }">
+				<div vc-recaptcha key="'6Ld1BxoTAAAAACY6VoYvOG2oFct5N1vxTYQ4O-f4'" name="recaptcha" on-create="registerCtrl.recaptchaCreated(widgetId)" ng-model="registerCtrl.recaptcha" required></div>
+				<div class="help-block" ng-messages="registerCtrl.registerForm.recaptcha.$error" ng-if="registerCtrl.registerForm.recaptcha.$touched || registerCtrl.submitAttempted">
+					<div ng-messages-include="js/triber-chat-login/messages.html"></div>
+				</div>
 			</div>
 			<!-- <div class="form-group">
 				<div class="checkbox i-checks">

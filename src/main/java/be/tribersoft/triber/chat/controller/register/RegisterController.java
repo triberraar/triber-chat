@@ -1,0 +1,33 @@
+package be.tribersoft.triber.chat.controller.register;
+
+import java.io.IOException;
+
+import javax.inject.Inject;
+import javax.validation.Valid;
+
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+
+import be.tribersoft.triber.chat.service.register.api.RegisterService;
+
+@RestController
+@RequestMapping("/register")
+public class RegisterController {
+
+	@Inject
+	private CaptchaVerificator captchaVerificator;
+
+	@Inject
+	private RegisterService registerService;
+
+	@RequestMapping(method = RequestMethod.POST, consumes = "application/json")
+	public void register(@Valid @RequestBody RegisterFromJsonAdapter json) throws JsonParseException, JsonMappingException, UnsupportedOperationException, IOException {
+		captchaVerificator.verify(json.getCaptcha());
+		registerService.register(json);
+	}
+}

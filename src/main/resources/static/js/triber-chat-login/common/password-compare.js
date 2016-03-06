@@ -5,7 +5,7 @@ angular.module('passwordCompare', [])
     return {
         require: 'ngModel',
         scope: {
-            otherModelValue: '=compareTo'
+            otherModelValue: '=passwordCompare'
         },
         link: function(scope, element, attributes, ngModel) {
 

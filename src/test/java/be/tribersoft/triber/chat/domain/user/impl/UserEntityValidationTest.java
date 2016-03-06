@@ -34,7 +34,16 @@ public class UserEntityValidationTest {
 
 		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
 		assertThat(violations).hasSize(1);
-		assertThat(violations.iterator().next().getMessage()).isEqualTo("user.validation.username.empty");
+		assertThat(violations.iterator().next().getMessage()).isEqualTo("user.validation.username.length");
+	}
+
+	@Test
+	public void failsWhenUsernameTooShort() {
+		UserEntity user = new UserEntity("123", "password", "email@host.com", new HashSet<>(Arrays.asList(Role.USER)));
+
+		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
+		assertThat(violations).hasSize(1);
+		assertThat(violations.iterator().next().getMessage()).isEqualTo("user.validation.username.length");
 	}
 
 	@Test
@@ -53,7 +62,16 @@ public class UserEntityValidationTest {
 
 		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
 		assertThat(violations).hasSize(1);
-		assertThat(violations.iterator().next().getMessage()).isEqualTo("user.validation.password.empty");
+		assertThat(violations.iterator().next().getMessage()).isEqualTo("user.validation.password.length");
+	}
+
+	@Test
+	public void failsWhenPasswordTooShort() {
+		UserEntity user = new UserEntity("user", "12345", "email@host.com", new HashSet<>(Arrays.asList(Role.USER)));
+
+		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
+		assertThat(violations).hasSize(1);
+		assertThat(violations.iterator().next().getMessage()).isEqualTo("user.validation.password.length");
 	}
 
 	@Test
@@ -91,6 +109,14 @@ public class UserEntityValidationTest {
 		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
 		assertThat(violations).hasSize(1);
 		assertThat(violations.iterator().next().getMessage()).isEqualTo("user.validation.roles.empty");
+	}
+
+	@Test
+	public void succeedsOtherwise() {
+		UserEntity user = new UserEntity("user", "123456", "test@test.com", new HashSet<>(Arrays.asList(Role.USER)));
+
+		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
+		assertThat(violations).isEmpty();
 	}
 
 }

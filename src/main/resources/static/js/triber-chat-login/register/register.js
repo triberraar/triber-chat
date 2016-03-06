@@ -1,25 +1,62 @@
 'use strict';
 
 var jsFiles = [
-    '/js/triber-chat-login/common/password-compare.js'
+    '/js/triber-chat-login/common/password-compare.js',
+    '/js/triber-chat-login/common/lodash.js'
 ];
 
 angular.module('register', ['vcRecaptcha', jsFiles])
-	.controller('RegisterController', function(vcRecaptchaService) {
-		var vm = this;
-		vm.submitAttempted = false;
-		
-		vm.register = function() {
-			vm.submitAttempted = true;
-			if(vm.registerForm.$error.recaptcha) {
-				console.log('error');
-			} else {
-				console.log('no error');
-			}
+.factory('RegisterResource', function($resource) {
+	return $resource('/register', {}, {
+		register : {
+			method : 'POST'
 		}
-		
-		vm.recaptchaCreated = function(widgetId) {
-			vm.widgetId = widgetId;
-		}
-		
 	});
+})
+.controller('RegisterController', function(vcRecaptchaService, toaster, RegisterResource, _) {
+		var vm = this;
+	vm.submitAttempted = false;
+	
+	vm.register = function() {
+		vm.submitAttempted = true;
+		if (vm.registerForm.$invalid) {
+			toaster.pop({
+				type : 'warning',
+				body : 'Please correct the register form.'
+			});
+			return;
+		}
+		var registration = {
+				username: vm.username,
+				email: vm.email,
+				password: vm.password,
+				captcha: vm.recaptcha
+		}
+		RegisterResource.register(registration).$promise.then(function(data){
+			
+		}, function(data){
+			vm.refreshRecaptcha();
+			var toasterBody = "";
+			if(data.data.errors) {
+				angular.forEach(data.data.errors, function(error) {
+					toasterBody = toasterBody + error + "<br>";
+				});
+			}
+			toaster.pop({
+				type: 'error',
+				body:toasterBody,
+				bodyOutputType: 'trustedHtml'
+			});
+		}) 
+	}
+	
+	vm.recaptchaCreated = function(widgetId) {
+		vm.widgetId = widgetId;
+	}
+	
+	vm.refreshRecaptcha = function() {
+		vcRecaptchaService.reload(vm.widgetId);
+		vm.recaptcha = undefined;
+	}
+	
+});
