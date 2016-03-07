@@ -7,8 +7,8 @@ import javax.inject.Named;
 
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import be.tribersoft.triber.chat.domain.user.api.User;
-import be.tribersoft.triber.chat.domain.user.api.UserRepository;
+import be.tribersoft.triber.chat.user.domain.api.User;
+import be.tribersoft.triber.chat.user.domain.api.UserRepository;
 
 @Named
 public class UserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {

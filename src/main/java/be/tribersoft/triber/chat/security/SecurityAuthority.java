@@ -2,7 +2,7 @@ package be.tribersoft.triber.chat.security;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import be.tribersoft.triber.chat.domain.user.api.Role;
+import be.tribersoft.triber.chat.user.domain.api.Role;
 
 public class SecurityAuthority implements GrantedAuthority {
 

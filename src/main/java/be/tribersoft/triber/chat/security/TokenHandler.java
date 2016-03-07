@@ -12,9 +12,10 @@ import org.springframework.security.authentication.InsufficientAuthenticationExc
 import com.auth0.jwt.Algorithm;
 import com.auth0.jwt.JWTSigner;
 import com.auth0.jwt.JWTSigner.Options;
-import com.auth0.jwt.JWTVerifier;
 
-import be.tribersoft.triber.chat.domain.user.api.User;
+import be.tribersoft.triber.chat.user.domain.api.User;
+
+import com.auth0.jwt.JWTVerifier;
 
 @Named
 public class TokenHandler {

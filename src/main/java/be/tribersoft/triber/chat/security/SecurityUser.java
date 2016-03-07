@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import be.tribersoft.triber.chat.domain.user.api.User;
+import be.tribersoft.triber.chat.user.domain.api.User;
 
 public class SecurityUser implements UserDetails {
 

@@ -1,8 +1,7 @@
 'use strict';
 
 var jsFiles = [
-    '/js/triber-chat-login/common/password-compare.js',
-    '/js/triber-chat-login/common/lodash.js'
+    '/js/triber-chat-login/common/password-compare.js'
 ];
 
 angular.module('register', ['vcRecaptcha', jsFiles])
@@ -13,7 +12,7 @@ angular.module('register', ['vcRecaptcha', jsFiles])
 		}
 	});
 })
-.controller('RegisterController', function(vcRecaptchaService, toaster, RegisterResource, _) {
+.controller('RegisterController', function(vcRecaptchaService, toaster, RegisterResource) {
 		var vm = this;
 	vm.submitAttempted = false;
 	vm.registering = false;

@@ -39,6 +39,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.POST, "/login").permitAll()
 				.antMatchers(HttpMethod.POST, "/register").permitAll()
 				.antMatchers(HttpMethod.POST, "/register/{userId}/activate").permitAll()
+				.antMatchers(HttpMethod.POST, "/reset-password").permitAll()
+				.antMatchers(HttpMethod.POST, "/reset-password/{resetPasswordId}").permitAll()
 				.anyRequest().authenticated().and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.addFilterBefore(new StatelessLoginFilter("/login", tokenAuthenticationService, userDetailsService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)

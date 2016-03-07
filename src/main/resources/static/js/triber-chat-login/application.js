@@ -46,7 +46,25 @@ angular.module('triber-chat-login', dependencies).config(function($stateProvider
 	})
 	.state('reset-password', {
 		url : '/reset-password',
-		templateUrl : 'js/triber-chat-login/reset-password/reset-password.html'
+		templateUrl : 'js/triber-chat-login/reset-password/reset-password.html',
+		controller: 'ResetPasswordController',
+		controllerAs: 'resetPasswordCtrl',
+		resolve: {
+			lazyLoad: function($ocLazyLoad) {
+				return $ocLazyLoad.load('js/triber-chat-login/reset-password/reset-password.js');
+			}
+		}
+	})
+	.state('confirm-reset-password', {
+		url : '/reset-password/:resetPasswordId',
+		templateUrl : 'js/triber-chat-login/reset-password/confirm-reset-password.html',
+		controller: 'ConfirmResetPasswordController',
+		controllerAs: 'confirmResetPasswordCtrl',
+		resolve: {
+			lazyLoad: function($ocLazyLoad) {
+				return $ocLazyLoad.load('js/triber-chat-login/reset-password/reset-password.js');
+			}
+		}
 	});
 
 });

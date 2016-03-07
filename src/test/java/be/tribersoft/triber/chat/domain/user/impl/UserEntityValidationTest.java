@@ -15,7 +15,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import be.tribersoft.triber.chat.domain.user.api.Role;
+import be.tribersoft.triber.chat.user.domain.api.Role;
+import be.tribersoft.triber.chat.user.domain.impl.UserEntity;
 
 public class UserEntityValidationTest {
 
@@ -33,8 +34,9 @@ public class UserEntityValidationTest {
 		UserEntity user = new UserEntity("", "password", "email@host.com", new HashSet<>(Arrays.asList(Role.USER)));
 
 		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
-		assertThat(violations).hasSize(1);
-		assertThat(violations.iterator().next().getMessage()).isEqualTo("user.validation.username.length");
+		assertThat(violations).hasSize(2);
+		assertViolationsContains(violations, "user.validation.username.empty");
+		assertViolationsContains(violations, "user.validation.username.length");
 	}
 
 	@Test
@@ -61,8 +63,9 @@ public class UserEntityValidationTest {
 		UserEntity user = new UserEntity("user", "", "email@host.com", new HashSet<>(Arrays.asList(Role.USER)));
 
 		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
-		assertThat(violations).hasSize(1);
-		assertThat(violations.iterator().next().getMessage()).isEqualTo("user.validation.password.length");
+		assertThat(violations).hasSize(2);
+		assertViolationsContains(violations, "user.validation.password.empty");
+		assertViolationsContains(violations, "user.validation.password.length");
 	}
 
 	@Test
@@ -117,6 +120,15 @@ public class UserEntityValidationTest {
 
 		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
 		assertThat(violations).isEmpty();
+	}
+
+	private boolean assertViolationsContains(Set<ConstraintViolation<UserEntity>> violations, String message) {
+		for (ConstraintViolation<UserEntity> constraintViolation : violations) {
+			if (constraintViolation.getMessage().equals(message)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 }

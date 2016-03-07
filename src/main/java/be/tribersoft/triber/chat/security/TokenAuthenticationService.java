@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 
-import be.tribersoft.triber.chat.domain.user.api.UserRepository;
+import be.tribersoft.triber.chat.user.domain.api.UserRepository;
 
 @Named
 public class TokenAuthenticationService {
