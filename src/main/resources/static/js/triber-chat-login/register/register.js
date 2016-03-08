@@ -1,7 +1,10 @@
 'use strict';
 
 var jsFiles = [
-    '/js/triber-chat-login/common/password-compare.js'
+    '/js/common/password-compare.js',
+    'js/common/warning-service.js',
+    'js/common/error-service.js',
+    'js/common/success-service.js'
 ];
 
 angular.module('register', ['vcRecaptcha', jsFiles])
@@ -12,7 +15,7 @@ angular.module('register', ['vcRecaptcha', jsFiles])
 		}
 	});
 })
-.controller('RegisterController', function(vcRecaptchaService, toaster, RegisterResource) {
+.controller('RegisterController', function(vcRecaptchaService, RegisterResource, ErrorService, WarningService, SuccessService) {
 		var vm = this;
 	vm.submitAttempted = false;
 	vm.registering = false;
@@ -20,10 +23,7 @@ angular.module('register', ['vcRecaptcha', jsFiles])
 	vm.register = function() {
 		vm.submitAttempted = true;
 		if (vm.registerForm.$invalid) {
-			toaster.pop({
-				type : 'warning',
-				body : 'Please correct the register form.'
-			});
+			WarningService.warn('Please correct the register form.');
 			return;
 		}
 		vm.registering = true;
@@ -34,27 +34,19 @@ angular.module('register', ['vcRecaptcha', jsFiles])
 				captcha: vm.recaptcha
 		}
 		RegisterResource.register(registration).$promise.then(function(data){
-			toaster.pop({
-				type: 'success',
-				body: 'Registration successful, you will receive an email.'
-			});
+			SuccessService.success('Registration successful, you will receive an email.');
 			vm.registering = false;
 		}, function(data){
 			vm.registering = false;
 			vm.refreshRecaptcha();
-			var toasterBody = "";
+			var toasterBody = undefined;
 			if(data.data.errors) {
 				angular.forEach(data.data.errors, function(error) {
+					toasterBody = toasterBody || '';
 					toasterBody = toasterBody + error + "<br>";
 				});
-			} else {
-				toasterBody = "Unknown error"
-			}
-			toaster.pop({
-				type: 'error',
-				body:toasterBody,
-				bodyOutputType: 'trustedHtml'
-			});
+			} 
+			ErrorService.error(toasterBody);
 		}) 
 	}
 	

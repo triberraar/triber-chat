@@ -11,7 +11,8 @@ var dependencies = [
                      'vcRecaptcha',
                      'angular-ladda'];
 
-angular.module('triber-chat-login', dependencies).config(function($stateProvider, $urlRouterProvider) {
+angular.module('triber-chat-login', dependencies)
+.config(function($stateProvider, $urlRouterProvider) {
 	$urlRouterProvider.otherwise('/login');
 	$stateProvider.state('login', {
 		url : '/login',
@@ -22,6 +23,9 @@ angular.module('triber-chat-login', dependencies).config(function($stateProvider
 			lazyLoad : function($ocLazyLoad) {
 				return $ocLazyLoad.load( '/js/triber-chat-login/login/login.js');
 			}
+		},
+		onExit: function(toaster) {
+			toaster.clear(undefined, 'loginFailedToastId');
 		}
 	}).state('register', {
 		url : '/register',

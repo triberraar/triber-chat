@@ -1,6 +1,9 @@
 'use strict';
 
 var jsFiles = [
+               'js/common/warning-service.js',
+               'js/common/error-service.js',
+               'js/common/success-service.js'
 ];
 
 angular.module('activateRegistration', ['vcRecaptcha', jsFiles])
@@ -11,33 +14,25 @@ angular.module('activateRegistration', ['vcRecaptcha', jsFiles])
 		}
 	});
 })
-.controller('ActivateRegistrationController', function($state, $stateParams, ActivateRegistrationResource, toaster) {
+.controller('ActivateRegistrationController', function($state, $stateParams, ActivateRegistrationResource, WarningService, ErrorService, SuccessService) {
 		var vm = this;
 	vm.submitAttempted = false;
 	
 	vm.activateRegistration = function() {
 		vm.submitAttempted = true;
-		if (vm.activateRegistration.$invalid) {
-			toaster.pop({
-				type : 'warning',
-				body : 'Please correct the activate form.'
-			});
+		if (vm.activateRegistrationForm.$invalid) {
+			WarningService.warn('Please correct the activate form.');
 			return;
 		}
 		ActivateRegistrationResource.register({userId: $stateParams.userId}, {password: vm.password}).$promise.then(function(data){
+			SuccessService.success('You are activated');
 			$state.go('login');
 		}, function(data){
 			var toasterBody;
 			if(data.data.errorCode) {
 					toasterBody = data.data.errorCode;
-			} else {
-				toasterBody = "Unknown error";
-			}
-			toaster.pop({
-				type: 'error',
-				body: toasterBody,
-				bodyOutputType: 'trustedHtml'
-			});
+			} 
+			ErrorService.error(toasterBody);
 		}); 
 	}
 	

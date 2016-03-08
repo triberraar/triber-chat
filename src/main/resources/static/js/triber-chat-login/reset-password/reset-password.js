@@ -1,7 +1,10 @@
 'use strict';
 
 var jsFiles = [
-               '/js/triber-chat-login/common/password-compare.js'
+               '/js/common/password-compare.js',
+               'js/common/warning-service.js',
+               'js/common/error-service.js',
+               'js/common/success-service.js'
            ];
 
 angular.module('resetPassword', [jsFiles])
@@ -15,67 +18,47 @@ angular.module('resetPassword', [jsFiles])
 			}
 		});
 	})
-	.controller('ResetPasswordController', function(toaster, ResetPasswordResource) {
+	.controller('ResetPasswordController', function(ResetPasswordResource, WarningService, SuccessService, ErrorService) {
 		var vm = this;
 		
 		vm.resetPassword = function() {
 			vm.submitAttempted = true;
 			if (vm.resetPasswordForm.$invalid) {
-				toaster.pop({
-					type : 'warning',
-					body : 'Please correct the reset password form.'
-				});
+				WarningService.warn('Please correct the reset password form.');
 				return;
 			}
 			vm.resetting = true;
 			ResetPasswordResource.reset({'email': vm.email}).$promise.then(function(data){
-				toaster.pop({
-					type: 'success',
-					body: 'Reset password successful, you will receive an email.'
-				});
+				SuccessService.success('Reset password successful, you will receive an email.');
 				vm.resetting = false;
 			}, function(data){
 				vm.resetting = false;
-				var toasterBody = "";
+				var toasterBody;
 				if(data.data.errorCode) {
 					toasterBody = data.data.errorCode
-				} else {
-					toasterBody = "Unknown error"
-				}
-				toaster.pop({
-					type: 'error',
-					body:toasterBody,
-					bodyOutputType: 'trustedHtml'
-				});
+				} 
+				ErrorService.error(toasterBody);
 			}) 
 		}
 	})
-	.controller('ConfirmResetPasswordController', function($state, $stateParams, toaster, ResetPasswordResource) {
+	.controller('ConfirmResetPasswordController', function($state, $stateParams, ResetPasswordResource, WarningService, ErrorService, SuccessService) {
 		var vm = this;
 		
 		vm.confirmResetPassword = function() {
 			vm.submitAttempted = true;
 			if (vm.confirmResetPasswordForm.$invalid) {
-				toaster.pop({
-					type : 'warning',
-					body : 'Please correct the confirm password form.'
-				});
+				WarningService.warn('Please correct the confirm password form.');
 				return;
 			}
-			ResetPasswordResource.confirm({resetPasswordId: $stateParams.resetPasswordId}, {password: vm.password}).$promise.then(function(data){
+			ResetPasswordResource.confirm({resetPasswordId: $stateParams.resetPasswordId}, {password: vm.password}).$promise.then(function(data) {
+				SuccessService.success('Password confirmed.');
 				$state.go('login');
 			}, function(data){
-				var toasterBody = "";
+				var toasterBody;
 				if(data.data.errorCode) {
 					toasterBody = data.data.errorCode
-				} else {
-					toasterBody = "Unknown error"
 				}
-				toaster.pop({
-					type: 'error',
-					body:toasterBody,
-					bodyOutputType: 'trustedHtml'
-				});
+				ErrorService.error(toasterBody);
 			}) 
 		}
 	});
