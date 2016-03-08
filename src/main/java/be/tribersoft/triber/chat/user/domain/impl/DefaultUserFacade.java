@@ -30,8 +30,7 @@ public class DefaultUserFacade implements UserFacade {
 
 	@Override
 	public void activate(String id, String password) {
-		UserEntity userEntity = defaultUserRepository.getNotActivatedById(id);
-		userEntity.activate(password);
+		defaultUserRepository.getNotActivatedById(id).activate(password);
 	}
 
 	@Override

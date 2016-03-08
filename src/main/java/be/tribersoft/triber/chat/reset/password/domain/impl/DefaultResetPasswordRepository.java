@@ -28,8 +28,8 @@ public class DefaultResetPasswordRepository implements ResetPasswordRepository {
 		return result.get();
 	}
 
-	public void delete(String id) {
-		resetPasswordJpaRepository.delete(id);
+	public void delete(ResetPasswordEntity resetPasswordEntity) {
+		resetPasswordJpaRepository.delete(resetPasswordEntity);
 	}
 
 	@Override

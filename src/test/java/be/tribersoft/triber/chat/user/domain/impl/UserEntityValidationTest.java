@@ -1,4 +1,4 @@
-package be.tribersoft.triber.chat.domain.user.impl;
+package be.tribersoft.triber.chat.user.domain.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

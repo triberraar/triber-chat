@@ -54,4 +54,8 @@ public class ResetPasswordEntity implements ResetPassword {
 	public String getId() {
 		return id;
 	}
+
+	public Date getExpireDate() {
+		return expireDate;
+	}
 }

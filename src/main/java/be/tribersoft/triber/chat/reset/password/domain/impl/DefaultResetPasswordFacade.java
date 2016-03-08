@@ -5,7 +5,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import be.tribersoft.triber.chat.reset.password.domain.api.ResetPassword;
 import be.tribersoft.triber.chat.reset.password.domain.api.ResetPasswordConfirmationMessage;
 import be.tribersoft.triber.chat.reset.password.domain.api.ResetPasswordFacade;
 import be.tribersoft.triber.chat.reset.password.domain.api.ResetPasswordMessage;
@@ -32,11 +31,6 @@ public class DefaultResetPasswordFacade implements ResetPasswordFacade {
 	}
 
 	@Override
-	public void delete(String id) {
-		defaultResetPasswordRepository.delete(id);
-	}
-
-	@Override
 	public void cleanup() {
 		List<ResetPasswordEntity> resetPasswordEntities = defaultResetPasswordRepository.findExpired();
 		defaultResetPasswordRepository.delete(resetPasswordEntities);
@@ -44,8 +38,8 @@ public class DefaultResetPasswordFacade implements ResetPasswordFacade {
 
 	@Override
 	public void confirm(String resetPasswordId, ResetPasswordConfirmationMessage resetPasswordConfirmationMessage) {
-		ResetPassword resetPassword = defaultResetPasswordRepository.getById(resetPasswordId);
+		ResetPasswordEntity resetPassword = defaultResetPasswordRepository.getById(resetPasswordId);
 		userFacade.changePassword(resetPassword.getUserId(), resetPasswordConfirmationMessage.getPassword());
-		defaultResetPasswordRepository.delete(resetPasswordId);
+		defaultResetPasswordRepository.delete(resetPassword);
 	}
 }
