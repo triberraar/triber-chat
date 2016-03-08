@@ -1,6 +1,8 @@
 package be.tribersoft.triber.chat.reset.password.domain.api;
 
+import java.util.List;
+
 public interface ResetPasswordRepository {
-	ResetPassword getById(String id);
+	List<? extends ResetPassword> findExpired();
 
 }

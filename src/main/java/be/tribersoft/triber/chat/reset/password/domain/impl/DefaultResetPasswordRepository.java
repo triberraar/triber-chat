@@ -1,10 +1,12 @@
 package be.tribersoft.triber.chat.reset.password.domain.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import be.tribersoft.triber.chat.common.DateFactory;
 import be.tribersoft.triber.chat.reset.password.domain.api.ResetPasswordNotFoundException;
 import be.tribersoft.triber.chat.reset.password.domain.api.ResetPasswordRepository;
 
@@ -18,7 +20,6 @@ public class DefaultResetPasswordRepository implements ResetPasswordRepository {
 		return resetPasswordJpaRepository.save(resetPasswordEntity);
 	}
 
-	@Override
 	public ResetPasswordEntity getById(String id) {
 		Optional<ResetPasswordEntity> result = resetPasswordJpaRepository.findById(id);
 		if (!result.isPresent()) {
@@ -29,6 +30,15 @@ public class DefaultResetPasswordRepository implements ResetPasswordRepository {
 
 	public void delete(String id) {
 		resetPasswordJpaRepository.delete(id);
+	}
+
+	@Override
+	public List<ResetPasswordEntity> findExpired() {
+		return resetPasswordJpaRepository.findByExpireDateBefore(DateFactory.now());
+	}
+
+	public void delete(List<ResetPasswordEntity> resetPasswordEntities) {
+		resetPasswordJpaRepository.delete(resetPasswordEntities);
 	}
 
 }

@@ -6,4 +6,8 @@ public interface ResetPasswordFacade {
 
 	void delete(String id);
 
+	void cleanup();
+
+	void confirm(String resetPasswordId, ResetPasswordConfirmationMessage resetPasswordConfirmationMessage);
+
 }

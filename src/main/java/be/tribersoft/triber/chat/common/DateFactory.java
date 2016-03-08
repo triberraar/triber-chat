@@ -10,7 +10,7 @@ public class DateFactory {
 		fixatedDate = date;
 	}
 
-	public static Date create() {
+	public static Date now() {
 		return fixatedDate == null ? new Date() : fixatedDate;
 	}
 

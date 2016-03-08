@@ -4,14 +4,14 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 
+import org.springframework.scheduling.annotation.Scheduled;
+
 import be.tribersoft.triber.chat.reset.password.domain.api.ResetPassword;
 import be.tribersoft.triber.chat.reset.password.domain.api.ResetPasswordConfirmationMessage;
 import be.tribersoft.triber.chat.reset.password.domain.api.ResetPasswordFacade;
 import be.tribersoft.triber.chat.reset.password.domain.api.ResetPasswordMessage;
-import be.tribersoft.triber.chat.reset.password.domain.api.ResetPasswordRepository;
 import be.tribersoft.triber.chat.reset.password.service.api.ResetPasswordService;
 import be.tribersoft.triber.chat.user.domain.api.User;
-import be.tribersoft.triber.chat.user.domain.api.UserFacade;
 import be.tribersoft.triber.chat.user.domain.api.UserRepository;
 
 @Named
@@ -24,10 +24,6 @@ public class DefaultResetPasswordService implements ResetPasswordService {
 	private ResetPasswordMailService resetPasswordMailService;
 	@Inject
 	private UserRepository userRepository;
-	@Inject
-	private ResetPasswordRepository resetPasswordRepository;
-	@Inject
-	private UserFacade userFacade;
 
 	@Override
 	public void request(ResetPasswordMessage resetPasswordMessage) {
@@ -38,9 +34,13 @@ public class DefaultResetPasswordService implements ResetPasswordService {
 
 	@Override
 	public void confirm(String resetPasswordId, ResetPasswordConfirmationMessage resetPasswordConfirmationMessage) {
-		ResetPassword resetPassword = resetPasswordRepository.getById(resetPasswordId);
-		userFacade.changePassword(resetPassword.getUserId(), resetPasswordConfirmationMessage.getPassword());
-		resetPasswordFacade.delete(resetPasswordId);
+		resetPasswordFacade.confirm(resetPasswordId, resetPasswordConfirmationMessage);
+	}
+
+	@Scheduled(cron = "0 0 0 * * ?")
+	@Override
+	public void cleanup() {
+		resetPasswordFacade.cleanup();
 	}
 
 }

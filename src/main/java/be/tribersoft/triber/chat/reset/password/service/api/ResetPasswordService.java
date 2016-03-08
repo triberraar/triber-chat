@@ -9,4 +9,6 @@ public interface ResetPasswordService {
 
 	void confirm(String resetPasswordId, ResetPasswordConfirmationMessage resetPasswordConfirmationMessage);
 
+	void cleanup();
+
 }

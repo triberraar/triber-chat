@@ -38,11 +38,11 @@ public class ResetPasswordEntity implements ResetPassword {
 
 	public ResetPasswordEntity(String userId) {
 		this.userId = userId;
-		this.expireDate = DateUtils.addDays(DateFactory.create(), 7);
+		this.expireDate = DateUtils.addDays(DateFactory.now(), 7);
 	}
 
 	public boolean isValid() {
-		return expireDate.after(DateFactory.create());
+		return expireDate.after(DateFactory.now());
 	}
 
 	@Override
