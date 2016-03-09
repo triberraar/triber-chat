@@ -1,0 +1,7 @@
+{
+  extends: angular,
+  "rules": {
+    "quotes": [ 2, "single"],
+    "strict": [2, "global"]
+  }
+}
