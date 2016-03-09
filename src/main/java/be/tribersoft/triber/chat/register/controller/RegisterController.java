@@ -33,7 +33,12 @@ public class RegisterController {
 	}
 
 	@RequestMapping(value = "/{userId}/activate", method = RequestMethod.POST, consumes = "application/json")
-	public void confirm(@Valid @RequestBody ActivateRegistrationFromJsonAdapter json, @PathVariable("userId") String userId) {
+	public void activate(@Valid @RequestBody ActivateRegistrationFromJsonAdapter json, @PathVariable("userId") String userId) {
 		registerService.activate(userId, json.getPassword());
+	}
+
+	@RequestMapping(value = "/{userId}/validate", method = RequestMethod.POST, consumes = "application/json")
+	public void validate(@PathVariable("userId") String userId) {
+		registerService.validate(userId);
 	}
 }

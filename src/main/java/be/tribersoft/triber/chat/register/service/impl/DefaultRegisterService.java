@@ -4,6 +4,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 
+import org.springframework.security.access.annotation.Secured;
+
 import be.tribersoft.triber.chat.register.service.api.RegisterService;
 import be.tribersoft.triber.chat.user.domain.api.User;
 import be.tribersoft.triber.chat.user.domain.api.UserFacade;
@@ -27,6 +29,12 @@ public class DefaultRegisterService implements RegisterService {
 	@Override
 	public void activate(String userId, String password) {
 		userFacade.activate(userId, password);
+	}
+
+	@Override
+	@Secured({ "ROLE_ADMIN" })
+	public void validate(String userId) {
+		userFacade.validate(userId);
 	}
 
 }

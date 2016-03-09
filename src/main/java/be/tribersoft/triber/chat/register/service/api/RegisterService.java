@@ -6,4 +6,6 @@ public interface RegisterService {
 	void register(UserMessage userMessage);
 
 	void activate(String userId, String password);
+
+	void validate(String userId);
 }

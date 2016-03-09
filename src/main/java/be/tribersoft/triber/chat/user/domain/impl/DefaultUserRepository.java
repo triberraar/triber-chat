@@ -61,4 +61,12 @@ public class DefaultUserRepository implements UserRepository {
 		}
 		return result.get();
 	}
+
+	public UserEntity getNotValidatedById(String id) {
+		Optional<UserEntity> result = userJpaRepository.findByIdAndValidated(id, false);
+		if (!result.isPresent()) {
+			throw new UserNotFoundException();
+		}
+		return result.get();
+	}
 }

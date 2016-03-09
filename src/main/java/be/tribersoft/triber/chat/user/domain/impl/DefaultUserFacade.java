@@ -38,4 +38,9 @@ public class DefaultUserFacade implements UserFacade {
 		defaultUserRepository.getActivatedById(id).changePassword(password);
 	}
 
+	@Override
+	public void validate(String id) {
+		defaultUserRepository.getNotValidatedById(id).validate();
+	}
+
 }
