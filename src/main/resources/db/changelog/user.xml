@@ -59,12 +59,15 @@
     	</insert>
     	<insert tableName="user_entity_roles">
     		<column name="user_entity_id" value="1"></column>
-    		<column name="roles" value="ADMIN"></column>
-    		<column name="roles" value="USER"></column>
+    		<column name="roles" value="ROLE_ADMIN"></column>
+    	</insert>
+    	<insert tableName="user_entity_roles">
+    		<column name="user_entity_id" value="1"></column>
+    		<column name="roles" value="ROLE_USER"></column>
     	</insert>
     	<insert tableName="user_entity_roles">
     		<column name="user_entity_id" value="2"></column>
-    		<column name="roles" value="USER"></column>
+    		<column name="roles" value="ROLE_USER"></column>
     	</insert>
     </changeSet>
 

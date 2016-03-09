@@ -16,7 +16,6 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import be.tribersoft.triber.chat.user.domain.api.Role;
-import be.tribersoft.triber.chat.user.domain.impl.UserEntity;
 
 public class UserEntityValidationTest {
 
@@ -31,7 +30,7 @@ public class UserEntityValidationTest {
 
 	@Test
 	public void failsWhenUsernameEmpty() {
-		UserEntity user = new UserEntity("", "password", "email@host.com", new HashSet<>(Arrays.asList(Role.USER)));
+		UserEntity user = new UserEntity("", "password", "email@host.com", new HashSet<>(Arrays.asList(Role.ROLE_USER)));
 
 		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
 		assertThat(violations).hasSize(2);
@@ -41,7 +40,7 @@ public class UserEntityValidationTest {
 
 	@Test
 	public void failsWhenUsernameTooShort() {
-		UserEntity user = new UserEntity("123", "password", "email@host.com", new HashSet<>(Arrays.asList(Role.USER)));
+		UserEntity user = new UserEntity("123", "password", "email@host.com", new HashSet<>(Arrays.asList(Role.ROLE_USER)));
 
 		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
 		assertThat(violations).hasSize(1);
@@ -50,7 +49,7 @@ public class UserEntityValidationTest {
 
 	@Test
 	public void failsWhenUsernameLongerThen256() {
-		UserEntity user = new UserEntity(StringUtils.leftPad("", 257, "a"), "password", "email@host.com", new HashSet<>(Arrays.asList(Role.USER)));
+		UserEntity user = new UserEntity(StringUtils.leftPad("", 257, "a"), "password", "email@host.com", new HashSet<>(Arrays.asList(Role.ROLE_USER)));
 
 		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
 		assertThat(violations).hasSize(1);
@@ -60,7 +59,7 @@ public class UserEntityValidationTest {
 
 	@Test
 	public void failsWhenPasswordEmpty() {
-		UserEntity user = new UserEntity("user", "", "email@host.com", new HashSet<>(Arrays.asList(Role.USER)));
+		UserEntity user = new UserEntity("user", "", "email@host.com", new HashSet<>(Arrays.asList(Role.ROLE_USER)));
 
 		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
 		assertThat(violations).hasSize(2);
@@ -70,7 +69,7 @@ public class UserEntityValidationTest {
 
 	@Test
 	public void failsWhenPasswordTooShort() {
-		UserEntity user = new UserEntity("user", "12345", "email@host.com", new HashSet<>(Arrays.asList(Role.USER)));
+		UserEntity user = new UserEntity("user", "12345", "email@host.com", new HashSet<>(Arrays.asList(Role.ROLE_USER)));
 
 		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
 		assertThat(violations).hasSize(1);
@@ -79,7 +78,7 @@ public class UserEntityValidationTest {
 
 	@Test
 	public void failsWhenPasswordLongerThen256() {
-		UserEntity user = new UserEntity("user", StringUtils.leftPad("", 257, "a"), "email@host.com", new HashSet<>(Arrays.asList(Role.USER)));
+		UserEntity user = new UserEntity("user", StringUtils.leftPad("", 257, "a"), "email@host.com", new HashSet<>(Arrays.asList(Role.ROLE_USER)));
 
 		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
 		assertThat(violations).hasSize(1);
@@ -89,7 +88,7 @@ public class UserEntityValidationTest {
 
 	@Test
 	public void failsWhenEmailEmpty() {
-		UserEntity user = new UserEntity("user", "password", "", new HashSet<>(Arrays.asList(Role.USER)));
+		UserEntity user = new UserEntity("user", "password", "", new HashSet<>(Arrays.asList(Role.ROLE_USER)));
 
 		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
 		assertThat(violations).hasSize(1);
@@ -98,7 +97,7 @@ public class UserEntityValidationTest {
 
 	@Test
 	public void failsWhenEmailNotAValidEmailAddress() {
-		UserEntity user = new UserEntity("user", "password", "test", new HashSet<>(Arrays.asList(Role.USER)));
+		UserEntity user = new UserEntity("user", "password", "test", new HashSet<>(Arrays.asList(Role.ROLE_USER)));
 
 		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
 		assertThat(violations).hasSize(1);
@@ -116,7 +115,7 @@ public class UserEntityValidationTest {
 
 	@Test
 	public void succeedsOtherwise() {
-		UserEntity user = new UserEntity("user", "123456", "test@test.com", new HashSet<>(Arrays.asList(Role.USER)));
+		UserEntity user = new UserEntity("user", "123456", "test@test.com", new HashSet<>(Arrays.asList(Role.ROLE_USER)));
 
 		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
 		assertThat(violations).isEmpty();
