@@ -8,5 +8,5 @@ public interface UserFacade {
 
 	void changePassword(String id, String password);
 
-	void validate(String userId);
+	void validate(String id);
 }
