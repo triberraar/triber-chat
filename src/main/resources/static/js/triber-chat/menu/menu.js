@@ -3,6 +3,7 @@
 angular.module('menu', ['securityService', '_', 'notificationService'])
 	.directive('menu', function() {
 		return {
+			replace: true,
 			templateUrl: '/js/triber-chat/menu/menu.html',
 			controller: 'MenuController',
 			controllerAs: 'menuCtrl'
