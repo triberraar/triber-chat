@@ -10,4 +10,6 @@ public interface UserRepository {
 
 	User getActivatedByEmail(String email);
 
+	boolean existsUnvalidated();
+
 }

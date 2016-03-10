@@ -69,4 +69,9 @@ public class DefaultUserRepository implements UserRepository {
 		}
 		return result.get();
 	}
+
+	@Override
+	public boolean existsUnvalidated() {
+		return userJpaRepository.countByValidated(false) > 0;
+	}
 }

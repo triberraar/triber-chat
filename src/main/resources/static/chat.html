@@ -23,13 +23,12 @@
 </head>
 <body class="gray-bg" ng-app="triber-chat" landing-scrollspy id="page-top">
 	<toaster-container toaster-options="{'close-button': true, 'time-out': 2500 }"></toaster-container>
-    	<div ng-include="'/js/triber-chat/layout/menu.html'">
-    	</div>
-    	<!-- Main view  -->
-        <div ui-view></div>
-        
-        <!-- Footer -->
-        <div ng-include="'/js/triber-chat/layout/footer.html'"></div>
+   	<menu></menu>
+   	<!-- Main view  -->
+    <div ui-view></div>
+    
+    <!-- Footer -->
+    <div ng-include="'/js/triber-chat/layout/footer.html'"></div>
 
     <!-- Scripts -->
     <!-- jQuery -->
@@ -57,5 +56,16 @@
 	
 	<!-- Application -->
 	<script src="js/triber-chat/application.js"></script>
+	<script src="js/triber-chat/menu/menu.js"></script>
+	<script src="js/common/error-service.js"></script>
+	<script src="js/common/jwt.js"></script>
+	<script src="js/common/local-storage.js"></script>
+	<script src="js/common/lodash.js"></script>
+	<script src="js/common/notification-service.js"></script>
+	<script src="js/common/password-compare.js"></script>
+	<script src="js/common/success-service.js"></script>
+	<script src="js/common/warning-service.js"></script>
+	<script src="js/common/notification-service.js"></script>
+	<script src="js/common/security-service.js"></script>
 </body>
 </html>

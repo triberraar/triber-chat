@@ -10,10 +10,14 @@ var dependencies = [
                      'oc.lazyLoad',
                      'ngPasswordStrength',
                      'vcRecaptcha',
-                     'angular-ladda'];
+                     'angular-ladda',
+                     'menu',
+                     'jwt'];
 
 angular.module('triber-chat', dependencies)
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider, jwtInterceptorProvider) {
+	
+	$httpProvider.interceptors.push('JWTInterceptor');
 //	$urlRouterProvider.otherwise('/home');
 //	$stateProvider.state('/home', {
 //		url : '/home',
@@ -27,4 +31,9 @@ angular.module('triber-chat', dependencies)
 //		}
 //	});
 
+})
+.run(function(JWT, $window) {
+	if(!JWT.isValid()) {
+		$window.location.href = '/';
+	}
 });
