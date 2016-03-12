@@ -14,7 +14,8 @@ var dependencies = [
                      'NgSwitchery',
                      'menu',
                      'jwt',
-                     'paging'];
+                     'paging',
+                     'noResults'];
 
 angular.module('triber-chat', dependencies)
 .config(function($stateProvider, $urlRouterProvider, $httpProvider, jwtInterceptorProvider) {

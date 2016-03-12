@@ -26,6 +26,7 @@ angular.module('User', [jsFiles])
 		vm.validating = false;
 		vm.validated = false;
 		vm.activated = false;
+		vm.users=[];
 		
 		vm.loadData();
 	}
