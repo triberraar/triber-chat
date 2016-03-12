@@ -19,4 +19,6 @@ public interface UserRepository {
 
 	User getById(String id);
 
+	Long countAll();
+
 }

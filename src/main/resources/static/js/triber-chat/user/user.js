@@ -10,8 +10,7 @@ angular.module('User', [jsFiles])
 .factory('UserResource', function($resource){
 	return $resource('/user/:userId/:action', {}, {
 		all : {
-			method : 'GET',
-			isArray: true
+			method : 'GET'
 		},
 		validate: {
 			method: 'PUT',
@@ -23,22 +22,31 @@ angular.module('User', [jsFiles])
 	var vm = this;
 	
 	vm.init = function(){
+		vm.currentPage = 1;
+		vm.validating = false;
 		vm.loadData();
 	}
 	
 	vm.validate = function(user) {
+		if(vm.validating) {
+			return;
+		}
+		vm.validating = true;
 		UserResource.validate({userId: user.id}).$promise.then(function() {
+			vm.validating = false;
 			SuccessService.success('User ' + user.username + ' validated');
 			vm.loadData();
 		}, function() {
+			vm.validating = false;
 			ErrorService.error('Validation failed');
 			vm.loadData();
 		})
 	}
 	
 	vm.loadData = function() {
-		UserResource.all().$promise.then(function(data) {
-			vm.users = data;
+		UserResource.all({page: vm.currentPage -1}).$promise.then(function(data) {
+			vm.users = data.content;
+			vm.totalElements = data.totalElements;
 		}, function() {
 			ErrorService.error('Could not get users');
 		});

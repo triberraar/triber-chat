@@ -91,4 +91,9 @@ public class DefaultUserRepository implements UserRepository {
 		}
 		return user.get();
 	}
+
+	@Override
+	public Long countAll() {
+		return userJpaRepository.count();
+	}
 }

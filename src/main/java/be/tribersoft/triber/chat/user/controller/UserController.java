@@ -6,7 +6,10 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import be.tribersoft.triber.chat.register.controller.ActivateRegistrationFromJsonAdapter;
+import be.tribersoft.triber.chat.user.domain.api.User;
 import be.tribersoft.triber.chat.user.service.api.UserService;
 
 @RestController
@@ -26,8 +30,10 @@ public class UserController {
 	private UserService userService;
 
 	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
-	public List<UserToJsonAdapter> all(Pageable pageable) {
-		return userService.findAll(pageable).stream().map(user -> new UserToJsonAdapter(user)).collect(Collectors.toList());
+	public Page<UserToJsonAdapter> all(@PageableDefault(size = 20) Pageable pageable) {
+		Page<? extends User> result = userService.findAll(pageable);
+		List<UserToJsonAdapter> pageContent = result.getContent().stream().map(user -> new UserToJsonAdapter(user)).collect(Collectors.toList());
+		return new PageImpl<>(pageContent, pageable, result.getTotalElements());
 	}
 
 	@RequestMapping(value = "/unvalidated", method = RequestMethod.GET, produces = "application/json")

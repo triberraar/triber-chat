@@ -6,6 +6,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 
@@ -32,8 +34,9 @@ public class DefaultUserService implements UserService {
 
 	@Override
 	@Secured({ "ROLE_ADMIN" })
-	public List<? extends User> findAll(Pageable pageable) {
-		return userRepository.findAll(pageable);
+	public Page<? extends User> findAll(Pageable pageable) {
+		List<? extends User> content = userRepository.findAll(pageable);
+		return new PageImpl<>(content, pageable, userRepository.countAll());
 	}
 
 	@Override
@@ -48,4 +51,5 @@ public class DefaultUserService implements UserService {
 		User user = userRepository.getById(userId);
 		validatedUserMailService.sendMail(user.getUsername(), user.getEmail());
 	}
+
 }
