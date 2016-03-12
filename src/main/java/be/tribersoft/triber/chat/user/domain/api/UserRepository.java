@@ -1,8 +1,9 @@
 package be.tribersoft.triber.chat.user.domain.api;
 
-import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface UserRepository {
@@ -15,7 +16,7 @@ public interface UserRepository {
 
 	boolean existsUnvalidated();
 
-	List<? extends User> findAll(Pageable pageable);
+	Page<? extends User> findAll(Pageable pageable, Map<String, String> searchParams);
 
 	User getById(String id);
 

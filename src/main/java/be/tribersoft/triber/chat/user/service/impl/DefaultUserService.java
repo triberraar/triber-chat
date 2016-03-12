@@ -1,13 +1,12 @@
 package be.tribersoft.triber.chat.user.service.impl;
 
-import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 
@@ -34,9 +33,8 @@ public class DefaultUserService implements UserService {
 
 	@Override
 	@Secured({ "ROLE_ADMIN" })
-	public Page<? extends User> findAll(Pageable pageable) {
-		List<? extends User> content = userRepository.findAll(pageable);
-		return new PageImpl<>(content, pageable, userRepository.countAll());
+	public Page<? extends User> findAll(Pageable pageable, Map<String, String> searchParams) {
+		return userRepository.findAll(pageable, searchParams);
 	}
 
 	@Override

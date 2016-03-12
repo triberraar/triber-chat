@@ -1,12 +1,14 @@
 package be.tribersoft.triber.chat.user.domain.impl;
 
-import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.querydsl.QPageRequest;
 
 import be.tribersoft.triber.chat.user.domain.api.User;
 import be.tribersoft.triber.chat.user.domain.api.UserNotFoundException;
@@ -16,6 +18,8 @@ import be.tribersoft.triber.chat.user.domain.api.UserRepository;
 public class DefaultUserRepository implements UserRepository {
 	@Inject
 	private UserJpaRepository userJpaRepository;
+	@Inject
+	private PredicateFactory predicateFactory;
 
 	@Override
 	public Optional<UserEntity> findByUsername(String username) {
@@ -79,8 +83,9 @@ public class DefaultUserRepository implements UserRepository {
 	}
 
 	@Override
-	public List<UserEntity> findAll(Pageable pageable) {
-		return userJpaRepository.findAllByOrderByUsernameAsc(pageable);
+	public Page<UserEntity> findAll(Pageable pageable, Map<String, String> searchParams) {
+		QPageRequest pageRequest = new QPageRequest(pageable.getPageNumber(), pageable.getPageSize(), QUserEntity.userEntity.username.asc());
+		return userJpaRepository.findAll(predicateFactory.create(searchParams), pageRequest);
 	}
 
 	@Override

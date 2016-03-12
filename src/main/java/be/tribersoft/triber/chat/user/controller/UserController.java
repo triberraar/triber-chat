@@ -1,6 +1,7 @@
 package be.tribersoft.triber.chat.user.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import be.tribersoft.triber.chat.register.controller.ActivateRegistrationFromJsonAdapter;
@@ -30,8 +32,8 @@ public class UserController {
 	private UserService userService;
 
 	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
-	public Page<UserToJsonAdapter> all(@PageableDefault(size = 20) Pageable pageable) {
-		Page<? extends User> result = userService.findAll(pageable);
+	public Page<UserToJsonAdapter> all(@PageableDefault(size = 1) Pageable pageable, @RequestParam Map<String, String> requestParams) {
+		Page<? extends User> result = userService.findAll(pageable, requestParams);
 		List<UserToJsonAdapter> pageContent = result.getContent().stream().map(user -> new UserToJsonAdapter(user)).collect(Collectors.toList());
 		return new PageImpl<>(pageContent, pageable, result.getTotalElements());
 	}
