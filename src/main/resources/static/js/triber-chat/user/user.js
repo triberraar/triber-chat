@@ -24,9 +24,10 @@ angular.module('User', [jsFiles])
 	vm.init = function(){
 		vm.currentPage = 1;
 		vm.validating = false;
-		vm.loadData();
-		vm.activated = false;
 		vm.validated = false;
+		vm.activated = false;
+		
+		vm.loadData();
 	}
 	
 	vm.validate = function(user) {
