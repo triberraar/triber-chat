@@ -7,14 +7,14 @@ var jsFiles = [
 ];
 
 angular.module('activateRegistration', ['vcRecaptcha', jsFiles])
-.factory('ActivateRegistrationResource', function($resource) {
-	return $resource('/register/:userId/activate', {}, {
+.factory('ActivateUserResource', function($resource) {
+	return $resource('/user/:userId/activate', {}, {
 		register : {
-			method : 'POST'
+			method : 'PUT'
 		}
 	});
 })
-.controller('ActivateRegistrationController', function($state, $stateParams, ActivateRegistrationResource, WarningService, ErrorService, SuccessService) {
+.controller('ActivateRegistrationController', function($state, $stateParams, ActivateUserResource, WarningService, ErrorService, SuccessService) {
 		var vm = this;
 	vm.submitAttempted = false;
 	
@@ -24,7 +24,7 @@ angular.module('activateRegistration', ['vcRecaptcha', jsFiles])
 			WarningService.warn('Please correct the activate form.');
 			return;
 		}
-		ActivateRegistrationResource.register({userId: $stateParams.userId}, {password: vm.password}).$promise.then(function(data){
+		ActivateUserResource.register({userId: $stateParams.userId}, {password: vm.password}).$promise.then(function(data){
 			SuccessService.success('You are activated');
 			$state.go('login');
 		}, function(data){

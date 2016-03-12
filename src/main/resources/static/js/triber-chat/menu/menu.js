@@ -9,19 +9,18 @@ angular.module('menu', ['securityService', '_', 'notificationService'])
 			controllerAs: 'menuCtrl'
 		}
 	})
-	.factory('UserResource', function($resource) {
-		return $resource('/user/:action', {}, {
+	.factory('UnvalidatedUserResource', function($resource) {
+		return $resource('/user/unvalidated', {}, {
 			existsUnvalidated : {
-				method : 'GET',
-				params: {action: 'unvalidated'}
+				method : 'GET'
 			}
 		});
 	})
-	.controller('MenuController', function(SecurityService, _, NotificationService, UserResource) {
+	.controller('MenuController', function(SecurityService, _, NotificationService, UnvalidatedUserResource) {
 		var vm = this;
 		
 		vm.showAdmin = function() {
-			return _.includes(SecurityService.getRoles(), 'ROLE_ADMIN');
+			return SecurityService.hasRole('ROLE_ADMIN');
 		}
 		
 		vm.numberOfNotifications = function() {
@@ -33,7 +32,7 @@ angular.module('menu', ['securityService', '_', 'notificationService'])
 		}
 		
 		vm.init = function() {
-			UserResource.existsUnvalidated().$promise.then(function() {
+			UnvalidatedUserResource.existsUnvalidated().$promise.then(function() {
 				NotificationService.addNotification('unvalidatedUser', 'There are unvalidated users.');
 			}, function() {
 			})

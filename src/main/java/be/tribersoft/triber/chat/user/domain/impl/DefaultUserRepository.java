@@ -1,9 +1,12 @@
 package be.tribersoft.triber.chat.user.domain.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import org.springframework.data.domain.Pageable;
 
 import be.tribersoft.triber.chat.user.domain.api.User;
 import be.tribersoft.triber.chat.user.domain.api.UserNotFoundException;
@@ -73,5 +76,19 @@ public class DefaultUserRepository implements UserRepository {
 	@Override
 	public boolean existsUnvalidated() {
 		return userJpaRepository.countByValidated(false) > 0;
+	}
+
+	@Override
+	public List<UserEntity> findAll(Pageable pageable) {
+		return userJpaRepository.findAllByOrderByUsernameAsc(pageable);
+	}
+
+	@Override
+	public UserEntity getById(String id) {
+		Optional<UserEntity> user = userJpaRepository.findById(id);
+		if (!user.isPresent()) {
+			throw new UserNotFoundException();
+		}
+		return user.get();
 	}
 }

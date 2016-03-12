@@ -104,4 +104,14 @@ public class UserEntity implements User {
 	public void changePassword(String password) {
 		this.password = new BCryptPasswordEncoder().encode(password);
 	}
+
+	@Override
+	public boolean isValidated() {
+		return validated;
+	}
+
+	@Override
+	public boolean isActivated() {
+		return activated;
+	}
 }

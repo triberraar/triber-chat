@@ -1,0 +1,25 @@
+<has-permission permission="ROLE_ADMIN">
+	<div class="ibox-content">
+<h3>Users</h3>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Activated</th>
+            <th>Validated</th>
+            <th>Validate</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-repeat="user in userCtrl.users">
+        	<td>{{user.username}}</td>
+        	<td>{{user.email}}</td>
+        	<td><span class=label ng-class="user.activated ? 'label-primary' : 'label-danger'"><i class="fa" ng-class="user.activated ? 'fa-check' : 'fa-times'"></i> {{user.activated ? 'Activated' : 'Not activated'}}</td>
+        	<td><span class="label" ng-class="user.validated ? 'label-primary' : 'label-danger'"><i class="fa" ng-class="user.validated ? 'fa-check' : 'fa-times'"></i> {{user.validated ? 'Validated' : 'Not validated'}}</td>
+        	<td><a ng-if="!user.validated" class="badge badge-primary" ng-click="userCtrl.validate(user)">Validate</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</has-permission>

@@ -1,4 +1,4 @@
-package be.tribersoft.triber.chat.reset.password.service.impl;
+package be.tribersoft.triber.chat.user.service.impl;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +15,7 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
 @Named
-public class ResetPasswordMailService {
+public class ValidatedUserMailService {
 
 	@Inject
 	private JavaMailSender mailSender;
@@ -24,7 +24,7 @@ public class ResetPasswordMailService {
 	@Value("${mail.sender.server.address}")
 	private String serverAddress;
 
-	public void sendMail(String resetPasswordId, String username, String email) {
+	public void sendMail(String username, String email) {
 
 		MimeMessagePreparator preparator = new MimeMessagePreparator() {
 			@Override
@@ -32,11 +32,10 @@ public class ResetPasswordMailService {
 				MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
 				message.setTo(email);
 				message.setFrom("triber.chat@gmail.com");
-				message.setSubject("Triber chat: reset password");
+				message.setSubject("Triber chat: account validated");
 				Map<String, Object> model = new HashMap<>();
 				model.put("username", username);
-				model.put("resetPasswordLink", serverAddress + "/#/reset-password/" + resetPasswordId);
-				String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/reset-password.vm", "UTF-8", model);
+				String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/validate-user.vm", "UTF-8", model);
 				message.setText(text, true);
 			}
 		};

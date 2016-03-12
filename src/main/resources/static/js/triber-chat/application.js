@@ -18,6 +18,17 @@ angular.module('triber-chat', dependencies)
 .config(function($stateProvider, $urlRouterProvider, $httpProvider, jwtInterceptorProvider) {
 	
 	$httpProvider.interceptors.push('JWTInterceptor');
+	$stateProvider.state('user', {
+		url:'/user',
+		templateUrl: 'js/triber-chat/user/user.html',
+		controller: 'UserController',
+		controllerAs: 'userCtrl',
+		resolve: {
+			lazyLoad: function($ocLazyLoad) {
+				return $ocLazyLoad.load('/js/triber-chat/user/user.js');
+			}
+		}
+	})
 //	$urlRouterProvider.otherwise('/home');
 //	$stateProvider.state('/home', {
 //		url : '/home',

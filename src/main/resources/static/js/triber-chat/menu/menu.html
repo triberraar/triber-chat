@@ -7,7 +7,7 @@
                 </a>
                 <ul class="dropdown-alerts" uib-dropdown-menu >
                     <li ng-if="menuCtrl.showAdmin() && menuCtrl.notification('unvalidatedUser')">
-                        <a >
+                        <a ui-sref="user">
                             <div>
                                 <i class="fa fa-user fa-fw"></i> {{menuCtrl.notification('unvalidatedUser')}}
                             </div>

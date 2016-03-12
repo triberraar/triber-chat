@@ -20,4 +20,8 @@ public interface User extends UserMessage {
 
 	String getId();
 
+	boolean isActivated();
+
+	boolean isValidated();
+
 }

@@ -1,7 +1,9 @@
 package be.tribersoft.triber.chat.user.domain.impl;
 
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QueryDslPredicateExecutor;
 
@@ -20,5 +22,9 @@ public interface UserJpaRepository extends JpaRepository<UserEntity, String>, Qu
 	Optional<UserEntity> findByEmailAndActivated(String email, boolean activated);
 
 	Optional<UserEntity> findByIdAndValidated(String id, boolean validated);
+
+	List<UserEntity> findAllByOrderByUsernameAsc(Pageable pageable);
+
+	Optional<UserEntity> findById(String id);
 
 }

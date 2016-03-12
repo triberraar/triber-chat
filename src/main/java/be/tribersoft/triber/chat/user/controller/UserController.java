@@ -1,23 +1,21 @@
 package be.tribersoft.triber.chat.user.controller;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mysema.query.types.Predicate;
-
-import be.tribersoft.triber.chat.user.domain.impl.QUserEntity;
-import be.tribersoft.triber.chat.user.domain.impl.UserEntity;
-import be.tribersoft.triber.chat.user.domain.impl.UserJpaRepository;
+import be.tribersoft.triber.chat.register.controller.ActivateRegistrationFromJsonAdapter;
 import be.tribersoft.triber.chat.user.service.api.UserService;
 
 @RestController
@@ -25,17 +23,11 @@ import be.tribersoft.triber.chat.user.service.api.UserService;
 public class UserController {
 
 	@Inject
-	private UserJpaRepository userJpaRepository;
-	@Inject
 	private UserService userService;
 
 	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
-	public List<UserEntity> register(@RequestParam(name = "username", required = false) Optional<String> username) {
-		QUserEntity userentity = QUserEntity.userEntity;
-		Predicate pred = userentity.username.contains(username.isPresent() ? username.get() : "");
-		ArrayList<UserEntity> result = new ArrayList<UserEntity>();
-		userJpaRepository.findAll(pred).forEach(result::add);
-		return result;
+	public List<UserToJsonAdapter> all(Pageable pageable) {
+		return userService.findAll(pageable).stream().map(user -> new UserToJsonAdapter(user)).collect(Collectors.toList());
 	}
 
 	@RequestMapping(value = "/unvalidated", method = RequestMethod.GET, produces = "application/json")
@@ -47,4 +39,13 @@ public class UserController {
 		}
 	}
 
+	@RequestMapping(value = "/{userId}/activate", method = RequestMethod.PUT, consumes = "application/json")
+	public void activate(@Valid @RequestBody ActivateRegistrationFromJsonAdapter json, @PathVariable("userId") String userId) {
+		userService.activate(userId, json.getPassword());
+	}
+
+	@RequestMapping(value = "/{userId}/validate", method = RequestMethod.PUT, consumes = "application/json")
+	public void validate(@PathVariable("userId") String userId) {
+		userService.validate(userId);
+	}
 }

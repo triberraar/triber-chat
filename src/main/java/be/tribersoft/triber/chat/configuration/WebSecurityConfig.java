@@ -40,7 +40,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/js/**", "/lib/**", "/index.html", "/chat.html", "/").permitAll()
 				.antMatchers(HttpMethod.POST, "/login").permitAll()
 				.antMatchers(HttpMethod.POST, "/register").permitAll()
-				.antMatchers(HttpMethod.POST, "/register/{userId}/activate").permitAll()
+				.antMatchers(HttpMethod.PUT, "/user/{userId}/activate").permitAll()
 				.antMatchers(HttpMethod.POST, "/reset-password").permitAll()
 				.antMatchers(HttpMethod.POST, "/reset-password/{resetPasswordId}").permitAll()
 				.anyRequest().authenticated().and()
