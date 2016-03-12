@@ -9,7 +9,8 @@ angular.module('paging', [])
 		bindToController: {
 			totalElements: '=',
 			onPageChange: '&',
-			currentPage: '='
+			currentPage: '=',
+			itemsPerPage: '='
 		}
 	}
 })
@@ -17,7 +18,6 @@ angular.module('paging', [])
 	var vm = this;
 	
 	vm.maxSize = 5;
-	vm.itemsPerPage = 20;
 	
 	$scope.$watch(angular.bind(this, function() {
 		return vm.currentPage;

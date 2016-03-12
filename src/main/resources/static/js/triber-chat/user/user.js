@@ -47,6 +47,7 @@ angular.module('User', [jsFiles])
 		UserResource.all({page: vm.currentPage - 1}).$promise.then(function(data) {
 			vm.users = data.content;
 			vm.totalElements = data.totalElements;
+			vm.itemsPerPage = data.size;
 		}, function() {
 			ErrorService.error('Could not get users');
 		});

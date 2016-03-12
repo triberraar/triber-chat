@@ -10,7 +10,6 @@ import javax.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +31,7 @@ public class UserController {
 	private UserService userService;
 
 	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
-	public Page<UserToJsonAdapter> all(@PageableDefault(size = 1) Pageable pageable, @RequestParam Map<String, String> requestParams) {
+	public Page<UserToJsonAdapter> all(Pageable pageable, @RequestParam Map<String, String> requestParams) {
 		Page<? extends User> result = userService.findAll(pageable, requestParams);
 		List<UserToJsonAdapter> pageContent = result.getContent().stream().map(user -> new UserToJsonAdapter(user)).collect(Collectors.toList());
 		return new PageImpl<>(pageContent, pageable, result.getTotalElements());
