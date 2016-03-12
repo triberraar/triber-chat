@@ -1,6 +1,24 @@
 <has-permission permission="ROLE_ADMIN">
-	<div class="ibox-content">
+	<div class="ibox-title">
 		<h3>Users</h3>
+	</div>
+	<div class="ibox-content">
+			<form class="form-horizontal" ng-submit="userCtrl.loadData()">
+				<div class="form-group">
+					<label class="col-sm-1 control-label">Username</label>
+					<div class="col-sm-2"><input type="text" class="form-control" ng-model="userCtrl.username"></div>
+					<label class="col-sm-1 control-label">Email</label>
+					<div class="col-sm-2"><input type="text" class="form-control" ng-model="userCtrl.email"></div>
+					<label  class="col-sm-1 control-label">Activated</label>
+					<div class="col-sm-1"><input type="checkbox" class="col-sm-2 js-switch" ui-switch checked ng-model="userCtrl.activated"/></div>
+					<label  class="col-sm-1 control-label">Validated</label>
+					<div class="col-sm-1"><input type="checkbox" class="col-sm-2 js-switch" ui-switch checked ng-model="userCtrl.validated"/></div>
+					<div class="col-sm-1">
+						<button class="btn btn-primary" type="submit">Search</button>
+					</div>
+				</div>
+			</form>
+		
 	    	<table class="table table-hover">
 	        <thead>
 	        <tr>

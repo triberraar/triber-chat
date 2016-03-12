@@ -26,11 +26,14 @@
     "lodash": "~4.6.1",
     "ng-password-strength": "~0.2.1",
     "angular-recaptcha": "~2.5.0",
-    "angular-ladda": "~0.3.4"
+    "angular-ladda": "~0.3.4",
+    "switchery": "~0.8.1",
+    "ng-switchery": "~1.0.0-alpha7"
   },
   "resolutions": {
     "jquery": "~2.1.4",
     "angular": "1.5.0",
-    "lodash": "~4.6.1"
+    "lodash": "~4.6.1",
+    "switchery": "~0.8.1"
   }
 }

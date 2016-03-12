@@ -11,6 +11,7 @@ var dependencies = [
                      'ngPasswordStrength',
                      'vcRecaptcha',
                      'angular-ladda',
+                     'NgSwitchery',
                      'menu',
                      'jwt',
                      'paging'];

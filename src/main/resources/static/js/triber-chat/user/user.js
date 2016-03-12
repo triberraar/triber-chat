@@ -25,6 +25,8 @@ angular.module('User', [jsFiles])
 		vm.currentPage = 1;
 		vm.validating = false;
 		vm.loadData();
+		vm.activated = false;
+		vm.validated = false;
 	}
 	
 	vm.validate = function(user) {
@@ -44,7 +46,7 @@ angular.module('User', [jsFiles])
 	}
 	
 	vm.loadData = function() {
-		UserResource.all({page: vm.currentPage - 1}).$promise.then(function(data) {
+		UserResource.all({page: vm.currentPage - 1, validated: vm.validated, activated: vm.activated, username: vm.username, email: vm.email}).$promise.then(function(data) {
 			vm.users = data.content;
 			vm.totalElements = data.totalElements;
 			vm.itemsPerPage = data.size;
