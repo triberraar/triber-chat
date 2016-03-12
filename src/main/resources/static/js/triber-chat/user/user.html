@@ -22,7 +22,7 @@
 	        </tbody>
 	    </table>
 	    <span>
-	    	<uib-pagination total-items="userCtrl.totalElements" ng-change="userCtrl.loadData()" ng-model="userCtrl.currentPage" max-size="'5'" items-per-page="'20'" class="pagination-sm" force-ellipses="true" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"></uib-pagination>
+	    	<paging total-elements="userCtrl.totalElements" on-page-change="userCtrl.loadData()" current-page="userCtrl.currentPage"></paging>
 	    </span>
 	</div>
 </has-permission>

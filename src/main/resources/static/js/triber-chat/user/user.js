@@ -40,11 +40,11 @@ angular.module('User', [jsFiles])
 			vm.validating = false;
 			ErrorService.error('Validation failed');
 			vm.loadData();
-		})
+		});
 	}
 	
 	vm.loadData = function() {
-		UserResource.all({page: vm.currentPage -1}).$promise.then(function(data) {
+		UserResource.all({page: vm.currentPage - 1}).$promise.then(function(data) {
 			vm.users = data.content;
 			vm.totalElements = data.totalElements;
 		}, function() {

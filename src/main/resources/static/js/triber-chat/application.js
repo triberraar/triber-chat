@@ -12,7 +12,8 @@ var dependencies = [
                      'vcRecaptcha',
                      'angular-ladda',
                      'menu',
-                     'jwt'];
+                     'jwt',
+                     'paging'];
 
 angular.module('triber-chat', dependencies)
 .config(function($stateProvider, $urlRouterProvider, $httpProvider, jwtInterceptorProvider) {
