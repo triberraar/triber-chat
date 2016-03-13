@@ -15,10 +15,10 @@ angular.module('notificationService', ['websocket'])
 	Websocket.subscribe('/topic/notifications/registeredUser', 'registeredUser');
 	Websocket.subscribe('/topic/notifications/validatedUser', 'registeredUser');
 	
-	$rootScope.$on('registeredUser', function(message) {
+	$rootScope.$on('registeredUser', function(event, args) {
 		notificationService.checkUnvalidatedUsers();
 	});
-	$rootScope.$on('validatedUser', function(message) {
+	$rootScope.$on('validatedUser', function(event, args) {
 		notificationService.checkUnvalidatedUsers();
 	});
 	

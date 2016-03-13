@@ -51,7 +51,7 @@ public class DefaultUserService implements UserService {
 		userFacade.validate(userId);
 		User user = userRepository.getById(userId);
 		validatedUserMailService.sendMail(user.getUsername(), user.getEmail());
-		webSocketService.send("/topic/notifications/validatedUser", null);
+		webSocketService.send("/topic/notifications/validatedUser", user.getUsername());
 	}
 
 }

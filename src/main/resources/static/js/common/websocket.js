@@ -6,13 +6,13 @@ angular.module('websocket', ['jwt'])
 	var subscriptions = [];
 	websocket.client = new SockJS('/chat?jwt=' + JWT.get());
 	websocket.stomp = Stomp.over(websocket.client);
-	websocket.stomp.debug = null;
+	//websocket.stomp.debug = null;
 	
 	websocket.connect = function() {
 		websocket.stomp.connect({}, function() {
 			angular.forEach(subscriptions, function(subscription) {
 				websocket.stomp.subscribe(subscription.channel, function(message) {
-					websocket.broadcast(subscription.eventName, message);
+					websocket.broadcast(subscription.eventName, message.body);
 				});
 			})
 		});
