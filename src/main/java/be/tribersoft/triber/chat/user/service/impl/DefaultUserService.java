@@ -10,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 
+import be.tribersoft.triber.chat.common.WebSocketService;
 import be.tribersoft.triber.chat.user.domain.api.User;
 import be.tribersoft.triber.chat.user.domain.api.UserFacade;
 import be.tribersoft.triber.chat.user.domain.api.UserRepository;
@@ -24,6 +25,8 @@ public class DefaultUserService implements UserService {
 	private UserFacade userFacade;
 	@Inject
 	private ValidatedUserMailService validatedUserMailService;
+	@Inject
+	private WebSocketService webSocketService;
 
 	@Override
 	@Secured({ "ROLE_ADMIN" })
@@ -48,6 +51,7 @@ public class DefaultUserService implements UserService {
 		userFacade.validate(userId);
 		User user = userRepository.getById(userId);
 		validatedUserMailService.sendMail(user.getUsername(), user.getEmail());
+		webSocketService.send("/topic/notifications/validatedUser", user.getUsername());
 	}
 
 }

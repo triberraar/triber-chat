@@ -12,10 +12,13 @@ var dependencies = [
                      'vcRecaptcha',
                      'angular-ladda',
                      'NgSwitchery',
-                     'menu',
                      'jwt',
                      'paging',
-                     'noResults'];
+                     'noResults',
+                     'websocket',
+                     'menu',
+                     'notificationService',
+                     ];
 
 angular.module('triber-chat', dependencies)
 .config(function($stateProvider, $urlRouterProvider, $httpProvider, jwtInterceptorProvider) {
@@ -46,8 +49,10 @@ angular.module('triber-chat', dependencies)
 //	});
 
 })
-.run(function(JWT, $window) {
+.run(function(JWT, $window, Websocket) {
 	if(!JWT.isValid()) {
 		$window.location.href = '/';
 	}
+	
+	Websocket.connect();
 });

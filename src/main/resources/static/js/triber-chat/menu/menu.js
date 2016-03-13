@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('menu', ['securityService', '_', 'notificationService'])
+angular.module('menu', ['securityService', '_', 'notificationService', 'websocket'])
 	.directive('menu', function() {
 		return {
 			replace: true,
@@ -9,14 +9,7 @@ angular.module('menu', ['securityService', '_', 'notificationService'])
 			controllerAs: 'menuCtrl'
 		}
 	})
-	.factory('UnvalidatedUserResource', function($resource) {
-		return $resource('/user/unvalidated', {}, {
-			existsUnvalidated : {
-				method : 'GET'
-			}
-		});
-	})
-	.controller('MenuController', function(SecurityService, _, NotificationService, UnvalidatedUserResource) {
+	.controller('MenuController', function(SecurityService, _, NotificationService, Websocket) {
 		var vm = this;
 		
 		vm.showAdmin = function() {
@@ -30,13 +23,12 @@ angular.module('menu', ['securityService', '_', 'notificationService'])
 		vm.notification = function(key) {
 			return NotificationService.notification(key);
 		}
-		
+
 		vm.init = function() {
-			UnvalidatedUserResource.existsUnvalidated().$promise.then(function() {
-				NotificationService.addNotification('unvalidatedUser', 'There are unvalidated users.');
-			}, function() {
-			})
+			NotificationService.checkUnvalidatedUsers();
+			
 		}
+		
 		
 		vm.init();
 	});
