@@ -18,8 +18,15 @@ angular.module('User', [jsFiles])
 		}
 	});
 })
-.controller('UserController', function(UserResource, ErrorService, SuccessService) {
+.controller('UserController', function($rootScope, UserResource, ErrorService, SuccessService) {
 	var vm = this;
+	
+	$rootScope.$on('registeredUser', function(event, args) {
+		vm.loadData();
+	});
+	$rootScope.$on('validatedUser', function(event, args) {
+		vm.loadData();
+	});
 	
 	vm.init = function(){
 		vm.currentPage = 1;
