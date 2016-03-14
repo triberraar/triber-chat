@@ -13,7 +13,7 @@ angular.module('notificationService', ['websocket'])
 	var numberOfNotifications = 0;
 	
 	Websocket.subscribe('/topic/notifications/registeredUser', 'registeredUser');
-	Websocket.subscribe('/topic/notifications/validatedUser', 'registeredUser');
+	Websocket.subscribe('/topic/notifications/validatedUser', 'validatedUser');
 	
 	$rootScope.$on('registeredUser', function(event, args) {
 		notificationService.checkUnvalidatedUsers();

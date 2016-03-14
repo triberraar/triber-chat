@@ -43,7 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.PUT, "/user/{userId}/activate").permitAll()
 				.antMatchers(HttpMethod.POST, "/reset-password").permitAll()
 				.antMatchers(HttpMethod.POST, "/reset-password/{resetPasswordId}").permitAll()
-				.antMatchers(HttpMethod.GET, "/chat/**").permitAll()
+				.antMatchers(HttpMethod.GET, "/chat/**").authenticated()
 				.anyRequest().authenticated().and()
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 				.addFilterBefore(new StatelessLoginFilter("/login", tokenAuthenticationService, userDetailsService, authenticationManager()), UsernamePasswordAuthenticationFilter.class)

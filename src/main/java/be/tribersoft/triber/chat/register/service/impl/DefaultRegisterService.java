@@ -25,7 +25,7 @@ public class DefaultRegisterService implements RegisterService {
 	public void register(UserMessage userMessage) {
 		User user = userFacade.register(userMessage);
 		registerMailService.sendMail(user.getUsername(), user.getId(), user.getEmail());
-		webSocketService.send("/topic/notification/registeredUser", user.getUsername());
+		webSocketService.send("/topic/notifications/registeredUser", user.getUsername());
 	}
 
 }
