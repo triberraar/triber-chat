@@ -22,19 +22,31 @@ var dependencies = [
 
 angular.module('triber-chat', dependencies)
 .config(function($stateProvider, $urlRouterProvider, $httpProvider, jwtInterceptorProvider) {
-	
+	$urlRouterProvider.otherwise('/general-chat');
 	$httpProvider.interceptors.push('JWTInterceptor');
-	$stateProvider.state('user', {
-		url:'/user',
-		templateUrl: 'js/triber-chat/user/user.html',
-		controller: 'UserController',
-		controllerAs: 'userCtrl',
-		resolve: {
-			lazyLoad: function($ocLazyLoad) {
-				return $ocLazyLoad.load('/js/triber-chat/user/user.js');
+	$stateProvider
+		.state('user', {
+			url:'/user',
+			templateUrl: 'js/triber-chat/user/user.html',
+			controller: 'UserController',
+			controllerAs: 'userCtrl',
+			resolve: {
+				lazyLoad: function($ocLazyLoad) {
+					return $ocLazyLoad.load('/js/triber-chat/user/user.js');
+				}
 			}
-		}
-	})
+		})
+		.state('general-chat', {
+			url:'/general-chat',
+			templateUrl: 'js/triber-chat/general-chat/general-chat.html',
+			controller: 'GeneralChatController',
+			controllerAs: 'generalChatCtrl',
+			resolve: {
+				lazyLoad: function($ocLazyLoad) {
+					return $ocLazyLoad.load('/js/triber-chat/general-chat/general-chat.js');
+				}
+			}
+		})
 //	$urlRouterProvider.otherwise('/home');
 //	$stateProvider.state('/home', {
 //		url : '/home',
