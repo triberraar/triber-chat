@@ -21,6 +21,9 @@ angular.module('notificationService', ['websocket'])
 	$rootScope.$on('validatedUser', function(event, args) {
 		notificationService.checkUnvalidatedUsers();
 	});
+	$rootScope.$on('connected', function(event, args) {
+		notificationService.checkUnvalidatedUsers();
+	});
 	
 	var notificationService = {
 			addNotification : function(key, notification) {

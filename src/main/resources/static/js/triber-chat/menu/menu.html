@@ -1,6 +1,7 @@
 <div class="row border-bottom">
     <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
         <ul class="nav navbar-top-links navbar-right">
+        	<li ng-if="!menuCtrl.connected()"><a><i class="fa fa-circle-o-notch fa-spin"></i> Connecting</li></a>
             <li uib-dropdown >
                 <a class="count-info" href uib-dropdown-toggle>
                     <i class="fa fa-bell"></i> <span class="label label-primary">{{menuCtrl.numberOfNotifications()}}</span>

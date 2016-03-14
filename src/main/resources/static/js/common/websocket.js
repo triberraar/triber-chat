@@ -1,20 +1,29 @@
 'use strict';
 
 angular.module('websocket', ['jwt'])
-.factory('Websocket', function(JWT, $rootScope) {
+.factory('Websocket', function(JWT, $rootScope, $timeout) {
 	var websocket = {};
 	var subscriptions = [];
-	websocket.client = new SockJS('/chat?jwt=' + JWT.get());
-	websocket.stomp = Stomp.over(websocket.client);
+	var reconnectTimeout;
 	//websocket.stomp.debug = null;
 	
 	websocket.connect = function() {
+		websocket.client = new SockJS('/chat?jwt=' + JWT.get());
+		websocket.stomp = Stomp.over(websocket.client);
 		websocket.stomp.connect({}, function() {
+			$rootScope.$emit('connected');
+			$timeout.cancel(reconnectTimeout);
 			angular.forEach(subscriptions, function(subscription) {
 				websocket.stomp.subscribe(subscription.channel, function(message) {
 					websocket.broadcast(subscription.eventName, message.body);
 				});
 			})
+		}, function() {
+			$rootScope.$apply(function() {
+				reconnectTimeout =$timeout(function() {
+					websocket.connect();
+				}, 5000);
+			});
 		});
 	}
 	
@@ -30,6 +39,10 @@ angular.module('websocket', ['jwt'])
 			});
 			return;
 		}
+	}
+	
+	websocket.connected = function() {
+		return websocket.stomp && websocket.stomp.connected;
 	}
 	
 //	websocket.send = function(channel, message) {

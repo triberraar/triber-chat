@@ -26,7 +26,10 @@ angular.module('menu', ['securityService', '_', 'notificationService', 'websocke
 
 		vm.init = function() {
 			NotificationService.checkUnvalidatedUsers();
-			
+		}
+		
+		vm.connected = function() {
+			return Websocket.connected();
 		}
 		
 		
