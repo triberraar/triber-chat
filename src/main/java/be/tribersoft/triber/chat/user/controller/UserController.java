@@ -1,5 +1,6 @@
 package be.tribersoft.triber.chat.user.controller;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -54,5 +55,11 @@ public class UserController {
 	@RequestMapping(value = "/{userId}/validate", method = RequestMethod.PUT, consumes = "application/json")
 	public void validate(@PathVariable("userId") String userId) {
 		userService.validate(userId);
+	}
+
+	@RequestMapping(value = "/connected", method = RequestMethod.GET, produces = "application/json")
+	public List<UserToJsonAdapter> allConnected() {
+		Comparator<User> comparator = Comparator.comparing(User::getUsernameLowerCase);
+		return userService.findAllConnected().stream().sorted(comparator).map(user -> new UserToJsonAdapter(user)).collect(Collectors.toList());
 	}
 }

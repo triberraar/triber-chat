@@ -1,5 +1,6 @@
 package be.tribersoft.triber.chat.user.service.impl;
 
+import java.util.Collection;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.annotation.Secured;
 
 import be.tribersoft.triber.chat.common.WebSocketService;
+import be.tribersoft.triber.chat.user.domain.api.ConnectedUsersRepository;
 import be.tribersoft.triber.chat.user.domain.api.User;
 import be.tribersoft.triber.chat.user.domain.api.UserFacade;
 import be.tribersoft.triber.chat.user.domain.api.UserRepository;
@@ -27,6 +29,8 @@ public class DefaultUserService implements UserService {
 	private ValidatedUserMailService validatedUserMailService;
 	@Inject
 	private WebSocketService webSocketService;
+	@Inject
+	private ConnectedUsersRepository connectedUsersRepository;
 
 	@Override
 	@Secured({ "ROLE_ADMIN" })
@@ -52,6 +56,11 @@ public class DefaultUserService implements UserService {
 		User user = userRepository.getById(userId);
 		validatedUserMailService.sendMail(user.getUsername(), user.getEmail());
 		webSocketService.send("/topic/notifications/validatedUser", user.getUsername());
+	}
+
+	@Override
+	public Collection<? extends User> findAllConnected() {
+		return connectedUsersRepository.findAll();
 	}
 
 }

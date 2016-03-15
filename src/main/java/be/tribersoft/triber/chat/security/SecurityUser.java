@@ -55,4 +55,7 @@ public class SecurityUser implements UserDetails {
 		return true;
 	}
 
+	public User getUser() {
+		return user;
+	}
 }

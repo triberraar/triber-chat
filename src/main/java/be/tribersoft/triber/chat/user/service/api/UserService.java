@@ -1,5 +1,6 @@
 package be.tribersoft.triber.chat.user.service.api;
 
+import java.util.Collection;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
@@ -16,5 +17,7 @@ public interface UserService {
 	void activate(String userId, String password);
 
 	void validate(String userId);
+
+	Collection<? extends User> findAllConnected();
 
 }

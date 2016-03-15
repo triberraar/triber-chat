@@ -114,4 +114,9 @@ public class UserEntity implements User {
 	public boolean isActivated() {
 		return activated;
 	}
+
+	@Override
+	public String getUsernameLowerCase() {
+		return username.toLowerCase();
+	}
 }
