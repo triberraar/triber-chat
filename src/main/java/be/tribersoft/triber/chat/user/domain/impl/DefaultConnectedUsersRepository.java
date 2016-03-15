@@ -1,8 +1,11 @@
 package be.tribersoft.triber.chat.user.domain.impl;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 import javax.inject.Named;
 
@@ -12,21 +15,31 @@ import be.tribersoft.triber.chat.user.domain.api.User;
 @Named
 public class DefaultConnectedUsersRepository implements ConnectedUsersRepository {
 
-	private Map<String, User> concurrentUsers = new ConcurrentHashMap<>();
+	private Map<String, List<User>> concurrentUsers = new ConcurrentHashMap<>();
 
 	@Override
-	public void addUser(User user) {
-		concurrentUsers.put(user.getId(), user);
+	public synchronized void addUser(User user) {
+		if (concurrentUsers.containsKey(user.getId())) {
+			concurrentUsers.get(user.getId()).add(user);
+		} else {
+			List<User> UserInstances = new ArrayList<>();
+			UserInstances.add(user);
+			concurrentUsers.put(user.getId(), UserInstances);
+		}
 	}
 
 	@Override
-	public void removeUser(User user) {
-		concurrentUsers.remove(user.getId());
+	public synchronized void removeUser(User user) {
+		concurrentUsers.get(user.getId()).remove(0);
+		if (concurrentUsers.get(user.getId()).isEmpty()) {
+			concurrentUsers.remove(user.getId());
+		}
 	}
 
 	@Override
-	public Collection<User> findAll() {
-		return concurrentUsers.values();
+	public synchronized List<User> findAll() {
+		Comparator<User> comparator = Comparator.comparing(User::getUsernameLowerCase);
+		return concurrentUsers.values().stream().map(users -> users.get(0)).sorted(comparator).collect(Collectors.toList());
 	}
 
 }

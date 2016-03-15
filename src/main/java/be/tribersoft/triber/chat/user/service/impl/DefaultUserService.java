@@ -1,6 +1,6 @@
 package be.tribersoft.triber.chat.user.service.impl;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
@@ -55,11 +55,11 @@ public class DefaultUserService implements UserService {
 		userFacade.validate(userId);
 		User user = userRepository.getById(userId);
 		validatedUserMailService.sendMail(user.getUsername(), user.getEmail());
-		webSocketService.send("/topic/notifications/validatedUser", user.getUsername());
+		webSocketService.send("/topic/notifications/validatedUser", user);
 	}
 
 	@Override
-	public Collection<? extends User> findAllConnected() {
+	public List<? extends User> findAllConnected() {
 		return connectedUsersRepository.findAll();
 	}
 

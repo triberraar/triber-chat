@@ -1,6 +1,6 @@
 package be.tribersoft.triber.chat.user.domain.api;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface ConnectedUsersRepository {
 
@@ -8,6 +8,6 @@ public interface ConnectedUsersRepository {
 
 	void removeUser(User user);
 
-	Collection<User> findAll();
+	List<User> findAll();
 
 }

@@ -28,7 +28,9 @@ angular.module('websocket', ['jwt'])
 	}
 	
 	websocket.broadcast = function(eventName, content) {
-		$rootScope.$emit(eventName, content);
+		$rootScope.$apply(function() {
+			$rootScope.$emit(eventName, angular.fromJson(content));
+		});
 	}
 	
 	websocket.subscribe = function(channel, eventName) {
