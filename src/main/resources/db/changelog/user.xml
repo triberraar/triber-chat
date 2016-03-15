@@ -57,14 +57,30 @@
     		<column name="activated" value="true"></column>
     		<column name="validated" value="true"></column>
     	</insert>
+    	<insert tableName="triber_user">
+    		<column name="id" value="3"></column>
+    		<column name="version" value="0"></column>
+    		<column name="password" value="$2a$10$MENm5lVP/GPtt8tGievarO.3hvk7Ofao6aK45F6oD6CTEWj03ebvO"></column>
+    		<column name="username" value="unvalidated"></column>
+    		<column name="email" value="unvalidated@user.com"></column>
+    		<column name="activated" value="true"></column>
+    		<column name="validated" value="false"></column>
+    	</insert>
     	<insert tableName="user_entity_roles">
     		<column name="user_entity_id" value="1"></column>
-    		<column name="roles" value="ADMIN"></column>
-    		<column name="roles" value="USER"></column>
+    		<column name="roles" value="ROLE_ADMIN"></column>
+    	</insert>
+    	<insert tableName="user_entity_roles">
+    		<column name="user_entity_id" value="1"></column>
+    		<column name="roles" value="ROLE_USER"></column>
     	</insert>
     	<insert tableName="user_entity_roles">
     		<column name="user_entity_id" value="2"></column>
-    		<column name="roles" value="USER"></column>
+    		<column name="roles" value="ROLE_USER"></column>
+    	</insert>
+    	<insert tableName="user_entity_roles">
+    		<column name="user_entity_id" value="3"></column>
+    		<column name="roles" value="ROLE_USER"></column>
     	</insert>
     </changeSet>
 

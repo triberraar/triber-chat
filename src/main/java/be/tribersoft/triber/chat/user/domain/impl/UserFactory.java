@@ -15,6 +15,6 @@ public class UserFactory {
 
 	public UserEntity create(UserMessage userMessage) {
 		String password = new BCryptPasswordEncoder().encode(userMessage.getPassword());
-		return new UserEntity(userMessage.getUsername(), password, userMessage.getEmail(), new HashSet<>(Arrays.asList(Role.USER)));
+		return new UserEntity(userMessage.getUsername(), password, userMessage.getEmail(), new HashSet<>(Arrays.asList(Role.ROLE_USER)));
 	}
 }

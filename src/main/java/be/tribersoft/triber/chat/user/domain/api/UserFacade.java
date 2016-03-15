@@ -7,4 +7,6 @@ public interface UserFacade {
 	void activate(String id, String password);
 
 	void changePassword(String id, String password);
+
+	void validate(String id);
 }

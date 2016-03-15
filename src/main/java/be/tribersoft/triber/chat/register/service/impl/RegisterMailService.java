@@ -34,7 +34,6 @@ public class RegisterMailService {
 				message.setFrom("triber.chat@gmail.com");
 				message.setSubject("Triber chat: activate account");
 				Map<String, Object> model = new HashMap<>();
-				model.put("email", email);
 				model.put("username", username);
 				model.put("activationLink", serverAddress + "/#/activate-registration/" + userId);
 				String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/activate-registration.vm", "UTF-8", model);

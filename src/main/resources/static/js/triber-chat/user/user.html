@@ -1,0 +1,49 @@
+<has-permission permission="ROLE_ADMIN">
+	<div class="ibox-title">
+		<h3>Users</h3>
+	</div>
+	<div class="ibox-content">
+			<form class="form-horizontal" ng-submit="userCtrl.loadData()">
+				<div class="form-group">
+					<label class="col-sm-1 control-label">Username</label>
+					<div class="col-sm-2"><input type="text" class="form-control" ng-model="userCtrl.username"></div>
+					<label class="col-sm-1 control-label">Email</label>
+					<div class="col-sm-2"><input type="text" class="form-control" ng-model="userCtrl.email"></div>
+					<label  class="col-sm-1 control-label">Activated</label>
+					<div class="col-sm-1"><input type="checkbox" class="col-sm-2 js-switch" ui-switch checked ng-model="userCtrl.activated"/></div>
+					<label  class="col-sm-1 control-label">Validated</label>
+					<div class="col-sm-1"><input type="checkbox" class="col-sm-2 js-switch" ui-switch checked ng-model="userCtrl.validated"/></div>
+					<div class="col-sm-1">
+						<button class="btn btn-primary" type="submit">Search</button>
+					</div>
+				</div>
+			</form>
+		
+		<div ng-if="userCtrl.users.length > 0">
+	    	<table class="table table-hover" >
+		        <thead>
+		        <tr>
+		            <th>Username</th>
+		            <th>Email</th>
+		            <th>Activated</th>
+		            <th>Validated</th>
+		            <th>Validate</th>
+		        </tr>
+		        </thead>
+		        <tbody>
+		        <tr ng-repeat="user in userCtrl.users">
+		        	<td>{{user.username}}</td>
+		        	<td>{{user.email}}</td>
+		        	<td><span class=label ng-class="user.activated ? 'label-primary' : 'label-danger'"><i class="fa" ng-class="user.activated ? 'fa-check' : 'fa-times'"></i> {{user.activated ? 'Activated' : 'Not activated'}}</td>
+		        	<td><span class="label" ng-class="user.validated ? 'label-primary' : 'label-danger'"><i class="fa" ng-class="user.validated ? 'fa-check' : 'fa-times'"></i> {{user.validated ? 'Validated' : 'Not validated'}}</td>
+		        	<td><a ng-if="!user.validated" class="badge badge-primary" ng-click="userCtrl.validate(user)" ng-class="{disabled: userCtrl.validating}"><i ng-if="userCtrl.validating" class="fa fa-circle-o-notch fa-spin"></i> Validate</a></td>
+		        </tr>
+		        </tbody>
+		    </table>
+		    <span>
+		    	<paging total-elements="userCtrl.totalElements" on-page-change="userCtrl.loadData()" current-page="userCtrl.currentPage" items-per-page="userCtrl.itemsPerPage"></paging>
+		    </span>
+	    </div>
+	    <no-results render="userCtrl.users.length == 0"></no-results>
+	</div>
+</has-permission>
