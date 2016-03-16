@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('generalChat', ['errorService'])
+angular.module('generalChat', ['errorService', '_'])
 .factory('ConnectedUsersResource', function($resource) {
 	return $resource('/user/connected', {}, {
 		all : {
@@ -9,7 +9,7 @@ angular.module('generalChat', ['errorService'])
 		}
 	});
 })
-.controller('GeneralChatController', function($rootScope, ConnectedUsersResource,ErrorService) {
+.controller('GeneralChatController', function($rootScope, _, ConnectedUsersResource,ErrorService, Websocket) {
 	var vm = this;
 	
 	vm.loadData = function() {
@@ -18,6 +18,17 @@ angular.module('generalChat', ['errorService'])
 		},function() {
 			ErrorService.error('Couldn\'t load connected users.')
 		});
+	}
+	
+	vm.connected = function() {
+		return Websocket.connected();
+	}
+	
+	vm.say = function() {
+		if( vm.message != undefined && vm.message.trim() != "") {
+			Websocket.send('/app/chat/general', {message: vm.message});
+			vm.message=undefined;
+		}
 	}
 	
 	$rootScope.$on('connectedUser', function(event, message) {
@@ -30,9 +41,14 @@ angular.module('generalChat', ['errorService'])
 	$rootScope.$on('connected', function(event, args) {
 		vm.loadData();
 	});
+	$rootScope.$on('chatGeneral', function(event, args) {
+		vm.messages.push(args);
+		vm.messages = _.takeRight(vm.messages, 10);
+	});
 	
 	vm.init = function() {
 		vm.loadData();
+		vm.messages = [];
 	};
 	
 	vm.init();
@@ -40,4 +56,5 @@ angular.module('generalChat', ['errorService'])
 .run(function(Websocket) {
 	Websocket.subscribe('/topic/user/connected', 'connectedUser');
 	Websocket.subscribe('/topic/user/disconnected', 'disconnectedUser');
+	Websocket.subscribe('/topic/chat/general', 'chatGeneral');
 });

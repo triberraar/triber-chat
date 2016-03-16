@@ -17,21 +17,13 @@
 
 	                    <div class="col-md-9 ">
 	                        <div class="chat-discussion">
-	                            <div class="chat-message left">
+	                        <div ng-repeat="message in generalChatCtrl.messages">
+	                            <div class="chat-message " ng-class-even="'left'" ng-class-odd="'right'">
 	                                <div class="message">
-	                                    <a class="message-author" href="#"> User1 </a>
-	                                    <span class="message-date"> Mon Jan 26 2015 - 18:39:23 </span>
+	                                    <a class="message-author" > {{message.username}} </a>
+	                                    <span class="message-date"> {{message.timestamp | date:'d/M/yyyy H:mm:ss'}} </span>
 	                                        <span class="message-content">
-								Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-	                                        </span>
-	                                </div>
-	                            </div>
-	                            <div class="chat-message right">
-	                                <div class="message">
-	                                    <a class="message-author" href="#"> User2 </a>
-	                                    <span class="message-date">  Fri Jan 25 2015 - 11:12:36 </span>
-	                                        <span class="message-content">
-								Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover.
+												{{message.message}}
 	                                        </span>
 	                                </div>
 	                            </div>
@@ -44,8 +36,8 @@
                             <div class="chat-message-form">
                                 <div class="form-group">
                                 	<div class="input-group">
-                                		<input type="text" class="form-control"> 
-                                		<span class="input-group-btn"> <button type="button" class="btn btn-primary">Say!</button> </span>
+                                		<input type="text" class="form-control" ng-model="generalChatCtrl.message"> 
+                                		<span class="input-group-btn"> <button type="button" class="btn btn-primary" ng-disabled="!generalChatCtrl.connected()" ng-click="generalChatCtrl.say()">Say!</button> </span>
                                 	</div>
                                 </div>
                             </div>

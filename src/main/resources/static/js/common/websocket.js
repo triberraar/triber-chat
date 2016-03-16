@@ -47,20 +47,12 @@ angular.module('websocket', ['jwt'])
 		return websocket.stomp && websocket.stomp.connected;
 	}
 	
-//	websocket.send = function(channel, message) {
-//		if(connected) {
-//			websocket.stomp.send(channel, {}, message);
-//			return;
-//		}
-//		sendInterval = $interval(function() {
-//			console.log('send timeout');
-//			if(connected) {
-//				websocket.stomp.send(channel, {}, message);
-//				$interval.cancel(sendInterval);
-//				sendInterval = null;
-//			}
-//		}, 100);
-//	}
+	websocket.send = function(channel, message) {
+		if(websocket.connected) {
+			websocket.stomp.send(channel, {}, angular.toJson(message));
+			return;
+		}
+	}
 	
 	return websocket;
 });
