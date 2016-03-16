@@ -18,6 +18,7 @@ var dependencies = [
                      'websocket',
                      'menu',
                      'notificationService',
+                     'autoscroll',
                      ];
 
 angular.module('triber-chat', dependencies)
