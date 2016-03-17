@@ -6,4 +6,5 @@ before_script:
   - pip install --user codecov
 before_script:
   - npm install
+  
 script: mvn verify
