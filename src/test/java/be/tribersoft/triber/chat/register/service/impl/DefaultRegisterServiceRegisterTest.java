@@ -10,6 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import be.tribersoft.triber.chat.common.WebSocketService;
 import be.tribersoft.triber.chat.user.domain.api.User;
 import be.tribersoft.triber.chat.user.domain.api.UserFacade;
 import be.tribersoft.triber.chat.user.domain.api.UserMessage;
@@ -32,6 +33,8 @@ public class DefaultRegisterServiceRegisterTest {
 	private UserMessage userMessage;
 	@Mock
 	private User user;
+	@Mock
+	private WebSocketService webSocketService;
 
 	@Before
 	public void setUp() {
@@ -47,5 +50,6 @@ public class DefaultRegisterServiceRegisterTest {
 
 		verify(userFacade).register(userMessage);
 		verify(registerMailService).sendMail(USERNAME, ID, EMAIL);
+		verify(webSocketService).send("/topic/notifications/registeredUser", user);
 	}
 }
