@@ -4,11 +4,12 @@ notifications:
     email: false
 before_script:
   - pip install --user codecov
+  
 before_script:
   - npm install
   
 script: mvn verify
 
 after_success:
-  - mvn clean cobertura:cobertura coveralls:report
+  - codecov
   
