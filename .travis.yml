@@ -10,5 +10,5 @@ before_script:
 script: mvn verify
 
 after_success:
-  - mvn cobertura:cobertura coveralls:report
+  - mvn clean cobertura:cobertura coveralls:report
   
