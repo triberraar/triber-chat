@@ -4,10 +4,6 @@ public class UserFromJson {
 	private String username;
 	private String password;
 
-	public UserFromJson() {
-
-	}
-
 	public String getUsername() {
 		return username;
 	}

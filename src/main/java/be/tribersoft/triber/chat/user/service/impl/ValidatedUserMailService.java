@@ -8,7 +8,6 @@ import javax.inject.Named;
 import javax.mail.internet.MimeMessage;
 
 import org.apache.velocity.app.VelocityEngine;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
@@ -21,8 +20,6 @@ public class ValidatedUserMailService {
 	private JavaMailSender mailSender;
 	@Inject
 	private VelocityEngine velocityEngine;
-	@Value("${mail.sender.server.address}")
-	private String serverAddress;
 
 	public void sendMail(String username, String email) {
 
