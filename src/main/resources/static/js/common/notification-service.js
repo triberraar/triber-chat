@@ -1,6 +1,6 @@
 'user strict'
 
-angular.module('notificationService', ['websocket'])
+angular.module('notificationService', ['websocket', 'securityService'])
 .factory('UnvalidatedUserResource', function($resource) {
 		return $resource('/user/unvalidated', {}, {
 			existsUnvalidated : {
@@ -8,12 +8,14 @@ angular.module('notificationService', ['websocket'])
 			}
 		});
 	})
-.factory('NotificationService', function(UnvalidatedUserResource, Websocket, $rootScope) {
+.factory('NotificationService', function(UnvalidatedUserResource, Websocket, $rootScope,SecurityService) {
 	var notifications = {};
 	var numberOfNotifications = 0;
 	
-	Websocket.subscribe('/topic/notifications/registeredUser', 'registeredUser');
-	Websocket.subscribe('/topic/notifications/validatedUser', 'validatedUser');
+	if(SecurityService.hasRole('ROLE_ADMIN')) {
+		Websocket.subscribe('/topic/notifications/registeredUser', 'registeredUser');
+		Websocket.subscribe('/topic/notifications/validatedUser', 'validatedUser');
+	}
 	
 	$rootScope.$on('registeredUser', function(event, args) {
 		notificationService.checkUnvalidatedUsers();

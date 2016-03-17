@@ -55,4 +55,9 @@ public class UserController {
 	public void validate(@PathVariable("userId") String userId) {
 		userService.validate(userId);
 	}
+
+	@RequestMapping(value = "/connected", method = RequestMethod.GET, produces = "application/json")
+	public List<UserToJsonAdapter> allConnected() {
+		return userService.findAllConnected().stream().map(user -> new UserToJsonAdapter(user)).collect(Collectors.toList());
+	}
 }

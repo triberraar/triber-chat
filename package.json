@@ -2,7 +2,6 @@
   "name": "java-grunt",
   "description": "file to have heroku run bower aswell",
   "dependencies": {
-    "angular-recaptcha": "^2.2.5",
     "bower": "1.7.6"
   },
   "scripts": {

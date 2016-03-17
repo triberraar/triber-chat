@@ -25,7 +25,9 @@ angular.module('menu', ['securityService', '_', 'notificationService', 'websocke
 		}
 
 		vm.init = function() {
-			NotificationService.checkUnvalidatedUsers();
+			if(SecurityService.hasRole('ROLE_ADMIN')) {
+				NotificationService.checkUnvalidatedUsers();
+			}
 		}
 		
 		vm.connected = function() {

@@ -15,6 +15,8 @@ public interface User extends UserMessage {
 	@Override
 	String getUsername();
 
+	String getUsernameLowerCase();
+
 	@Override
 	String getEmail();
 
