@@ -25,9 +25,9 @@ angular.module('generalChat', ['errorService', '_'])
 	}
 	
 	vm.say = function() {
-		if( vm.message != undefined && vm.message.trim() != "") {
-			Websocket.send('/app/chat/general', {message: vm.message});
-			vm.message=undefined;
+		if( vm.content != undefined && vm.content.trim() != "" && vm.messageForm.$valid) {
+			Websocket.send('/app/message/general', {content: vm.content});
+			vm.content=undefined;
 		}
 	}
 	
@@ -41,7 +41,7 @@ angular.module('generalChat', ['errorService', '_'])
 	$rootScope.$on('connected', function(event, args) {
 		vm.loadData();
 	});
-	$rootScope.$on('chatGeneral', function(event, args) {
+	$rootScope.$on('messageGeneral', function(event, args) {
 		vm.messages.push(args);
 		vm.messages = _.takeRight(vm.messages, 10);
 	});
@@ -56,5 +56,5 @@ angular.module('generalChat', ['errorService', '_'])
 .run(function(Websocket) {
 	Websocket.subscribe('/topic/user/connected', 'connectedUser');
 	Websocket.subscribe('/topic/user/disconnected', 'disconnectedUser');
-	Websocket.subscribe('/topic/chat/general', 'chatGeneral');
+	Websocket.subscribe('/topic/message/general', 'messageGeneral');
 });
