@@ -5,9 +5,9 @@ angular.module('autoscroll', [])
 	return {
 		link: function(scope, element, attr) {
 			scope.$watch(function() {
-				return document.getElementById(attr.elementToScroll).scrollHeight;
+				return document.getElementById(attr.elementToScroll).scrollHeight; // eslint-disable-line
 			}, function() {
-				var scroller = document.getElementById(attr.elementToScroll);
+				var scroller = document.getElementById(attr.elementToScroll); // eslint-disable-line
 			      scroller.scrollTop = scroller.scrollHeight;
 			})
 		}

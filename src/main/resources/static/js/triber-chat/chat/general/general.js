@@ -9,7 +9,7 @@ angular.module('generalChat', ['errorService', '_'])
 		}
 	});
 })
-.controller('GeneralChatController', function($rootScope, _, ConnectedUsersResource,ErrorService, Websocket) {
+.controller('GeneralChatController', function($rootScope, $scope, _, ConnectedUsersResource,ErrorService, Websocket) {
 	var vm = this;
 	
 	vm.loadData = function() {
@@ -25,26 +25,33 @@ angular.module('generalChat', ['errorService', '_'])
 	}
 	
 	vm.say = function() {
-		if( vm.content != undefined && vm.content.trim() != "" && vm.messageForm.$valid) {
+		if( angular.isDefined( vm.content) && vm.content.trim() != '' && vm.messageForm.$valid) {
 			Websocket.send('/app/message/general', {content: vm.content});
 			vm.content=undefined;
 		}
 	}
 	
-	$rootScope.$on('connectedUser', function(event, message) {
+	vm.connectedUserBroadcast = $rootScope.$on('connectedUser', function(event, message) {
 		vm.loadData();
 	});
-	$rootScope.$on('disconnectedUser', function(event, message) {
+	vm.disconnectedUserBroadcast = $rootScope.$on('disconnectedUser', function(event, message) {
 		vm.loadData();
 	});
 		
-	$rootScope.$on('connected', function(event, args) {
+	vm.connectedBroadcast = $rootScope.$on('connected', function(event, args) {
 		vm.loadData();
 	});
-	$rootScope.$on('messageGeneral', function(event, args) {
+	vm.generalMessageBroadcast = $rootScope.$on('messageGeneral', function(event, args) {
 		vm.messages.push(args);
 		vm.messages = _.takeRight(vm.messages, 10);
 	});
+	
+	$scope.$on('$destroy', function() {
+		vm.connectedUserBroadcast();
+		vm.disconnectedUserBroadcast();
+		vm.connectedBroadcast();
+		vm.generalMessageBroadcast();
+	})
 	
 	vm.init = function() {
 		vm.loadData();

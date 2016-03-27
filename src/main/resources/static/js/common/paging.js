@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 angular.module('paging', [])
 .directive('paging', function() {
@@ -19,7 +19,7 @@ angular.module('paging', [])
 	
 	vm.maxSize = 5;
 	
-	$scope.$watch(angular.bind(this, function() {
+	$scope.$watch(angular.bind(vm, function() {
 		return vm.currentPage;
 	}), function() {
 		vm.onPageChange();

@@ -1,4 +1,4 @@
-'user strict'
+'user strict';
 
 angular.module('notificationService', ['websocket', 'securityService'])
 .factory('UnvalidatedUserResource', function($resource) {
