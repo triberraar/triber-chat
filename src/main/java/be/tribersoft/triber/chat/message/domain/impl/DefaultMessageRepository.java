@@ -9,7 +9,7 @@ public class DefaultMessageRepository {
 	@Inject
 	private MessageJpaRepository messageJpaRepository;
 
-	public void create(MessageEntity messageEntity) {
+	public void save(AbstractMessageEntity messageEntity) {
 		messageJpaRepository.save(messageEntity);
 	}
 }

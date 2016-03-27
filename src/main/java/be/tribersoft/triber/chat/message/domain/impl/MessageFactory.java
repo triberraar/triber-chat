@@ -5,7 +5,7 @@ import javax.inject.Named;
 @Named
 public class MessageFactory {
 
-	public MessageEntity createPublic(String ownerUsername, String content) {
-		return new MessageEntity(ownerUsername, content, true);
+	public PublicMessageEntity createPublic(String ownerUsername, String content) {
+		return new PublicMessageEntity(ownerUsername, content);
 	}
 }
