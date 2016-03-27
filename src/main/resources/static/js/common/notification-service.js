@@ -17,13 +17,13 @@ angular.module('notificationService', ['websocket', 'securityService'])
 		Websocket.subscribe('/topic/notifications/validatedUser', 'validatedUser');
 	}
 	
-	$rootScope.$on('registeredUser', function(event, args) {
+	var registeredUserBroadcast = $rootScope.$on('registeredUser', function(event, args) {
 		notificationService.checkUnvalidatedUsers();
 	});
-	$rootScope.$on('validatedUser', function(event, args) {
+	var validatedUserBroadcast = $rootScope.$on('validatedUser', function(event, args) {
 		notificationService.checkUnvalidatedUsers();
 	});
-	$rootScope.$on('connected', function(event, args) {
+	var conntectedBroadcast = $rootScope.$on('connected', function(event, args) {
 		notificationService.checkUnvalidatedUsers();
 	});
 	
