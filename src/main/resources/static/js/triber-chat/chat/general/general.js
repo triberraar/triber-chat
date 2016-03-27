@@ -9,16 +9,59 @@ angular.module('generalChat', ['errorService', '_'])
 		}
 	});
 })
-.controller('GeneralChatController', function($rootScope, $scope, _, ConnectedUsersResource,ErrorService, Websocket) {
-	var vm = this;
+.factory('GeneralChatService', function($rootScope, _, Websocket) {
+	var messages = [];
 	
-	vm.loadData = function() {
+	var generalMessageBroadcast = $rootScope.$on('messageGeneral', function(event, args) {
+		messages.push(args);
+		messages = _.takeRight(messages, 10);
+	});
+	
+	var generalChatService = {
+		getMessages: function() {
+			return messages
+		},
+		sendMessage: function(message) {
+			Websocket.send('/app/message/general', message);
+		}
+	}
+	
+	return generalChatService;
+	
+})
+.factory('ConnectedUserService', function($rootScope, ConnectedUsersResource, ErrorService) {
+	var users = [];
+	var loadData = function() {
 		ConnectedUsersResource.all().$promise.then(function(data) {
-			vm.users = data;
+			users = data;
 		},function() {
 			ErrorService.error('Couldn\'t load connected users.')
 		});
 	}
+	
+	var connectedUserBroadcast = $rootScope.$on('connectedUser', function(event, message) {
+		loadData();
+	});
+	var disconnectedUserBroadcast = $rootScope.$on('disconnectedUser', function(event, message) {
+		loadData();
+	});
+		
+	var connectedBroadcast = $rootScope.$on('connected', function(event, args) {
+		loadData();
+	});
+
+	loadData();
+	
+	var connectedUserService = {
+		getUsers: function() {
+			return users;
+		}
+	}
+	
+	return connectedUserService;
+})
+.controller('GeneralChatController', function($rootScope, _, ConnectedUsersResource,ErrorService, Websocket, GeneralChatService, ConnectedUserService) {
+	var vm = this;
 	
 	vm.connected = function() {
 		return Websocket.connected();
@@ -26,39 +69,18 @@ angular.module('generalChat', ['errorService', '_'])
 	
 	vm.say = function() {
 		if( angular.isDefined( vm.content) && vm.content.trim() != '' && vm.messageForm.$valid) {
-			Websocket.send('/app/message/general', {content: vm.content});
+			GeneralChatService.sendMessage({content: vm.content});
 			vm.content=undefined;
 		}
 	}
 	
-	vm.connectedUserBroadcast = $rootScope.$on('connectedUser', function(event, message) {
-		vm.loadData();
-	});
-	vm.disconnectedUserBroadcast = $rootScope.$on('disconnectedUser', function(event, message) {
-		vm.loadData();
-	});
-		
-	vm.connectedBroadcast = $rootScope.$on('connected', function(event, args) {
-		vm.loadData();
-	});
-	vm.generalMessageBroadcast = $rootScope.$on('messageGeneral', function(event, args) {
-		vm.messages.push(args);
-		vm.messages = _.takeRight(vm.messages, 10);
-	});
+	vm.messages = function() {
+		return GeneralChatService.getMessages();
+	}
 	
-	$scope.$on('$destroy', function() {
-		vm.connectedUserBroadcast();
-		vm.disconnectedUserBroadcast();
-		vm.connectedBroadcast();
-		vm.generalMessageBroadcast();
-	})
-	
-	vm.init = function() {
-		vm.loadData();
-		vm.messages = [];
-	};
-	
-	vm.init();
+	vm.users = function() {
+		return ConnectedUserService.getUsers();
+	}
 })
 .run(function(Websocket) {
 	Websocket.subscribe('/topic/user/connected', 'connectedUser');
