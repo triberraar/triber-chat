@@ -43,7 +43,7 @@ angular.module('register', ['vcRecaptcha', jsFiles])
 			if(data.data.errors) {
 				angular.forEach(data.data.errors, function(error) {
 					toasterBody = toasterBody || '';
-					toasterBody = toasterBody + error + "<br>";
+					toasterBody = toasterBody + error + '<br>';
 				});
 			} 
 			ErrorService.error(toasterBody);

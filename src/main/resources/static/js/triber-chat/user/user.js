@@ -18,13 +18,13 @@ angular.module('User', [jsFiles])
 		}
 	});
 })
-.controller('UserController', function($rootScope, UserResource, ErrorService, SuccessService) {
+.controller('UserController', function($rootScope, $scope, UserResource, ErrorService, SuccessService) {
 	var vm = this;
 	
-	$rootScope.$on('registeredUser', function(event, args) {
+	vm.registeredUserBroadcast = $rootScope.$on('registeredUser', function(event, args) {
 		vm.loadData();
 	});
-	$rootScope.$on('validatedUser', function(event, args) {
+	vm.validatedUserBroadcast = $rootScope.$on('validatedUser', function(event, args) {
 		vm.loadData();
 	});
 	
@@ -65,5 +65,10 @@ angular.module('User', [jsFiles])
 	}
 	
 	vm.init();
+	
+	$scope.$on('$destroy', function() {
+		vm.registeredUserBroadcast();
+		vm.validatedUserBroadcast();
+	})
 	
 });
