@@ -34,8 +34,8 @@ public class UserEntityValidationTest {
 
 		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
 		assertThat(violations).hasSize(2);
-		assertViolationsContains(violations, "user.validation.username.empty");
-		assertViolationsContains(violations, "user.validation.username.length");
+		assertThat(assertViolationsContains(violations, "user.validation.username.empty")).isTrue();
+		assertThat(assertViolationsContains(violations, "user.validation.username.length")).isTrue();
 	}
 
 	@Test
@@ -63,8 +63,8 @@ public class UserEntityValidationTest {
 
 		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
 		assertThat(violations).hasSize(2);
-		assertViolationsContains(violations, "user.validation.password.empty");
-		assertViolationsContains(violations, "user.validation.password.length");
+		assertThat(assertViolationsContains(violations, "user.validation.password.empty")).isTrue();
+		assertThat(assertViolationsContains(violations, "user.validation.password.length")).isTrue();
 	}
 
 	@Test

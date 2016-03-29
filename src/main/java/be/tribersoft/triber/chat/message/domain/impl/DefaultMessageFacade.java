@@ -13,8 +13,8 @@ public class DefaultMessageFacade implements MessageFacade {
 	private DefaultMessageRepository defaultMessageRepository;
 
 	@Override
-	public PublicMessageEntity createPublic(String ownerId, String content) {
-		PublicMessageEntity messageEntity = messageFactory.createPublic(ownerId, content);
+	public PublicMessageEntity createPublic(String ownerUsername, String content) {
+		PublicMessageEntity messageEntity = messageFactory.createPublic(ownerUsername, content);
 		defaultMessageRepository.save(messageEntity);
 		return messageEntity;
 	}

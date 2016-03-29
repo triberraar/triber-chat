@@ -14,7 +14,6 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import be.tribersoft.triber.chat.common.DateFactory;
 import be.tribersoft.triber.chat.common.jpa.CryptoConverter;
@@ -33,12 +32,11 @@ public abstract class AbstractMessageEntity implements Message {
 	@Column(nullable = false)
 	private Long version;
 
-	@NotEmpty(message = "message.validation.owner.empty")
+	@Column(nullable = false)
 	protected String ownerUsername;
 
-	@NotEmpty(message = "message.validation.content.empty")
 	@Convert(converter = CryptoConverter.class)
-	@Column(length = 1)
+	@Column(length = 2048, nullable = false)
 	protected String content;
 
 	@Column(nullable = false)
