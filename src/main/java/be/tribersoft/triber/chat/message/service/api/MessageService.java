@@ -4,6 +4,6 @@ import be.tribersoft.triber.chat.message.domain.api.Message;
 
 public interface MessageService {
 
-	Message create(String ownerUsername, String content);
+	Message createPublic(String ownerUsername, String content);
 
 }

@@ -16,7 +16,7 @@ public class DefaultMessageService implements MessageService {
 	private MessageFacade messageFacade;
 
 	@Override
-	public Message create(String ownerUsername, String content) {
+	public Message createPublic(String ownerUsername, String content) {
 		return messageFacade.createPublic(ownerUsername, content);
 	}
 }

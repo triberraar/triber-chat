@@ -18,7 +18,7 @@ public class MessageController {
 
 	@MessageMapping("/message/general")
 	public MessageToJsonAdapter generalChat(MessageFromJsonAdapter inputMessage, Principal principal) {
-		Message message = messageService.create(principal.getName(), inputMessage.getContent());
+		Message message = messageService.createPublic(principal.getName(), inputMessage.getContent());
 		return new MessageToJsonAdapter(message);
 	}
 }
