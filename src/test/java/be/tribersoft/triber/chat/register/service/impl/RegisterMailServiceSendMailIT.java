@@ -26,7 +26,7 @@ import be.tribersoft.triber.chat.common.MailAssertions;
 @SpringApplicationConfiguration(classes = Application.class)
 @WebAppConfiguration
 @TestPropertySource(value = "classpath:/application-test.properties")
-public class RegisterMailServiceSendMailTest {
+public class RegisterMailServiceSendMailIT {
 
 	private Wiser wiser;
 
