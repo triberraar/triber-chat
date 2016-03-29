@@ -28,6 +28,9 @@
 		<commons.lang3.version>3.4</commons.lang3.version>
 		<cobertura.plugin.version>2.7</cobertura.plugin.version>
 		<coveralls.plugin.version>3.2.0</coveralls.plugin.version>
+		<querydsl.version>3.7.2</querydsl.version>
+		<subethamail.version>3.1.7</subethamail.version>
+		<commons.io.version>2.4</commons.io.version>
 	</properties>
 
 	<dependencies>
@@ -139,14 +142,33 @@
 		<dependency>
 			<groupId>com.mysema.querydsl</groupId>
 			<artifactId>querydsl-apt</artifactId>
-			<version>3.7.2</version>
+			<version>${querydsl.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>com.mysema.querydsl</groupId>
 			<artifactId>querydsl-jpa</artifactId>
-			<version>3.7.2</version>
+			<version>${querydsl.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.subethamail</groupId>
+			<artifactId>subethasmtp</artifactId>
+			<version>${subethamail.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${commons.io.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.scala-lang</groupId>
+			<artifactId>scala-library</artifactId>
+			<version>2.11.0</version>
 		</dependency>
 	</dependencies>
 
@@ -191,24 +213,24 @@
 				</executions>
 			</plugin>
 			<plugin>
-  <groupId>org.jacoco</groupId>
-  <artifactId>jacoco-maven-plugin</artifactId>
-  <version>0.7.6.201602180812</version>
-  <executions>
-    <execution>
-      <goals>
-        <goal>prepare-agent</goal>
-      </goals>
-    </execution>
-    <execution>
-      <id>report</id>
-      <phase>test</phase>
-      <goals>
-        <goal>report</goal>
-      </goals>
-    </execution>
-  </executions>
-</plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.7.6.201602180812</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.eluder.coveralls</groupId>
 				<artifactId>coveralls-maven-plugin</artifactId>
