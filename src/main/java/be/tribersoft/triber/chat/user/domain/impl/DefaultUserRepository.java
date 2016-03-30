@@ -21,8 +21,7 @@ public class DefaultUserRepository implements UserRepository {
 	@Inject
 	private PredicateFactory predicateFactory;
 
-	@Override
-	public Optional<UserEntity> findByUsername(String username) {
+	private Optional<UserEntity> findByUsername(String username) {
 		return userJpaRepository.findByUsername(username);
 	}
 
@@ -91,6 +90,15 @@ public class DefaultUserRepository implements UserRepository {
 	@Override
 	public UserEntity getById(String id) {
 		Optional<UserEntity> user = userJpaRepository.findById(id);
+		if (!user.isPresent()) {
+			throw new UserNotFoundException();
+		}
+		return user.get();
+	}
+
+	@Override
+	public UserEntity getByUsername(String username) {
+		Optional<UserEntity> user = userJpaRepository.findByUsername(username);
 		if (!user.isPresent()) {
 			throw new UserNotFoundException();
 		}

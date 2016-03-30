@@ -21,7 +21,7 @@ public class TokenAuthenticationService {
 	private UserRepository userRepository;
 
 	public void addAuthentication(HttpServletResponse response, SecurityUserAuthentication userAuthentication) {
-		response.addHeader(HEADER_NAME, "Bearer " + tokenHandler.toToken(userRepository.findByUsername(userAuthentication.getName()).get()));
+		response.addHeader(HEADER_NAME, "Bearer " + tokenHandler.toToken(userRepository.getByUsername(userAuthentication.getName())));
 	}
 
 	public Authentication getAuthentication(HttpServletRequest request) {
