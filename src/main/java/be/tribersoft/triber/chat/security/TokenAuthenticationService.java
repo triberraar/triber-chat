@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 
 import be.tribersoft.triber.chat.user.domain.api.UserRepository;
 
@@ -33,12 +32,8 @@ public class TokenAuthenticationService {
 			token = request.getParameter("jwt");
 		}
 		if (token != null) {
-			try {
-				final SecurityUser user = tokenHandler.fromToken(token);
-				return new SecurityUserAuthentication(user);
-			} catch (AuthenticationException ae) {
-				return null;
-			}
+			final SecurityUser user = tokenHandler.fromToken(token);
+			return new SecurityUserAuthentication(user);
 		}
 		return null;
 	}
