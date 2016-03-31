@@ -57,7 +57,7 @@ public class UserEntity implements User {
 
 	public UserEntity(String username, String password, String email, Set<Role> roles) {
 		this.username = username;
-		this.password = password;
+		this.password = new BCryptPasswordEncoder().encode(password);
 		this.email = email;
 		this.roles = roles;
 		this.activated = false;
