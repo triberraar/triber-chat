@@ -15,7 +15,7 @@ public class UserEntityActivateTest {
 
 	@Test
 	public void activatesIfPasswordMatches() {
-		UserEntity user = new UserEntity("username", new BCryptPasswordEncoder().encode("password"), "email@email", new HashSet<>(Arrays.asList(Role.ROLE_ADMIN)));
+		UserEntity user = new UserEntity("username", "password", "email@email", new HashSet<>(Arrays.asList(Role.ROLE_ADMIN)));
 
 		user.activate("password");
 
