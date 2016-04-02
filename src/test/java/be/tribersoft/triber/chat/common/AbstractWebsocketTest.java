@@ -1,4 +1,4 @@
-package be.tribersoft.triber.chat.common.exception;
+package be.tribersoft.triber.chat.common;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +32,7 @@ import be.tribersoft.triber.chat.user.domain.api.UserRepository;
 @WebAppConfiguration
 @TestPropertySource(value = "classpath:/application-test.properties")
 @IntegrationTest("server.port:0")
-public class AbstractWebsocketTest {
+public abstract class AbstractWebsocketTest {
 
 	@Inject
 	private TokenHandler tokenHandler;

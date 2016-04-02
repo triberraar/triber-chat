@@ -19,9 +19,9 @@ import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
 
+import be.tribersoft.triber.chat.common.AbstractWebsocketTest;
 import be.tribersoft.triber.chat.common.DateFactory;
 import be.tribersoft.triber.chat.common.TestAbstractStompSessionHandler;
-import be.tribersoft.triber.chat.common.exception.AbstractWebsocketTest;
 import be.tribersoft.triber.chat.message.domain.impl.AbstractMessageEntity;
 import be.tribersoft.triber.chat.message.domain.impl.MessageJpaRepository;
 import be.tribersoft.triber.chat.message.domain.impl.PublicMessageEntity;
