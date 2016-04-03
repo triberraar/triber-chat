@@ -16,7 +16,7 @@ public class RestSecurityIT extends AbstractRestIT {
 
 	@Test
 	public void loggedInUserCanProceed() {
-		String jwtHeader = getJwtHeader();
+		String jwtHeader = getJwtHeader("user");
 		// @formatter:off
 		given()
 			.header(new Header("Authorization", jwtHeader))

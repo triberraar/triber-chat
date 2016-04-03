@@ -29,12 +29,12 @@ import be.tribersoft.triber.chat.user.domain.api.UserRepository;
 public abstract class AbstractRestIT {
 
 	@Value("${local.server.port}")
-	private int port;
+	protected int port;
 
 	@Inject
-	private TokenHandler tokenHandler;
+	protected TokenHandler tokenHandler;
 	@Inject
-	private UserRepository userRepository;
+	protected UserRepository userRepository;
 
 	private String jwtHeader;
 
@@ -43,7 +43,6 @@ public abstract class AbstractRestIT {
 	@Before
 	public void initialize() {
 		RestAssured.port = port;
-		jwtHeader = "Bearer " + tokenHandler.toToken(userRepository.getByUsername("user"));
 		testMailHandler = new TestMailHandler();
 	}
 
@@ -52,7 +51,8 @@ public abstract class AbstractRestIT {
 		testMailHandler.stop();
 	}
 
-	public String getJwtHeader() {
+	public String getJwtHeader(String username) {
+		jwtHeader = "Bearer " + tokenHandler.toToken(userRepository.getByUsername(username));
 		return jwtHeader;
 	}
 

@@ -14,13 +14,14 @@ import be.tribersoft.triber.chat.register.controller.ActivateRegistrationFromJso
 
 public class ExceptionHandlerIT extends AbstractRestIT {
 
+	private static final String USER = "user";
 	private static final String URL = "/test/exception/{exception}";
 
 	@Test
 	public void canNotActivateUserExceptionReturnsBadRequest() {
 		// @formatter:off
 		given()
-			.header(new Header("Authorization", getJwtHeader()))
+			.header(new Header("Authorization", getJwtHeader(USER)))
 			.pathParam("exception", "can-not-activate-user")
 		.when()
 			.get(URL)
@@ -34,7 +35,7 @@ public class ExceptionHandlerIT extends AbstractRestIT {
 	public void notFoundExceptionReturnsNotFound() {
 		// @formatter:off
 		given()
-			.header(new Header("Authorization", getJwtHeader()))
+			.header(new Header("Authorization", getJwtHeader(USER)))
 			.pathParam("exception", "not-found")
 		.when()
 			.get(URL)
@@ -48,7 +49,7 @@ public class ExceptionHandlerIT extends AbstractRestIT {
 	public void validationExceptionReturnsBadRequest() {
 		// @formatter:off
 		given()
-			.header(new Header("Authorization", getJwtHeader()))
+			.header(new Header("Authorization", getJwtHeader(USER)))
 			.pathParam("exception", "validation")
 		.when()
 			.get(URL)
@@ -63,7 +64,7 @@ public class ExceptionHandlerIT extends AbstractRestIT {
 	public void methodArgumentNotValidExceptionRetursBadRequest() {
 		// @formatter:off
 		given()
-			.header(new Header("Authorization", getJwtHeader()))
+			.header(new Header("Authorization", getJwtHeader(USER)))
 			.contentType(ContentType.JSON)
 			.pathParam("exception", "method-argument-not-valid")
 			.body(new ActivateRegistrationFromJsonAdapter())
