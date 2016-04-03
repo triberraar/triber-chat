@@ -35,7 +35,7 @@ public class MessageControllerGeneralChatIT extends AbstractWebsocketIT {
 	private MessageJpaRepository messageJpaRepository;
 
 	@Before
-	public void setup() {
+	public void setUp() {
 		DateFactory.fixate(NOW);
 	}
 

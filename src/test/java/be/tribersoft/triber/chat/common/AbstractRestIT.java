@@ -36,8 +36,6 @@ public abstract class AbstractRestIT {
 	@Inject
 	protected UserRepository userRepository;
 
-	private String jwtHeader;
-
 	private TestMailHandler testMailHandler;
 
 	@Before
@@ -52,8 +50,7 @@ public abstract class AbstractRestIT {
 	}
 
 	public String getJwtHeader(String username) {
-		jwtHeader = "Bearer " + tokenHandler.toToken(userRepository.getByUsername(username));
-		return jwtHeader;
+		return "Bearer " + tokenHandler.toToken(userRepository.getByUsername(username));
 	}
 
 	public TestMailHandler getTestMailHandler() {

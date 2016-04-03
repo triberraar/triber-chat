@@ -20,14 +20,14 @@ public class DefaultResetPasswordRepositoryDeleteTest {
 	private ResetPasswordEntity resetPasswordEntity;
 
 	@Test
-	public void delegatesToJpaRepository_one() {
+	public void delegatesToJpaRepositoryOne() {
 		defaultResetPasswordRepository.delete(resetPasswordEntity);
 
 		verify(resetPasswordJpaRepository).delete(resetPasswordEntity);
 	}
 
 	@Test
-	public void delegatesToJpaRepository_list() {
+	public void delegatesToJpaRepositoryList() {
 		defaultResetPasswordRepository.delete(Arrays.asList(resetPasswordEntity));
 
 		verify(resetPasswordJpaRepository).delete(Arrays.asList(resetPasswordEntity));

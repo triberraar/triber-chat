@@ -24,7 +24,7 @@ import org.springframework.web.socket.sockjs.client.WebSocketTransport;
 public abstract class AbstractWebsocketRestIT extends AbstractRestIT {
 
 	private StompSession stompSession;
-	final CountDownLatch latch = new CountDownLatch(1);
+	private final CountDownLatch latch = new CountDownLatch(1);
 
 	public void connectWithWebsocket(String username) throws InterruptedException {
 
