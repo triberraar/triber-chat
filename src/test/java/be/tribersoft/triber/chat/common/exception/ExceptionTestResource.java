@@ -12,7 +12,7 @@ import be.tribersoft.triber.chat.user.domain.api.CanNotActivateUserException;
 
 @RestController
 @RequestMapping("/test/exception")
-public class ExceptionResource {
+public class ExceptionTestResource {
 
 	@RequestMapping(method = RequestMethod.GET, produces = "application/json", path = "/can-not-activate-user")
 	public void throwsCanNotActivateUserException() {

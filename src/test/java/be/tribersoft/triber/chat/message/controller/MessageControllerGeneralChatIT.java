@@ -57,9 +57,8 @@ public class MessageControllerGeneralChatIT extends AbstractWebsocketTest {
 
 					@Override
 					public void handleFrame(StompHeaders headers, Object payload) {
-						MessageToJsonAdapter message = (MessageToJsonAdapter) payload;
-						System.out.println("content " + message.getContent());
 						try {
+							MessageToJsonAdapter message = (MessageToJsonAdapter) payload;
 							assertThat(message.getContent()).isEqualTo(CONTENT);
 							assertThat(message.getUsername()).isEqualTo(USERNAME);
 							assertThat(message.getTimestamp()).isEqualTo(NOW);
