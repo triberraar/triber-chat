@@ -9,10 +9,10 @@ import org.springframework.http.HttpStatus;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Header;
 
-import be.tribersoft.triber.chat.common.AbstractRestTest;
+import be.tribersoft.triber.chat.common.AbstractRestIT;
 import be.tribersoft.triber.chat.register.controller.ActivateRegistrationFromJsonAdapter;
 
-public class ExceptionHandlerIT extends AbstractRestTest {
+public class ExceptionHandlerIT extends AbstractRestIT {
 
 	private static final String URL = "/test/exception/{exception}";
 

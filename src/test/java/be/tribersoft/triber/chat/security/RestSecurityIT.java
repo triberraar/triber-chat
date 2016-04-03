@@ -8,9 +8,9 @@ import org.springframework.http.HttpStatus;
 
 import com.jayway.restassured.response.Header;
 
-import be.tribersoft.triber.chat.common.AbstractRestTest;
+import be.tribersoft.triber.chat.common.AbstractRestIT;
 
-public class RestSecurityIT extends AbstractRestTest {
+public class RestSecurityIT extends AbstractRestIT {
 
 	private static final String URL = "/test/security";
 

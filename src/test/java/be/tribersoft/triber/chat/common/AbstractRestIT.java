@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
@@ -23,7 +25,8 @@ import be.tribersoft.triber.chat.user.domain.api.UserRepository;
 @WebAppConfiguration
 @TestPropertySource(value = "classpath:/application-test.properties")
 @IntegrationTest("server.port:0")
-public class AbstractRestTest {
+@Sql(executionPhase = ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:db/clean.sql")
+public abstract class AbstractRestIT {
 
 	@Value("${local.server.port}")
 	private int port;

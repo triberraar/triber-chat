@@ -32,7 +32,7 @@ import be.tribersoft.triber.chat.user.domain.api.UserRepository;
 @WebAppConfiguration
 @TestPropertySource(value = "classpath:/application-test.properties")
 @IntegrationTest("server.port:0")
-public abstract class AbstractWebsocketTest {
+public abstract class AbstractWebsocketIT {
 
 	@Inject
 	private TokenHandler tokenHandler;

@@ -15,13 +15,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.jayway.restassured.http.ContentType;
 
-import be.tribersoft.triber.chat.common.AbstractRestTest;
+import be.tribersoft.triber.chat.common.AbstractRestIT;
 import be.tribersoft.triber.chat.common.DummyCaptchaVerificator;
 import be.tribersoft.triber.chat.user.domain.api.Role;
 import be.tribersoft.triber.chat.user.domain.impl.UserEntity;
 import be.tribersoft.triber.chat.user.domain.impl.UserJpaRepository;
 
-public class RegisterControllerIT extends AbstractRestTest {
+public class RegisterControllerIT extends AbstractRestIT {
 	private static final String USERNAME = "username";
 	private static final String PASSWORD = "password";
 	private static final String EMAIL = "email@email";
@@ -34,7 +34,7 @@ public class RegisterControllerIT extends AbstractRestTest {
 	private UserJpaRepository userJpaRepository;
 
 	@Test
-	public void canNotActivateUserExceptionReturnsBadRequest() {
+	public void registersUser() {
 		// @formatter:off
 		given()
 			.body(new TestFromJsonAdapter())
