@@ -2,6 +2,7 @@ package be.tribersoft.triber.chat.common;
 
 import javax.inject.Inject;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,15 +35,26 @@ public class AbstractRestTest {
 
 	private String jwtHeader;
 
+	private TestMailHandler testMailHandler;
+
 	@Before
-	public void initilaizeRestAssured() {
+	public void initialize() {
 		RestAssured.port = port;
 		jwtHeader = "Bearer " + tokenHandler.toToken(userRepository.getByUsername("user"));
+		testMailHandler = new TestMailHandler();
+	}
 
+	@After
+	public void cleanUp() {
+		testMailHandler.stop();
 	}
 
 	public String getJwtHeader() {
 		return jwtHeader;
+	}
+
+	public TestMailHandler getTestMailHandler() {
+		return testMailHandler;
 	}
 
 }

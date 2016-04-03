@@ -31,6 +31,7 @@ public class ExceptionTestResource {
 
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json", consumes = "application/json", path = "/method-argument-not-valid")
 	public void throwsMethodArgumentNotValidException(@Valid @RequestBody ActivateRegistrationFromJsonAdapter body) {
+		return;
 	}
 
 }

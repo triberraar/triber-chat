@@ -10,7 +10,7 @@ public class SecurityTestResource {
 
 	@RequestMapping(method = RequestMethod.GET)
 	public void security() {
-
+		return;
 	}
 
 }
