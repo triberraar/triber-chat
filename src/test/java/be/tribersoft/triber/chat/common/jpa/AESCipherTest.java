@@ -1,4 +1,4 @@
-package be.tribersoft.triber.chat;
+package be.tribersoft.triber.chat.common.jpa;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

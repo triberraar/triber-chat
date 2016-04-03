@@ -49,4 +49,8 @@ public class SecurityUserAuthentication implements Authentication {
 		this.authenticated = isAuthenticated;
 	}
 
+	protected SecurityUser getUser() {
+		return user;
+	}
+
 }

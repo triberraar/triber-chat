@@ -21,11 +21,6 @@ public class DefaultUserRepository implements UserRepository {
 	@Inject
 	private PredicateFactory predicateFactory;
 
-	@Override
-	public Optional<UserEntity> findByUsername(String username) {
-		return userJpaRepository.findByUsername(username);
-	}
-
 	public boolean existsByUsername(String username) {
 		return userJpaRepository.findByUsername(username).isPresent();
 	}
@@ -57,8 +52,9 @@ public class DefaultUserRepository implements UserRepository {
 	}
 
 	@Override
-	public Optional<? extends User> findActivatedAndValidatedByUsername(String username) {
-		return userJpaRepository.findByUsernameAndActivatedAndValidated(username, true, true);
+	public Optional<User> findActivatedAndValidatedByUsername(String username) {
+		Optional<UserEntity> result = userJpaRepository.findByUsernameAndActivatedAndValidated(username, true, true);
+		return Optional.ofNullable(result.isPresent() ? result.get() : null);
 	}
 
 	public UserEntity getActivatedById(String id) {
@@ -91,6 +87,15 @@ public class DefaultUserRepository implements UserRepository {
 	@Override
 	public UserEntity getById(String id) {
 		Optional<UserEntity> user = userJpaRepository.findById(id);
+		if (!user.isPresent()) {
+			throw new UserNotFoundException();
+		}
+		return user.get();
+	}
+
+	@Override
+	public UserEntity getByUsername(String username) {
+		Optional<UserEntity> user = userJpaRepository.findByUsername(username);
 		if (!user.isPresent()) {
 			throw new UserNotFoundException();
 		}

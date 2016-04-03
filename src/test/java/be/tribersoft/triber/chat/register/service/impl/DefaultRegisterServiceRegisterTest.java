@@ -45,7 +45,7 @@ public class DefaultRegisterServiceRegisterTest {
 	}
 
 	@Test
-	public void registersUserAndSendEMail() {
+	public void registersUserAndSendEMailAndBroadcastsRegistration() {
 		defaultRegisterService.register(userMessage);
 
 		verify(userFacade).register(userMessage);

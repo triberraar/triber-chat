@@ -14,6 +14,7 @@ import javax.validation.ValidatorFactory;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.mockito.internal.util.reflection.Whitebox;
 
 import be.tribersoft.triber.chat.user.domain.api.Role;
 
@@ -34,8 +35,8 @@ public class UserEntityValidationTest {
 
 		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
 		assertThat(violations).hasSize(2);
-		assertViolationsContains(violations, "user.validation.username.empty");
-		assertViolationsContains(violations, "user.validation.username.length");
+		assertThat(assertViolationsContains(violations, "user.validation.username.empty")).isTrue();
+		assertThat(assertViolationsContains(violations, "user.validation.username.length")).isTrue();
 	}
 
 	@Test
@@ -60,16 +61,18 @@ public class UserEntityValidationTest {
 	@Test
 	public void failsWhenPasswordEmpty() {
 		UserEntity user = new UserEntity("user", "", "email@host.com", new HashSet<>(Arrays.asList(Role.ROLE_USER)));
+		Whitebox.setInternalState(user, "password", "");
 
 		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
 		assertThat(violations).hasSize(2);
-		assertViolationsContains(violations, "user.validation.password.empty");
-		assertViolationsContains(violations, "user.validation.password.length");
+		assertThat(assertViolationsContains(violations, "user.validation.password.empty")).isTrue();
+		assertThat(assertViolationsContains(violations, "user.validation.password.length")).isTrue();
 	}
 
 	@Test
 	public void failsWhenPasswordTooShort() {
 		UserEntity user = new UserEntity("user", "12345", "email@host.com", new HashSet<>(Arrays.asList(Role.ROLE_USER)));
+		Whitebox.setInternalState(user, "password", "12345");
 
 		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
 		assertThat(violations).hasSize(1);
@@ -79,6 +82,7 @@ public class UserEntityValidationTest {
 	@Test
 	public void failsWhenPasswordLongerThen256() {
 		UserEntity user = new UserEntity("user", StringUtils.leftPad("", 257, "a"), "email@host.com", new HashSet<>(Arrays.asList(Role.ROLE_USER)));
+		Whitebox.setInternalState(user, "password", StringUtils.leftPad("", 257, "a"));
 
 		Set<ConstraintViolation<UserEntity>> violations = validator.validate(user);
 		assertThat(violations).hasSize(1);

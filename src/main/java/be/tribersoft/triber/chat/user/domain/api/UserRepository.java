@@ -8,9 +8,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface UserRepository {
 
-	Optional<? extends User> findByUsername(String username);
-
-	Optional<? extends User> findActivatedAndValidatedByUsername(String username);
+	Optional<User> findActivatedAndValidatedByUsername(String username);
 
 	User getActivatedByEmail(String email);
 
@@ -21,5 +19,7 @@ public interface UserRepository {
 	User getById(String id);
 
 	Long countAll();
+
+	User getByUsername(String username);
 
 }

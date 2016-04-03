@@ -10,6 +10,10 @@ public class MessageToJsonAdapter {
 	private String username;
 	private Date timestamp;
 
+	protected MessageToJsonAdapter() {
+
+	}
+
 	public MessageToJsonAdapter(Message message) {
 		this.content = message.getContent();
 		this.username = message.getOwnerUsername();

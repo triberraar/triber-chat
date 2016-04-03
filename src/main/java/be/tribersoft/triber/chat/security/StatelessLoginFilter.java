@@ -40,15 +40,9 @@ public class StatelessLoginFilter extends AbstractAuthenticationProcessingFilter
 	@Override
 	protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
 
-		// Lookup the complete User object from the database and create an
-		// Authentication for it
 		final SecurityUser authenticatedUser = userDetailsService.loadUserByUsername(authentication.getName());
 		final SecurityUserAuthentication userAuthentication = new SecurityUserAuthentication(authenticatedUser);
-
-		// Add the custom token as HTTP header to the response
 		tokenAuthenticationService.addAuthentication(response, userAuthentication);
-
-		// Add the authentication to the Security context
 		SecurityContextHolder.getContext().setAuthentication(userAuthentication);
 	}
 

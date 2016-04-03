@@ -5,8 +5,6 @@ import java.util.HashSet;
 
 import javax.inject.Named;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
 import be.tribersoft.triber.chat.user.domain.api.Role;
 import be.tribersoft.triber.chat.user.domain.api.UserMessage;
 
@@ -14,7 +12,6 @@ import be.tribersoft.triber.chat.user.domain.api.UserMessage;
 public class UserFactory {
 
 	public UserEntity create(UserMessage userMessage) {
-		String password = new BCryptPasswordEncoder().encode(userMessage.getPassword());
-		return new UserEntity(userMessage.getUsername(), password, userMessage.getEmail(), new HashSet<>(Arrays.asList(Role.ROLE_USER)));
+		return new UserEntity(userMessage.getUsername(), userMessage.getPassword(), userMessage.getEmail(), new HashSet<>(Arrays.asList(Role.ROLE_USER)));
 	}
 }
