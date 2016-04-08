@@ -1,5 +1,4 @@
 'use strict';
-var sdf = "sfd"
 
 angular.module('autoscroll', [])
 .directive('scrollBottom', function() {
