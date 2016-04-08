@@ -15,5 +15,5 @@ angular.module('errorService', ['toaster'])
 			clear: function(toastId) {
 				toaster.clear(undefined, toastId);
 			}
-		}
+		};
 	});

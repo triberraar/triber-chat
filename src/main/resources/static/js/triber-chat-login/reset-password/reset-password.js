@@ -35,11 +35,11 @@ angular.module('resetPassword', [jsFiles])
 				vm.resetting = false;
 				var toasterBody;
 				if(data.data.errorCode) {
-					toasterBody = data.data.errorCode
+					toasterBody = data.data.errorCode;
 				} 
 				ErrorService.error(toasterBody);
-			}) 
-		}
+			});
+		};
 	})
 	.controller('ConfirmResetPasswordController', function($state, $stateParams, ResetPasswordResource, WarningService, ErrorService, SuccessService) {
 		var vm = this;
@@ -56,9 +56,9 @@ angular.module('resetPassword', [jsFiles])
 			}, function(data){
 				var toasterBody;
 				if(data.data.errorCode) {
-					toasterBody = data.data.errorCode
+					toasterBody = data.data.errorCode;
 				}
 				ErrorService.error(toasterBody);
-			}) 
-		}
+			});
+		};
 	});

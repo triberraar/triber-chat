@@ -93,6 +93,6 @@ angular.module('User', [jsFiles])
         $scope.$on('$destroy', function () {
             vm.registeredUserBroadcast();
             vm.validatedUserBroadcast();
-        })
+        });
 
     });

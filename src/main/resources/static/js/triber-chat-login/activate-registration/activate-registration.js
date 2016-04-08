@@ -34,6 +34,6 @@ angular.module('activateRegistration', ['vcRecaptcha', jsFiles])
 			} 
 			ErrorService.error(toasterBody);
 		}); 
-	}
+	};
 	
 });

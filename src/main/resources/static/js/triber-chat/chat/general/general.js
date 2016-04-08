@@ -19,12 +19,12 @@ angular.module('generalChat', ['errorService', '_'])
 	
 	var generalChatService = {
 		getMessages: function() {
-			return messages
+			return messages;
 		},
 		sendMessage: function(message) {
 			Websocket.send('/app/message/general', message);
 		}
-	}
+	};
 	
 	return generalChatService;
 	
@@ -35,9 +35,9 @@ angular.module('generalChat', ['errorService', '_'])
 		ConnectedUsersResource.all().$promise.then(function(data) {
 			users = data;
 		},function() {
-			ErrorService.error('Couldn\'t load connected users.')
+			ErrorService.error('Couldn\'t load connected users.');
 		});
-	}
+	};
 	
 	var connectedUserBroadcast = $rootScope.$on('connectedUser', function(event, message) {
 		loadData();
@@ -56,7 +56,7 @@ angular.module('generalChat', ['errorService', '_'])
 		getUsers: function() {
 			return users;
 		}
-	}
+	};
 	
 	return connectedUserService;
 })
@@ -65,22 +65,22 @@ angular.module('generalChat', ['errorService', '_'])
 	
 	vm.connected = function() {
 		return Websocket.connected();
-	}
+	};
 	
 	vm.say = function() {
 		if( angular.isDefined( vm.content) && vm.content.trim() != '' && vm.messageForm.$valid) {
 			GeneralChatService.sendMessage({content: vm.content});
 			vm.content=undefined;
 		}
-	}
+	};
 	
 	vm.messages = function() {
 		return GeneralChatService.getMessages();
-	}
+	};
 	
 	vm.users = function() {
 		return ConnectedUserService.getUsers();
-	}
+	};
 })
 .run(function(Websocket) {
 	Websocket.subscribe('/topic/user/connected', 'connectedUser');

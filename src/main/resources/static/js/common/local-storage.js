@@ -15,5 +15,5 @@ angular.module('localStorage', [])
 		getObject: function(key) {
 			return angular.toJson(get(key));
 		}
-	}
+	};
 });

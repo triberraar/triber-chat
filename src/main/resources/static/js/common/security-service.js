@@ -10,7 +10,7 @@ angular.module('securityService', ['jwt', '_'])
 				return _.includes(securityService.getRoles(), role);
 			}
 		};
-		return securityService
+		return securityService;
 	})
 	.directive('hasPermission', function() {
 		return {
@@ -22,12 +22,12 @@ angular.module('securityService', ['jwt', '_'])
 			bindToController: {
 				permission: '@'
 			}
-		}
+		};
 	})
 	.controller('SecurityController', function(SecurityService) {
 		var vm = this;
 		
 		vm.allowed = function() {
 			return SecurityService.hasRole(vm.permission );
-		}
+		};
 	});

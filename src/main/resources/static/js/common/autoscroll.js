@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 angular.module('autoscroll', [])
 .directive('scrollBottom', function() {
@@ -9,7 +9,7 @@ angular.module('autoscroll', [])
 			}, function() {
 				var scroller = document.getElementById(attr.elementToScroll); // eslint-disable-line
 			      scroller.scrollTop = scroller.scrollHeight;
-			})
+			});
 		}
-	}
-})
+	};
+});

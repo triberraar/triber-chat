@@ -17,7 +17,7 @@ angular.module('websocket', ['jwt'])
 				websocket.stomp.subscribe(subscription.channel, function(message) {
 					websocket.broadcast(subscription.eventName, message.body);
 				});
-			})
+			});
 		}, function() {
 			$rootScope.$apply(function() {
 				reconnectTimeout =$timeout(function() {
@@ -25,13 +25,13 @@ angular.module('websocket', ['jwt'])
 				}, 5000);
 			});
 		});
-	}
+	};
 	
 	websocket.broadcast = function(eventName, content) {
 		$rootScope.$apply(function() {
 			$rootScope.$emit(eventName, angular.fromJson(content));
 		});
-	}
+	};
 	
 	websocket.subscribe = function(channel, eventName) {
 		subscriptions.push({channel: channel, eventName: eventName});
@@ -41,18 +41,18 @@ angular.module('websocket', ['jwt'])
 			});
 			return;
 		}
-	}
+	};
 	
 	websocket.connected = function() {
 		return websocket.stomp && websocket.stomp.connected;
-	}
+	};
 	
 	websocket.send = function(channel, message) {
 		if(websocket.connected) {
 			websocket.stomp.send(channel, {}, angular.toJson(message));
 			return;
 		}
-	}
+	};
 	
 	return websocket;
 });

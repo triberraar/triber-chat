@@ -12,7 +12,7 @@ angular.module('paging', [])
 			currentPage: '=',
 			itemsPerPage: '='
 		}
-	}
+	};
 })
 .controller('PagingController', function($scope) {
 	var vm = this;

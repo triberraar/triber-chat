@@ -48,7 +48,7 @@ angular.module('login', [ 'ngResource', 'jwt', jsFiles ])
 				$window.location.href = '/chat.html';
 			}, function() {
 				ErrorService.error('Login failed, please correct the login form and try again.', 0, 'loginFailedToastId');
-			})
+			});
 		}
 	};
 

@@ -56,6 +56,6 @@ angular.module('notificationService', ['websocket', 'securityService'])
 			numberOfNotifications: function() {
 				return numberOfNotifications;
 			}
-	}
+	};
 	return notificationService;
-})
+});

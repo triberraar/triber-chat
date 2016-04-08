@@ -11,5 +11,5 @@ angular.module('successService', ['toaster'])
 					bodyOutputType: 'trustedHtml'
 				});
 			}
-		}
+		};
 	});
