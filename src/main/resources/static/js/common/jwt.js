@@ -21,7 +21,7 @@ angular.module('jwt', ['angular-jwt', 'localStorage' ])
             clear: function() {
                 localStorage.removeItem('jwt');
             }
-		}
+		};
 		return JWT;
 	})
 	.factory('JWTInterceptor', function(JWT) {

@@ -1,7 +1,7 @@
 <div class="row border-bottom">
     <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
     	<div class="navbar-header home">
-    		<a ui-sref="general-chat"><i class="fa fa-home fa-2x"></i></a>
+    		<a ui-sref="chat.general"><i class="fa fa-home fa-2x"></i></a>
     	</div>
         <ul class="nav navbar-top-links navbar-right">
         	<li ng-if="!menuCtrl.connected()"><a><i class="fa fa-circle-o-notch fa-spin"></i> Connecting</li></a>
@@ -28,7 +28,7 @@
                 </ul>
             </li>
             <li>
-                <a ui-sref="login">
+                <a ng-click="menuCtrl.logout()">
                     <i class="fa fa-sign-out"></i> Log out
                 </a>
             </li>

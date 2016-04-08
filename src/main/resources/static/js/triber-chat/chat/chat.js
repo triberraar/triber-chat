@@ -13,7 +13,7 @@ angular.module('Chat', [])
 		if($state.is('chat.room')) {
 			vm.roomActive = true;
 		}
-	}
+	};
 	
 	vm.init();
 	
