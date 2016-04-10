@@ -4,7 +4,8 @@ angular.module('securityService', ['jwt', '_'])
 	.factory('SecurityService', function(JWT, _) {
 		var securityService= {
 			getRoles: function() {
-				return JWT.decode().roles || [];
+				var decodedJwt = JWT.decode();
+				return decodedJwt ? decodedJwt.roles : [];
 			},
 			hasRole: function(role) {
 				return _.includes(securityService.getRoles(), role);

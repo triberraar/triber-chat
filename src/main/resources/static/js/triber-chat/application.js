@@ -18,11 +18,11 @@ var dependencies = [
                      'websocket',
                      'menu',
                      'notificationService',
-                     'autoscroll',
+                     'autoscroll'
                      ];
 
 angular.module('triber-chat', dependencies)
-.config(function($stateProvider, $urlRouterProvider, $httpProvider, jwtInterceptorProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 	$urlRouterProvider.otherwise('/chat/general');
 	$httpProvider.interceptors.push('JWTInterceptor');
 	$stateProvider

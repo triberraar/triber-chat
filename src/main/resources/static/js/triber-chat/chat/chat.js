@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('Chat', [])
-.controller('ChatController', function($state, $scope) {
+.controller('ChatController', function($state) {
 	var vm=this;
 	
 	vm.init = function() {

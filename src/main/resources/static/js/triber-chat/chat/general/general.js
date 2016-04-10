@@ -12,7 +12,7 @@ angular.module('generalChat', ['errorService', '_'])
 .factory('GeneralChatService', function($rootScope, _, Websocket) {
 	var messages = [];
 	
-	var generalMessageBroadcast = $rootScope.$on('messageGeneral', function(event, args) {
+	$rootScope.$on('messageGeneral', function(event, args) {
 		messages.push(args);
 		messages = _.takeRight(messages, 10);
 	});
@@ -39,14 +39,14 @@ angular.module('generalChat', ['errorService', '_'])
 		});
 	};
 	
-	var connectedUserBroadcast = $rootScope.$on('connectedUser', function(event, message) {
+	$rootScope.$on('connectedUser', function() {
 		loadData();
 	});
-	var disconnectedUserBroadcast = $rootScope.$on('disconnectedUser', function(event, message) {
+	$rootScope.$on('disconnectedUser', function() {
 		loadData();
 	});
 		
-	var connectedBroadcast = $rootScope.$on('connected', function(event, args) {
+	$rootScope.$on('connected', function() {
 		loadData();
 	});
 

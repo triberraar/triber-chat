@@ -8,8 +8,8 @@ angular.module('websocket', ['jwt'])
 	//websocket.stomp.debug = null;
 	
 	websocket.connect = function() {
-		websocket.client = new SockJS('/chat?jwt=' + JWT.get());
-		websocket.stomp = Stomp.over(websocket.client);
+		websocket.client = new SockJS('/chat?jwt=' + JWT.get()); // eslint-disable-line
+		websocket.stomp = Stomp.over(websocket.client); // eslint-disable-line
 		websocket.stomp.connect({}, function() {
 			$rootScope.$emit('connected');
 			$timeout.cancel(reconnectTimeout);

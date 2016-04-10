@@ -1,8 +1,9 @@
 {
-  "extends": "angular",
+  "extends": ["angular", "eslint:recommended"],
   "rules": {
     "quotes": [ 2, "single"],
     "strict": [2, "global"],
-    "semi": ["error", "always"]
+    "semi": ["error", "always"],
+    "angular/on-watch": "warn"
   }
 }
