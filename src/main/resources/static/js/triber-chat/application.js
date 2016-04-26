@@ -28,12 +28,10 @@ angular.module('triber-chat', dependencies)
 	$stateProvider
 		.state('user', {
 			url:'/user',
-			templateUrl: 'js/triber-chat/user/user.html',
-			controller: 'UserController',
-			controllerAs: 'userCtrl',
+			template: '<users></users>',
 			resolve: {
 				lazyLoad: function($ocLazyLoad) {
-					return $ocLazyLoad.load('/js/triber-chat/user/user.controller.js');
+					return $ocLazyLoad.load(['/js/triber-chat/user/user.component.js', '/js/triber-chat/user/user.controller.js']);
 				}
 			}
 		})
