@@ -37,7 +37,6 @@ proxy.on( 'proxyReqWs', function ( proxyReqWs, req, res ) {
 
 app.all('/*',  function (req, res) {
     proxy.web(req, res, {target: {host: '127.0.0.1', port:'8080'}}, function (e, req, res) {
-        console.log(2);
         res.json({'message': 'proxy error'});
     });
 });

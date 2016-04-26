@@ -33,7 +33,7 @@ angular.module('triber-chat', dependencies)
 			controllerAs: 'userCtrl',
 			resolve: {
 				lazyLoad: function($ocLazyLoad) {
-					return $ocLazyLoad.load('/js/triber-chat/user/user.js');
+					return $ocLazyLoad.load('/js/triber-chat/user/user.controller.js');
 				}
 			}
 		})

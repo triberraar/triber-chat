@@ -1,42 +1,13 @@
 'use strict';
 
 var jsFiles = [
-    'js/common/warning-service.js',
     'js/common/error-service.js',
-    'js/common/success-service.js'
+    'js/common/success-service.js',
+    'js/triber-chat/user/user.repository.js',
+    'js/triber-chat/user/user.resource.js'
 ];
 
-function UserRepository($http, ErrorService) {
-	var UserRepository = {};
-	UserRepository.users = {};
-    UserRepository.totalElements;
-    UserRepository.itemsPerPage;
-    UserRepository.all = function (queryParams) {
-        return $http.get('/user', {params: queryParams}).
-        then( function (response) {
-            UserRepository.users = response.data.content;
-            UserRepository.totalElements = response.data.totalElements;
-            UserRepository.itemsPerPage = response.data.size;
-        }, function () {
-            ErrorService.error('Could not get users');
-        });
-    };
-    return UserRepository;
-}
-
-angular.module('User', [jsFiles])
-    .factory('UserResource', function ($resource) {
-        return $resource('/user/:userId/:action', {}, {
-            all: {
-                method: 'GET'
-            },
-            validate: {
-                method: 'PUT',
-                params: {action: 'validate', userId: '@userId'}
-            }
-        });
-    })
-    .factory('UserRepository', UserRepository)
+angular.module('user.controller', ['errorService', 'successService', 'user.repository', 'user.resource', {files: jsFiles}])
     .controller('UserController', function ($rootScope, $scope, UserResource, ErrorService, SuccessService, UserRepository) {
         var vm = this;
 
