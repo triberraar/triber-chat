@@ -1,9 +1,5 @@
 'use strict';
 
-var jsFiles = [
-    'js/common/error-service.js'
-];
-
 function UserRepository($http, ErrorService) {
     var UserRepository = {};
     UserRepository.users = {};
@@ -22,5 +18,5 @@ function UserRepository($http, ErrorService) {
     return UserRepository;
 }
 
-angular.module('user.repository', [ {files: jsFiles}])
+angular.module('user.repository', [ 'errorService'])
     .factory('UserRepository', UserRepository);

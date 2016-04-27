@@ -1,14 +1,7 @@
 'use strict';
 
-var jsFiles = [
-    'js/common/error-service.js',
-    'js/common/success-service.js',
-    'js/triber-chat/user/user.repository.js',
-    'js/triber-chat/user/user.resource.js'
-];
-
-angular.module('user.controller', ['errorService', 'successService', 'user.repository', 'user.resource', {files: jsFiles}])
-    .controller('UserController', function ($rootScope, $scope, UserResource, ErrorService, SuccessService, UserRepository) {
+angular.module('user.controller', ['errorService', 'successService', 'user.repository', 'user.resource', 'user.criteria.service'])
+    .controller('UserController', function ($rootScope, $scope, UserResource, ErrorService, SuccessService, UserRepository, UserCriteriaService) {
         var vm = this;
 
         vm.registeredUserBroadcast = $rootScope.$on('registeredUser', function () {
@@ -21,12 +14,27 @@ angular.module('user.controller', ['errorService', 'successService', 'user.repos
         vm.init = function () {
             vm.currentPage = 1;
             vm.validating = false;
-            vm.validated = false;
-            vm.activated = false;
             vm.users = [];
 
             vm.loadData();
         };
+
+        vm.username = function(value) {
+            return arguments.length ? (UserCriteriaService.username = value) : UserCriteriaService.username;
+        };
+
+        vm.email = function(value) {
+            return arguments.length ? (UserCriteriaService.email = value) : UserCriteriaService.email;
+        };
+
+        vm.validated = function(value) {
+            return arguments.length ? (UserCriteriaService.validated = value) : UserCriteriaService.validated;
+        };
+
+        vm.activated = function(value) {
+            return arguments.length ? (UserCriteriaService.activated = value) : UserCriteriaService.activated;
+        };
+
 
         vm.validate = function (user) {
             if (vm.validating) {
@@ -45,12 +53,16 @@ angular.module('user.controller', ['errorService', 'successService', 'user.repos
         };
 
         vm.loadData = function () {
+            var validated = vm.validated();
+            var activated = vm.activated();
+            var username = vm.username();
+            var email = vm.email();
             UserRepository.all({
                 page: vm.currentPage - 1,
-                validated: vm.validated,
-                activated: vm.activated,
-                username: vm.username,
-                email: vm.email
+                validated: validated,
+                activated: activated,
+                username: username,
+                email: email
             }).then(function () {
                 vm.users = UserRepository.users;
                 vm.totalElements = UserRepository.totalElements;
