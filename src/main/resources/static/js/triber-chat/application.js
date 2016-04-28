@@ -28,7 +28,7 @@ angular.module('triber-chat', dependencies)
 	$stateProvider
 		.state('user', {
 			url:'/user',
-			template: '<users></users>',
+			template: '<user></user>',
 			resolve: {
 				lazyLoad: function($ocLazyLoad) {
 					return $ocLazyLoad.load(['/js/triber-chat/user/user.component.js']);

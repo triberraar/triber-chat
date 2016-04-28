@@ -1,11 +1,19 @@
 'use strict';
 
-function UserRepository($http, ErrorService) {
+function UserRepository($http, ErrorService, UserCriteriaService) {
     var UserRepository = {};
     UserRepository.users = {};
     UserRepository.totalElements;
     UserRepository.itemsPerPage;
-    UserRepository.all = function (queryParams) {
+    UserRepository.all = function () {
+        var queryParams = {
+            page: UserCriteriaService.currentPage - 1,
+            validated: UserCriteriaService.validated,
+            activated: UserCriteriaService.activated,
+            username: UserCriteriaService.username,
+            email: UserCriteriaService.email
+        };
+
         return $http.get('/user', {params: queryParams}).
         then( function (response) {
             UserRepository.users = response.data.content;
@@ -18,5 +26,5 @@ function UserRepository($http, ErrorService) {
     return UserRepository;
 }
 
-angular.module('user.repository', [ 'errorService'])
+angular.module('user.repository', [ 'errorService', 'user.criteria.service'])
     .factory('UserRepository', UserRepository);

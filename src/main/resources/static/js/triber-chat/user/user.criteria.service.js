@@ -2,18 +2,18 @@
 
 angular.module('user.criteria.service', [])
     .factory('UserCriteriaService', function () {
-        var username, email, activated , validated, currentPage = 1 ;
+        var username, email, activated, validated, currentPage = 1;
         var userCriteriaService = {
             get username() {
                 return username;
             },
             set username(value) {
-                username = value ;
+                username = value;
             },
             get email() {
                 return email;
             },
-            set emai(value) {
+            set email(value) {
                 email = value;
             },
             get activated() {
@@ -32,7 +32,14 @@ angular.module('user.criteria.service', [])
                 return currentPage;
             },
             set currentPage(value) {
-              currentPage = value;
+                currentPage = value;
+            },
+            clear: function () {
+                username = undefined;
+                email = undefined;
+                validated = undefined;
+                activated = undefined;
+                currentPage = 1;
             }
         };
 
