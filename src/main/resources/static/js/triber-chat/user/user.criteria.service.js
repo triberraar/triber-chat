@@ -2,7 +2,7 @@
 
 angular.module('user.criteria.service', [])
     .factory('UserCriteriaService', function () {
-        var username, email, activated , validated ;
+        var username, email, activated , validated, currentPage = 1 ;
         var userCriteriaService = {
             get username() {
                 return username;
@@ -27,6 +27,12 @@ angular.module('user.criteria.service', [])
             },
             set validated(value) {
                 validated = (value === '' ? undefined : value);
+            },
+            get currentPage() {
+                return currentPage;
+            },
+            set currentPage(value) {
+              currentPage = value;
             }
         };
 

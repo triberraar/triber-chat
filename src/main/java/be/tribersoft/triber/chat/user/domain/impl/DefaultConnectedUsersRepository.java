@@ -30,6 +30,9 @@ public class DefaultConnectedUsersRepository implements ConnectedUsersRepository
 
 	@Override
 	public synchronized void removeUser(User user) {
+		if (!concurrentUsers.containsKey(user.getId())) {
+			return;
+		}
 		concurrentUsers.get(user.getId()).remove(0);
 		if (concurrentUsers.get(user.getId()).isEmpty()) {
 			concurrentUsers.remove(user.getId());

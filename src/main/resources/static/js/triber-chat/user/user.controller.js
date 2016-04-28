@@ -12,10 +12,10 @@ angular.module('user.controller', ['errorService', 'successService', 'user.repos
         });
 
         vm.init = function () {
-            vm.currentPage = 1;
             vm.validating = false;
             vm.users = [];
-
+            vm.currentPage = UserCriteriaService.currentPage;
+            
             vm.loadData();
         };
 
@@ -35,7 +35,6 @@ angular.module('user.controller', ['errorService', 'successService', 'user.repos
             return arguments.length ? (UserCriteriaService.activated = value) : UserCriteriaService.activated;
         };
 
-
         vm.validate = function (user) {
             if (vm.validating) {
                 return;
@@ -53,20 +52,17 @@ angular.module('user.controller', ['errorService', 'successService', 'user.repos
         };
 
         vm.loadData = function () {
-            var validated = vm.validated();
-            var activated = vm.activated();
-            var username = vm.username();
-            var email = vm.email();
+            UserCriteriaService.currentPage = vm.currentPage;
             UserRepository.all({
-                page: vm.currentPage - 1,
-                validated: validated,
-                activated: activated,
-                username: username,
-                email: email
+                page: UserCriteriaService.currentPage - 1,
+                validated: vm.validated(),
+                activated: vm.activated(),
+                username: vm.username(),
+                email: vm.email()
             }).then(function () {
                 vm.users = UserRepository.users;
                 vm.totalElements = UserRepository.totalElements;
-                vm.itemsPerPage = UserRepository.size;
+                vm.itemsPerPage = UserRepository.itemsPerPage;
             });
 
         };
