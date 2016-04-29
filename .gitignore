@@ -7,3 +7,4 @@ src/main/resources/static/lib
 node_modules
 npm-debug.log
 .README.md.html
+coverage
