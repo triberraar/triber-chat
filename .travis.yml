@@ -8,7 +8,8 @@ install:
   - pip install --user codecov
   
 script:
-  - npm run lint 
+  - npm run lint
+  - npm run test_phantomjs
   - mvn verify
 
 after_success:
