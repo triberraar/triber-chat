@@ -1,11 +1,8 @@
 'use strict';
 
-angular.module('user.resource', [])
+angular.module('user.resource', ['ngResource'])
     .factory('UserResource', function ($resource) {
         return $resource('/user/:userId/:action', {}, {
-            all: {
-                method: 'GET'
-            },
             validate: {
                 method: 'PUT',
                 params: {action: 'validate', userId: '@userId'}
