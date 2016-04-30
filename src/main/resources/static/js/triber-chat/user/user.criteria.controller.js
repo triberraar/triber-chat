@@ -11,7 +11,7 @@ angular.module('user.criteria.controller', ['user.repository', 'user.criteria.se
             vm.loadData();
         });
 
-        vm.init = function () {
+        var init = function () {
             vm.currentPage = UserCriteriaService.currentPage;
 
             vm.loadData();
@@ -42,7 +42,7 @@ angular.module('user.criteria.controller', ['user.repository', 'user.criteria.se
             UserCriteriaService.clear();
         };
 
-        vm.init();
+        init();
 
         $scope.$on('$destroy', function () {
             vm.registeredUserBroadcast();
