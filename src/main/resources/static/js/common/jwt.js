@@ -5,7 +5,7 @@ angular.module('jwt', ['angular-jwt', 'localStorage'])
         var JWT = {
             isValid: function () {
                 var jwtToken = $localStorage.get('jwt');
-                return jwtToken && !jwtHelper.isTokenExpired(jwtToken);
+                return angular.isDefined(jwtToken) && !jwtHelper.isTokenExpired(jwtToken);
             },
             get: function () {
                 return $localStorage.get('jwt');
