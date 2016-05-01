@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('notificationService', ['websocket', 'securityService'])
+angular.module('notificationService', ['websocket', 'securityService', 'ngResource'])
 .factory('UnvalidatedUserResource', function($resource) {
 		return $resource('/user/unvalidated', {}, {
 			existsUnvalidated : {
@@ -8,7 +8,7 @@ angular.module('notificationService', ['websocket', 'securityService'])
 			}
 		});
 	})
-.factory('NotificationService', function(UnvalidatedUserResource, Websocket, $rootScope,SecurityService) {
+.factory('NotificationService', function(UnvalidatedUserResource, Websocket, $rootScope, SecurityService) {
 	var notifications = {};
 	var numberOfNotifications = 0;
 	
