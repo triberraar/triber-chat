@@ -59,6 +59,6 @@ describe('local-storage', function() {
             localStorage.remove('key');
 
             expect(windowMock.localStorage.removeItem).toHaveBeenCalled();
-        })
-    })
-})
+        });
+    });
+});
