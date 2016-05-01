@@ -92,9 +92,14 @@ module.exports = function (config) {
         // Concurrency level
         // how many browser should be started simultaneous
         concurrency: Infinity,
-        coverageReporter: {
-            type: 'html',
-            dir: 'coverage/'
-        }
+        coverageReporter: [{
+            type: 'text'
+        },
+            {
+                type: 'lcov', dir: 'coverage/'
+            }]
     });
+    if (process.env.TRAVIS) {
+        config.reporters.push('coveralls');
+    }
 };
