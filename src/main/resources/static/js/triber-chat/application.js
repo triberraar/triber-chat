@@ -18,22 +18,20 @@ var dependencies = [
                      'websocket',
                      'menu',
                      'notificationService',
-                     'autoscroll',
+                     'autoscroll'
                      ];
 
 angular.module('triber-chat', dependencies)
-.config(function($stateProvider, $urlRouterProvider, $httpProvider, jwtInterceptorProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
 	$urlRouterProvider.otherwise('/chat/general');
 	$httpProvider.interceptors.push('JWTInterceptor');
 	$stateProvider
 		.state('user', {
 			url:'/user',
-			templateUrl: 'js/triber-chat/user/user.html',
-			controller: 'UserController',
-			controllerAs: 'userCtrl',
+			template: '<user></user>',
 			resolve: {
 				lazyLoad: function($ocLazyLoad) {
-					return $ocLazyLoad.load('/js/triber-chat/user/user.js');
+					return $ocLazyLoad.load(['/js/triber-chat/user/user.component.js']);
 				}
 			}
 		})
@@ -45,7 +43,7 @@ angular.module('triber-chat', dependencies)
 			controllerAs: 'chatCtrl',
 			resolve: {
 				lazyLoad: function($ocLazyLoad) {
-					return $ocLazyLoad.load('/js/triber-chat/chat/chat.js')
+					return $ocLazyLoad.load('/js/triber-chat/chat/chat.js');
 				}
 			}
 		})
@@ -63,7 +61,7 @@ angular.module('triber-chat', dependencies)
 		.state('chat.room', {
 			url: '/room',
 			templateUrl: 'js/triber-chat/chat/room/room.html'
-		})
+		});
 //	$urlRouterProvider.otherwise('/home');
 //	$stateProvider.state('/home', {
 //		url : '/home',

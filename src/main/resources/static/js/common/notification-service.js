@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('notificationService', ['websocket', 'securityService'])
+angular.module('notificationService', ['websocket', 'securityService', 'ngResource'])
 .factory('UnvalidatedUserResource', function($resource) {
 		return $resource('/user/unvalidated', {}, {
 			existsUnvalidated : {
@@ -8,7 +8,7 @@ angular.module('notificationService', ['websocket', 'securityService'])
 			}
 		});
 	})
-.factory('NotificationService', function(UnvalidatedUserResource, Websocket, $rootScope,SecurityService) {
+.factory('NotificationService', function(UnvalidatedUserResource, Websocket, $rootScope, SecurityService) {
 	var notifications = {};
 	var numberOfNotifications = 0;
 	
@@ -17,13 +17,13 @@ angular.module('notificationService', ['websocket', 'securityService'])
 		Websocket.subscribe('/topic/notifications/validatedUser', 'validatedUser');
 	}
 	
-	var registeredUserBroadcast = $rootScope.$on('registeredUser', function(event, args) {
+	$rootScope.$on('registeredUser', function() {
 		notificationService.checkUnvalidatedUsers();
 	});
-	var validatedUserBroadcast = $rootScope.$on('validatedUser', function(event, args) {
+	$rootScope.$on('validatedUser', function() {
 		notificationService.checkUnvalidatedUsers();
 	});
-	var conntectedBroadcast = $rootScope.$on('connected', function(event, args) {
+	$rootScope.$on('connected', function() {
 		notificationService.checkUnvalidatedUsers();
 	});
 	
@@ -56,6 +56,6 @@ angular.module('notificationService', ['websocket', 'securityService'])
 			numberOfNotifications: function() {
 				return numberOfNotifications;
 			}
-	}
+	};
 	return notificationService;
-})
+});

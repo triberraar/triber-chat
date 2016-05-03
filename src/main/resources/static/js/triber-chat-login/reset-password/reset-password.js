@@ -28,18 +28,18 @@ angular.module('resetPassword', [jsFiles])
 				return;
 			}
 			vm.resetting = true;
-			ResetPasswordResource.reset({'email': vm.email}).$promise.then(function(data){
+			ResetPasswordResource.reset({'email': vm.email}).$promise.then(function(){
 				SuccessService.success('Reset password successful, you will receive an email.');
 				vm.resetting = false;
 			}, function(data){
 				vm.resetting = false;
 				var toasterBody;
 				if(data.data.errorCode) {
-					toasterBody = data.data.errorCode
+					toasterBody = data.data.errorCode;
 				} 
 				ErrorService.error(toasterBody);
-			}) 
-		}
+			});
+		};
 	})
 	.controller('ConfirmResetPasswordController', function($state, $stateParams, ResetPasswordResource, WarningService, ErrorService, SuccessService) {
 		var vm = this;
@@ -50,15 +50,15 @@ angular.module('resetPassword', [jsFiles])
 				WarningService.warn('Please correct the confirm password form.');
 				return;
 			}
-			ResetPasswordResource.confirm({resetPasswordId: $stateParams.resetPasswordId}, {password: vm.password}).$promise.then(function(data) {
+			ResetPasswordResource.confirm({resetPasswordId: $stateParams.resetPasswordId}, {password: vm.password}).$promise.then(function() {
 				SuccessService.success('Password confirmed.');
 				$state.go('login');
 			}, function(data){
 				var toasterBody;
 				if(data.data.errorCode) {
-					toasterBody = data.data.errorCode
+					toasterBody = data.data.errorCode;
 				}
 				ErrorService.error(toasterBody);
-			}) 
-		}
+			});
+		};
 	});

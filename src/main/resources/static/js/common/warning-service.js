@@ -11,5 +11,5 @@ angular.module('warningService', ['toaster'])
 					bodyOutputType: 'trustedHtml'
 				});
 			}
-		}
+		};
 	});

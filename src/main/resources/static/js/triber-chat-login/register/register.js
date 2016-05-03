@@ -32,8 +32,8 @@ angular.module('register', ['vcRecaptcha', jsFiles])
 				email: vm.email,
 				password: vm.password,
 				captcha: vm.recaptcha
-		}
-		RegisterResource.register(registration).$promise.then(function(data){
+		};
+		RegisterResource.register(registration).$promise.then(function(){
 			SuccessService.success('Registration successful, you will receive an email.');
 			vm.registering = false;
 		}, function(data){
@@ -47,16 +47,16 @@ angular.module('register', ['vcRecaptcha', jsFiles])
 				});
 			} 
 			ErrorService.error(toasterBody);
-		}) 
-	}
+		});
+	};
 	
 	vm.recaptchaCreated = function(widgetId) {
 		vm.widgetId = widgetId;
-	}
+	};
 	
 	vm.refreshRecaptcha = function() {
 		vcRecaptchaService.reload(vm.widgetId);
 		vm.recaptcha = undefined;
-	}
+	};
 	
 });

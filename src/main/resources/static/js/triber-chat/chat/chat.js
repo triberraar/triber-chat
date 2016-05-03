@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('Chat', [])
-.controller('ChatController', function($state, $scope) {
+.controller('ChatController', function($state) {
 	var vm=this;
 	
 	vm.init = function() {
@@ -13,7 +13,7 @@ angular.module('Chat', [])
 		if($state.is('chat.room')) {
 			vm.roomActive = true;
 		}
-	}
+	};
 	
 	vm.init();
 	

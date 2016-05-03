@@ -2,15 +2,31 @@
   "name": "java-grunt",
   "description": "file to have heroku run bower aswell",
   "dependencies": {
-    "bower": "1.7.6"
+    "bower": "1.7.6",
+    "karma": "^0.13.22"
   },
   "scripts": {
     "postinstall": "bower install",
-    "lint": "eslint src/main/resources/static/js"
+    "lint": "eslint src/main/resources/static/js",
+    "test_chrome": "./node_modules/.bin/karma start --single-run --colors --browsers Chrome",
+    "test_phantomjs": "./node_modules/.bin/karma start --single-run --colors --browsers PhantomJS",
+    "proxy": "node proxy.js"
   },
   "devDependencies": {
+    "bunyan": "^1.8.0",
     "eslint": "^2.3.0",
     "eslint-config-angular": "^0.5.0",
-    "eslint-plugin-angular": "^1.0.0"
+    "eslint-plugin-angular": "^1.0.0",
+    "eslint-plugin-jasmine": "^1.8.1",
+    "express": "^4.13.4",
+    "http-proxy": "^1.13.2",
+    "jasmine-core": "^2.4.1",
+    "karma": "^0.13.22",
+    "karma-chrome-launcher": "^0.2.3",
+    "karma-coverage": "^0.5.5",
+    "karma-coveralls": "^1.1.2",
+    "karma-jasmine": "^0.3.8",
+    "karma-phantomjs-launcher": "^1.0.0",
+    "karma-story-reporter": "^0.3.1"
   }
 }

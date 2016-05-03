@@ -4,13 +4,14 @@ angular.module('securityService', ['jwt', '_'])
 	.factory('SecurityService', function(JWT, _) {
 		var securityService= {
 			getRoles: function() {
-				return JWT.decode().roles || [];
+				var decodedJwt = JWT.decode();
+				return decodedJwt ? decodedJwt.roles : [];
 			},
 			hasRole: function(role) {
 				return _.includes(securityService.getRoles(), role);
 			}
 		};
-		return securityService
+		return securityService;
 	})
 	.directive('hasPermission', function() {
 		return {
@@ -22,12 +23,12 @@ angular.module('securityService', ['jwt', '_'])
 			bindToController: {
 				permission: '@'
 			}
-		}
+		};
 	})
 	.controller('SecurityController', function(SecurityService) {
 		var vm = this;
 		
 		vm.allowed = function() {
 			return SecurityService.hasRole(vm.permission );
-		}
+		};
 	});

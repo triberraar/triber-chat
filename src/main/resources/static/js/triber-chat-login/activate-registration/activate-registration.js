@@ -24,7 +24,7 @@ angular.module('activateRegistration', ['vcRecaptcha', jsFiles])
 			WarningService.warn('Please correct the activate form.');
 			return;
 		}
-		ActivateUserResource.register({userId: $stateParams.userId}, {password: vm.password}).$promise.then(function(data){
+		ActivateUserResource.register({userId: $stateParams.userId}, {password: vm.password}).$promise.then(function(){
 			SuccessService.success('You are activated');
 			$state.go('login');
 		}, function(data){
@@ -34,6 +34,6 @@ angular.module('activateRegistration', ['vcRecaptcha', jsFiles])
 			} 
 			ErrorService.error(toasterBody);
 		}); 
-	}
+	};
 	
 });

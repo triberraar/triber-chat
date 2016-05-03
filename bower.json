@@ -32,8 +32,11 @@
   },
   "resolutions": {
     "jquery": "~2.1.4",
-    "angular": "1.5.3",
+    "angular": "1.5.5",
     "lodash": "~4.6.1",
     "switchery": "~0.8.1"
+  },
+  "devDependencies": {
+    "angular-mocks": "~1.5.5"
   }
 }

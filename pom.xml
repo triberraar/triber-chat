@@ -185,7 +185,7 @@
 			<plugin>
 				<groupId>org.pitest</groupId>
 				<artifactId>pitest-maven</artifactId>
-				<version>1.1.9</version>
+				<version>${pit.version}</version>
 				<configuration>
 					<targetClasses>
 						<param>be.tribersoft*</param>

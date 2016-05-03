@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 
 angular.module('noResults', [])
 .directive('noResults', function() {
@@ -9,5 +9,5 @@ angular.module('noResults', [])
 		bindToController: {
 			render: '='
 		}
-	}
-})
+	};
+});

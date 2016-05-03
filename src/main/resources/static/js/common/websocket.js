@@ -8,8 +8,8 @@ angular.module('websocket', ['jwt'])
 	//websocket.stomp.debug = null;
 	
 	websocket.connect = function() {
-		websocket.client = new SockJS('/chat?jwt=' + JWT.get());
-		websocket.stomp = Stomp.over(websocket.client);
+		websocket.client = new SockJS('/chat?jwt=' + JWT.get()); // eslint-disable-line
+		websocket.stomp = Stomp.over(websocket.client); // eslint-disable-line
 		websocket.stomp.connect({}, function() {
 			$rootScope.$emit('connected');
 			$timeout.cancel(reconnectTimeout);
@@ -17,7 +17,7 @@ angular.module('websocket', ['jwt'])
 				websocket.stomp.subscribe(subscription.channel, function(message) {
 					websocket.broadcast(subscription.eventName, message.body);
 				});
-			})
+			});
 		}, function() {
 			$rootScope.$apply(function() {
 				reconnectTimeout =$timeout(function() {
@@ -25,13 +25,13 @@ angular.module('websocket', ['jwt'])
 				}, 5000);
 			});
 		});
-	}
+	};
 	
 	websocket.broadcast = function(eventName, content) {
 		$rootScope.$apply(function() {
 			$rootScope.$emit(eventName, angular.fromJson(content));
 		});
-	}
+	};
 	
 	websocket.subscribe = function(channel, eventName) {
 		subscriptions.push({channel: channel, eventName: eventName});
@@ -41,18 +41,18 @@ angular.module('websocket', ['jwt'])
 			});
 			return;
 		}
-	}
+	};
 	
 	websocket.connected = function() {
 		return websocket.stomp && websocket.stomp.connected;
-	}
+	};
 	
 	websocket.send = function(channel, message) {
 		if(websocket.connected) {
 			websocket.stomp.send(channel, {}, angular.toJson(message));
 			return;
 		}
-	}
+	};
 	
 	return websocket;
 });
