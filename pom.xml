@@ -45,6 +45,18 @@
 				<skip.unit.tests>false</skip.unit.tests>
 			</properties>
 		</profile>
+		<profile>
+			<id>heroku</id>
+			<activation>
+            	<property>
+                	<name>env.DYNO</name>
+            	</property>
+        	</activation>
+			<properties>
+				<skip.integration.tests>true</skip.integration.tests>
+				<skip.unit.tests>true</skip.unit.tests>
+			</properties>
+		</profile>
 	</profiles>
 	<dependencies>
 		<dependency>
