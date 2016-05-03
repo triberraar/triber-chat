@@ -97,7 +97,7 @@ module.exports = function (config) {
                 type: 'text'
             }, {
                 type: 'lcov',
-                dir: 'coverage/'
+                dir: 'coverage-frontend/'
             }]
         }
     });
