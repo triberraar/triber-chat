@@ -1,4 +1,4 @@
-# triber-chat
+# triber-chat [![Travis build status](https://img.shields.io/travis/triberraar/triber-chat/develop.svg)](https://travis-ci.org/triberraar/triber-chat)
 A chat application written in Java and Javascript. See a running example at [triber-chat](https://triber-chat.herokuapp.com/).
 
 Uses both rest and websockets (using stomp over sockjs).
