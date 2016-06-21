@@ -43,12 +43,15 @@
     "**/extjs/welcome/**",
     "bower_components/**",
     "**/lib/**",
-    "**/lib-static/**"
+    "**/lib-static/**",
+    "proxy.js",
+    "karma.conf.js"
   ],
   "test": [
     "**/test/**",
     "**/tests/**",
     "**/spec/**",
-    "**/specs/**"
+    "**/specs/**",
+    "**/*_spec.js"
   ]
 }
