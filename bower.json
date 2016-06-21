@@ -5,10 +5,10 @@
     "triberraar"
   ],
   "dependencies": {
-    "angular-animate": "~1.5.0",
-    "angular-sanitize": "~1.5.0",
-    "angular-messages": "~1.5.0",
-    "angular-aria": "~1.5.0",
+    "angular-animate": "~1.5.7",
+    "angular-sanitize": "~1.5.7",
+    "angular-messages": "~1.5.7",
+    "angular-aria": "~1.5.7",
     "jquery": "~2.1.4",
     "angular-resource": "~1.5.0",
     "angular-ui-router": "~0.2.15",
@@ -32,11 +32,11 @@
   },
   "resolutions": {
     "jquery": "~2.1.4",
-    "angular": "1.5.5",
+    "angular": "1.5.7",
     "lodash": "~4.6.1",
     "switchery": "~0.8.1"
   },
   "devDependencies": {
-    "angular-mocks": "~1.5.5"
+    "angular-mocks": "~1.5.7"
   }
 }
