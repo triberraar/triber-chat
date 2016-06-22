@@ -4,13 +4,6 @@ angular.module('user.criteria.controller', ['user.repository', 'user.criteria.se
     .controller('UserCriteriaController', function ($rootScope, $scope, UserRepository, UserCriteriaService) {
         var vm = this;
 
-        vm.registeredUserBroadcast = $rootScope.$on('registeredUser', function () {
-            vm.loadData();
-        });
-        vm.validatedUserBroadcast = $rootScope.$on('validatedUser', function () {
-            vm.loadData();
-        });
-
         var init = function () {
             vm.currentPage = UserCriteriaService.currentPage;
 
@@ -43,10 +36,5 @@ angular.module('user.criteria.controller', ['user.repository', 'user.criteria.se
         };
 
         init();
-
-        $scope.$on('$destroy', function () {
-            vm.registeredUserBroadcast();
-            vm.validatedUserBroadcast();
-        });
 
     });

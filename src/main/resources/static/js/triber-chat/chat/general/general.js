@@ -11,12 +11,12 @@ angular.module('generalChat', ['errorService', '_'])
 })
 .factory('GeneralChatService', function($rootScope, _, Websocket) {
 	var messages = [];
-	
-	$rootScope.$on('messageGeneral', function(event, args) {
-		messages.push(args);
+
+	Websocket.subscribe('/topic/message/general', function(message) {
+		messages.push(message);
 		messages = _.takeRight(messages, 10);
 	});
-	
+
 	var generalChatService = {
 		getMessages: function() {
 			return messages;
@@ -29,7 +29,7 @@ angular.module('generalChat', ['errorService', '_'])
 	return generalChatService;
 	
 })
-.factory('ConnectedUserService', function($rootScope, ConnectedUsersResource, ErrorService) {
+.factory('ConnectedUserService', function($rootScope, ConnectedUsersResource, ErrorService, Websocket) {
 	var users = [];
 	var loadData = function() {
 		ConnectedUsersResource.all().$promise.then(function(data) {
@@ -38,18 +38,12 @@ angular.module('generalChat', ['errorService', '_'])
 			ErrorService.error('Couldn\'t load connected users.');
 		});
 	};
-	
-	$rootScope.$on('connectedUser', function() {
-		loadData();
-	});
-	$rootScope.$on('disconnectedUser', function() {
-		loadData();
-	});
-		
-	$rootScope.$on('connected', function() {
-		loadData();
-	});
 
+	Websocket.subscribe('/topic/user/connected', loadData);
+	Websocket.subscribe('/topic/user/disconnected', loadData);
+
+	Websocket.onConnected(loadData);
+	
 	loadData();
 	
 	var connectedUserService = {
@@ -81,9 +75,4 @@ angular.module('generalChat', ['errorService', '_'])
 	vm.users = function() {
 		return ConnectedUserService.getUsers();
 	};
-})
-.run(function(Websocket) {
-	Websocket.subscribe('/topic/user/connected', 'connectedUser');
-	Websocket.subscribe('/topic/user/disconnected', 'disconnectedUser');
-	Websocket.subscribe('/topic/message/general', 'messageGeneral');
 });

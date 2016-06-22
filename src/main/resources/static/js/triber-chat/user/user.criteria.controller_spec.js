@@ -46,24 +46,6 @@ describe('user.criteria.controller', function() {
         });
 
     });
-    describe('registeredUser event', function() {
-        beforeEach(createController);
-        it('should get the data', function() {
-            spyOn(userRepositoryMock, 'all');
-            rootScope.$broadcast('registeredUser');
-
-            expect(userRepositoryMock.all).toHaveBeenCalled();
-        });
-    });
-    describe('validatedUser', function() {
-        beforeEach(createController);
-        it('should get the data', function() {
-            spyOn(userRepositoryMock, 'all');
-            rootScope.$broadcast('validatedUser');
-
-            expect(userRepositoryMock.all).toHaveBeenCalled();
-        });
-    });
     describe('username', function() {
         var controller;
         beforeEach(function() {
@@ -144,22 +126,6 @@ describe('user.criteria.controller', function() {
             controller.clear();
 
             expect(userCriteriaServiceMock.clear).toHaveBeenCalled();
-        });
-    });
-    describe('destroy', function() {
-        var controller;
-        beforeEach(function() {
-            controller = createController();
-            spyOn(userCriteriaServiceMock, 'clear');
-        });
-        it('should clean up the listeners', function() {
-            spyOn(controller, 'registeredUserBroadcast');
-            spyOn(controller, 'validatedUserBroadcast');
-
-            scope.$destroy();
-
-            expect(controller.registeredUserBroadcast).toHaveBeenCalled();
-            expect(controller.validatedUserBroadcast).toHaveBeenCalled();
         });
     });
 

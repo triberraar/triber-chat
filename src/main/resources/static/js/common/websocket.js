@@ -4,42 +4,48 @@ angular.module('websocket', ['jwt'])
 .factory('Websocket', function(JWT, $rootScope, $timeout) {
 	var websocket = {};
 	var subscriptions = [];
+	var onConnected = [];
 	var reconnectTimeout;
-	//websocket.stomp.debug = null;
+
+
+	function executeOnConnectionFunctions() {
+		angular.forEach(onConnected, function(eventFunction) {
+			eventFunction();
+		});
+	}
+
+	function subscribe(channel, eventFunction) {
+		websocket.stomp.subscribe(channel, function(message) {
+			eventFunction(angular.fromJson(message.body));
+			$rootScope.$digest();
+		});
+	}
 	
 	websocket.connect = function() {
 		websocket.client = new SockJS('/chat?jwt=' + JWT.get()); // eslint-disable-line
 		websocket.stomp = Stomp.over(websocket.client); // eslint-disable-line
+		websocket.stomp.debug = null;
 		websocket.stomp.connect({}, function() {
-			$rootScope.$emit('connected');
+			executeOnConnectionFunctions();
 			$timeout.cancel(reconnectTimeout);
 			angular.forEach(subscriptions, function(subscription) {
-				websocket.stomp.subscribe(subscription.channel, function(message) {
-					websocket.broadcast(subscription.eventName, message.body);
-				});
+				subscribe(subscription.channel, subscription.eventFunction);
+
 			});
 		}, function() {
 			$rootScope.$apply(function() {
-				reconnectTimeout =$timeout(function() {
+				reconnectTimeout = $timeout(function() {
 					websocket.connect();
 				}, 5000);
 			});
 		});
 	};
 	
-	websocket.broadcast = function(eventName, content) {
-		$rootScope.$apply(function() {
-			$rootScope.$emit(eventName, angular.fromJson(content));
-		});
-	};
-	
-	websocket.subscribe = function(channel, eventName) {
-		subscriptions.push({channel: channel, eventName: eventName});
+	websocket.subscribe = function(channel, eventFunction) {
+
+		subscriptions.push({channel: channel, eventFunction: eventFunction});
 		if(websocket.stomp.connected) {
-			websocket.stomp.subscribe(channel, function(message) {
-				websocket.broadcast(eventName, message);
-			});
-			return;
+			subscribe(channel, eventFunction);
 		}
 	};
 	
@@ -50,8 +56,11 @@ angular.module('websocket', ['jwt'])
 	websocket.send = function(channel, message) {
 		if(websocket.connected) {
 			websocket.stomp.send(channel, {}, angular.toJson(message));
-			return;
 		}
+	};
+
+	websocket.onConnected = function(eventFunction) {
+		onConnected.push(eventFunction);
 	};
 	
 	return websocket;
