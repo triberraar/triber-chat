@@ -20,6 +20,7 @@ angular.module('user.result.controller', ['errorService', 'successService', 'use
             UserResource.validate({userId: user.id}).$promise.then(function () {
                 vm.validating = false;
                 SuccessService.success('User ' + user.username + ' validated');
+                UserRepository.all();
             }, function () {
                 vm.validating = false;
                 ErrorService.error('Validation failed');

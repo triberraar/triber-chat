@@ -9,6 +9,7 @@
     "postinstall": "bower install",
     "lint": "eslint src/main/resources/static/js",
     "test_chrome": "./node_modules/.bin/karma start --single-run --colors --browsers Chrome",
+    "test_chrome_watch": "./node_modules/.bin/karma start --auto-watch --colors --browsers Chrome",
     "test_phantomjs": "./node_modules/.bin/karma start --single-run --colors --browsers PhantomJS",
     "proxy": "node proxy.js"
   },

@@ -13,19 +13,18 @@ angular.module('notificationService', ['websocket', 'securityService', 'ngResour
 	var numberOfNotifications = 0;
 	
 	if(SecurityService.hasRole('ROLE_ADMIN')) {
-		Websocket.subscribe('/topic/notifications/registeredUser', 'registeredUser');
-		Websocket.subscribe('/topic/notifications/validatedUser', 'validatedUser');
+		Websocket.subscribe('/topic/notifications/registeredUser', checkUnvalidatedUsers);
+		Websocket.subscribe('/topic/notifications/validatedUser', checkUnvalidatedUsers);
+		Websocket.onConnected(checkUnvalidatedUsers);
 	}
 	
-	$rootScope.$on('registeredUser', function() {
-		notificationService.checkUnvalidatedUsers();
-	});
-	$rootScope.$on('validatedUser', function() {
-		notificationService.checkUnvalidatedUsers();
-	});
-	$rootScope.$on('connected', function() {
-		notificationService.checkUnvalidatedUsers();
-	});
+	function checkUnvalidatedUsers() {
+		UnvalidatedUserResource.existsUnvalidated().$promise.then(function() {
+			notificationService.addNotification('unvalidatedUser', 'There are unvalidated users.');
+		}, function() {
+			notificationService.removeNotification('unvalidatedUser');
+		});
+	}
 	
 	var notificationService = {
 			addNotification : function(key, notification) {
@@ -40,13 +39,7 @@ angular.module('notificationService', ['websocket', 'securityService', 'ngResour
 					notifications[key] = undefined;
 				}
 			},
-			checkUnvalidatedUsers: function() {
-				UnvalidatedUserResource.existsUnvalidated().$promise.then(function() {
-					notificationService.addNotification('unvalidatedUser', 'There are unvalidated users.');
-				}, function() {
-					notificationService.removeNotification('unvalidatedUser');
-				});
-			},
+			checkUnvalidatedUsers: checkUnvalidatedUsers,
 			notifications : function() {
 				return notifications;
 			},

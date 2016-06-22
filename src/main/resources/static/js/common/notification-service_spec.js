@@ -2,12 +2,13 @@
 
 describe('service', function() {
 
-    var notificationService, $rootScope, $httpBackend;
+    var notificationService, $httpBackend;
 
     var securityServiceMock = {
         hasRole: function() {}
     }, websocketMock = {
-        subscribe:function() {}
+        subscribe:function() {},
+        onConnected: function() {}
     };
 
     beforeEach(module('notificationService'));
@@ -18,9 +19,58 @@ describe('service', function() {
     }));
 
     describe('init', function() {
-
-        it('should subscribe to registeredUser and validatedUser when admin', function() {
+        it('should subscribe to registeredUser when admin', function() {
             spyOn(securityServiceMock, 'hasRole').and.returnValue(true);
+            spyOn(websocketMock, 'subscribe');
+
+            inject(function(_NotificationService_, _$httpBackend_) {
+                notificationService = _NotificationService_;
+                $httpBackend = _$httpBackend_;
+            });
+
+            expect(securityServiceMock.hasRole).toHaveBeenCalled();
+            expect(securityServiceMock.hasRole).toHaveBeenCalledWith('ROLE_ADMIN');
+            expect(websocketMock.subscribe).toHaveBeenCalledTimes(2);
+            expect(websocketMock.subscribe).toHaveBeenCalledWith('/topic/notifications/registeredUser', jasmine.any(Function));
+            websocketMock.subscribe.calls.argsFor(0)[1]();
+            $httpBackend.expectGET('/user/unvalidated').respond(200);
+            $httpBackend.flush();
+        });
+        it('should subscribe to validatedUser when admin', function() {
+            spyOn(securityServiceMock, 'hasRole').and.returnValue(true);
+            spyOn(websocketMock, 'subscribe');
+
+            inject(function(_NotificationService_, _$httpBackend_) {
+                notificationService = _NotificationService_;
+                $httpBackend = _$httpBackend_;
+            });
+
+            expect(securityServiceMock.hasRole).toHaveBeenCalled();
+            expect(securityServiceMock.hasRole).toHaveBeenCalledWith('ROLE_ADMIN');
+            expect(websocketMock.subscribe).toHaveBeenCalledTimes(2);
+            expect(websocketMock.subscribe).toHaveBeenCalledWith('/topic/notifications/validatedUser', jasmine.any(Function));
+            websocketMock.subscribe.calls.argsFor(1)[1]();
+            $httpBackend.expectGET('/user/unvalidated').respond(200);
+            $httpBackend.flush();
+        });
+        it('should register a callback to onConnected', function() {
+            spyOn(securityServiceMock, 'hasRole').and.returnValue(true);
+            spyOn(websocketMock, 'onConnected');
+
+            inject(function(_NotificationService_, _$httpBackend_) {
+                notificationService = _NotificationService_;
+                $httpBackend = _$httpBackend_;
+            });
+
+            expect(securityServiceMock.hasRole).toHaveBeenCalled();
+            expect(securityServiceMock.hasRole).toHaveBeenCalledWith('ROLE_ADMIN');
+            expect(websocketMock.onConnected).toHaveBeenCalledWith(jasmine.any(Function));
+            websocketMock.onConnected.calls.argsFor(0)[0]();
+            $httpBackend.expectGET('/user/unvalidated').respond(200);
+            $httpBackend.flush();
+        });
+        it('shouldn\'t subscribe when not admin', function() {
+            spyOn(securityServiceMock, 'hasRole').and.returnValue(false);
             spyOn(websocketMock, 'subscribe');
 
             inject(function(_NotificationService_) {
@@ -29,98 +79,7 @@ describe('service', function() {
 
             expect(securityServiceMock.hasRole).toHaveBeenCalled();
             expect(securityServiceMock.hasRole).toHaveBeenCalledWith('ROLE_ADMIN');
-            expect(websocketMock.subscribe).toHaveBeenCalledTimes(2);
-            expect(websocketMock.subscribe).toHaveBeenCalledWith('/topic/notifications/registeredUser', 'registeredUser');
-            expect(websocketMock.subscribe).toHaveBeenCalledWith('/topic/notifications/validatedUser', 'validatedUser');
-        });
-        it('shouldn\'t subscribe when not admin', function() {
-            spyOn(securityServiceMock, 'hasRole').and.returnValue(false);
-            spyOn(websocketMock, 'subscribe');
-
-            inject(function(_NotificationService_, _$rootScope_) {
-                notificationService = _NotificationService_;
-                $rootScope = _$rootScope_;
-            });
-
-            expect(securityServiceMock.hasRole).toHaveBeenCalled();
-            expect(securityServiceMock.hasRole).toHaveBeenCalledWith('ROLE_ADMIN');
             expect(websocketMock.subscribe).not.toHaveBeenCalled();
-        });
-    });
-    describe('on registeredUser event', function() {
-        beforeEach(inject(function(_NotificationService_, _$rootScope_, _$httpBackend_) {
-            notificationService = _NotificationService_;
-            $rootScope = _$rootScope_;
-            $httpBackend = _$httpBackend_;
-        }));
-        it('should add notification if unvalidated user exists', function() {
-            $httpBackend.expectGET('/user/unvalidated').respond(200);
-            $rootScope.$emit('registeredUser');
-            $httpBackend.flush();
-
-            expect(notificationService.notification('unvalidatedUser')).toBeDefined();
-        });
-        it('should remove notification if no unvalidated user exists', function() {
-            $httpBackend.expectGET('/user/unvalidated').respond(404);
-            $rootScope.$emit('registeredUser');
-            $httpBackend.flush();
-
-            expect(notificationService.notification('unvalidatedUser')).toBeUndefined();
-        });
-
-        afterEach(function() {
-            $httpBackend.verifyNoOutstandingExpectation();
-            $httpBackend.verifyNoOutstandingRequest();
-        });
-    });
-    describe('on validatedUser event', function() {
-        beforeEach(inject(function(_NotificationService_, _$rootScope_, _$httpBackend_) {
-            notificationService = _NotificationService_;
-            $rootScope = _$rootScope_;
-            $httpBackend = _$httpBackend_;
-        }));
-        it('should add notification if unvalidated user exists', function() {
-            $httpBackend.expectGET('/user/unvalidated').respond(200);
-            $rootScope.$emit('validatedUser');
-            $httpBackend.flush();
-
-            expect(notificationService.notification('unvalidatedUser')).toBeDefined();
-        });
-        it('should remove notification if no unvalidated user exists', function() {
-            $httpBackend.expectGET('/user/unvalidated').respond(404);
-            $rootScope.$emit('validatedUser');
-            $httpBackend.flush();
-
-            expect(notificationService.notification('unvalidatedUser')).toBeUndefined();
-        });
-        afterEach(function() {
-            $httpBackend.verifyNoOutstandingExpectation();
-            $httpBackend.verifyNoOutstandingRequest();
-        });
-    });
-    describe('on connected event', function() {
-        beforeEach(inject(function(_NotificationService_, _$rootScope_, _$httpBackend_) {
-            notificationService = _NotificationService_;
-            $rootScope = _$rootScope_;
-            $httpBackend = _$httpBackend_;
-        }));
-        it('should add notification if unvalidated user exists', function() {
-            $httpBackend.expectGET('/user/unvalidated').respond(200);
-            $rootScope.$emit('connected');
-            $httpBackend.flush();
-
-            expect(notificationService.notification('unvalidatedUser')).toBeDefined();
-        });
-        it('should remove notification if no unvalidated user exists', function() {
-            $httpBackend.expectGET('/user/unvalidated').respond(404);
-            $rootScope.$emit('connected');
-            $httpBackend.flush();
-
-            expect(notificationService.notification('unvalidatedUser')).toBeUndefined();
-        });
-        afterEach(function() {
-            $httpBackend.verifyNoOutstandingExpectation();
-            $httpBackend.verifyNoOutstandingRequest();
         });
     });
     describe('addNotification', function() {

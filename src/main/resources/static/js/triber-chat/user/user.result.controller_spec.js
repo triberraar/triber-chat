@@ -10,7 +10,8 @@ describe('user.result.controller', function () {
         success: function () {
         }
     }, userRepositoryMock = {
-        users: [{id: 1}]
+        users: [{id: 1}],
+        all: function() {}
     };
 
     beforeEach(module('user.result.controller'));
@@ -60,12 +61,14 @@ describe('user.result.controller', function () {
         it('should validate and display success message, when successful', function () {
             $httpBackend.expectPUT('/user/1/validate').respond(200);
             spyOn(successServiceMock, 'success');
+            spyOn(userRepositoryMock, 'all');
 
             userResultController.validate({id: 1, username: 'username'});
             $httpBackend.flush();
 
             expect(successServiceMock.success).toHaveBeenCalled();
             expect(successServiceMock.success).toHaveBeenCalledWith('User username validated');
+            expect(userRepositoryMock.all).toHaveBeenCalled();
         });
         it('should validated and display error message, when not successful', function () {
             $httpBackend.expectPUT('/user/1/validate').respond(500);
