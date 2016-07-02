@@ -18,7 +18,8 @@ var dependencies = [
                      'websocket',
                      'menu',
                      'notificationService',
-                     'autoscroll'
+                     'autoscroll',
+                     'chatSlimScroll'
                      ];
 
 angular.module('triber-chat', dependencies)
@@ -43,7 +44,7 @@ angular.module('triber-chat', dependencies)
 			controllerAs: 'chatCtrl',
 			resolve: {
 				lazyLoad: function($ocLazyLoad) {
-					return $ocLazyLoad.load('/js/triber-chat/chat/chat.js');
+					return $ocLazyLoad.load(['/js/triber-chat/chat/chat.js', '/js/triber-chat/chat/private/private.component.js']);
 				}
 			}
 		})

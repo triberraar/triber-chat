@@ -75,4 +75,8 @@ angular.module('generalChat', ['errorService', '_'])
 	vm.users = function() {
 		return ConnectedUserService.getUsers();
 	};
+
+	vm.clickedUser = function(user) {
+		console.log('clicked ' + user);
+	}
 });
