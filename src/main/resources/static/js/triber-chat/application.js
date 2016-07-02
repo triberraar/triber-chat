@@ -44,7 +44,7 @@ angular.module('triber-chat', dependencies)
 			controllerAs: 'chatCtrl',
 			resolve: {
 				lazyLoad: function($ocLazyLoad) {
-					return $ocLazyLoad.load(['/js/triber-chat/chat/chat.js', '/js/triber-chat/chat/private/private.component.js']);
+					return $ocLazyLoad.load(['/js/triber-chat/chat/chat.js']);
 				}
 			}
 		})
@@ -55,7 +55,7 @@ angular.module('triber-chat', dependencies)
 			controllerAs: 'generalChatCtrl',
 			resolve: {
 				lazyLoad: function($ocLazyLoad) {
-					return $ocLazyLoad.load('/js/triber-chat/chat/general/general.js');
+					return $ocLazyLoad.load(['/js/triber-chat/chat/general/general.js','/js/triber-chat/chat/private/private.service.js', '/js/triber-chat/chat/private/private.component.js']);
 				}
 			}
 		})

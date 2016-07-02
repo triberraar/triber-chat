@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('generalChat', ['errorService', '_'])
+angular.module('generalChat', ['errorService', '_', 'chat.private.service'])
 .factory('ConnectedUsersResource', function($resource) {
 	return $resource('/user/connected', {}, {
 		all : {
@@ -54,7 +54,7 @@ angular.module('generalChat', ['errorService', '_'])
 	
 	return connectedUserService;
 })
-.controller('GeneralChatController', function($rootScope, _, ConnectedUsersResource,ErrorService, Websocket, GeneralChatService, ConnectedUserService) {
+.controller('GeneralChatController', function($rootScope, _, ConnectedUsersResource,ErrorService, Websocket, GeneralChatService, ConnectedUserService,PrivateChatService) {
 	var vm = this;
 	
 	vm.connected = function() {
@@ -77,6 +77,6 @@ angular.module('generalChat', ['errorService', '_'])
 	};
 
 	vm.clickedUser = function(user) {
-		console.log('clicked ' + user);
+		PrivateChatService.chatWithUser(user);
 	}
 });

@@ -1,10 +1,10 @@
-<div class="small-chat-box ng-small-chat fadeInRight animated chat-private" >
+<div class="small-chat-box ng-small-chat chat-private" ng-show="privateChatCtrl.shouldShow()">
 
     <div class="heading" draggable="true">
-        <small class="chat-date pull-right">
+        <small class="chat-date pull-right" ng-click="privateChatCtrl.hide()">
             X
         </small>
-        Small chat
+        {{privateChatCtrl.user().username}}
     </div>
 
     <div class="content" chat-slim-scroll>
