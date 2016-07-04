@@ -4,14 +4,19 @@ import be.tribersoft.triber.chat.message.domain.api.MessageMessage;
 
 public class PrivateMessageFromJsonAdapter implements MessageMessage {
 	private String content;
-	private String destination;
+	private String to;
+	private String from;
 
 	@Override
 	public String getContent() {
 		return content;
 	}
 
-	public String getDestination() {
-		return destination;
+	public String getTo() {
+		return to;
+	}
+
+	public String getFrom() {
+		return from;
 	}
 }

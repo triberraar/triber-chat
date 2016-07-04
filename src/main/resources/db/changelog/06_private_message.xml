@@ -7,7 +7,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <changeSet id="create message" author="tribersoft">
+    <changeSet id="create private message" author="tribersoft">
     	<createTable tableName="private_message" >
     		<column name="id" type="varchar(256)">
     			<constraints primaryKey="true" nullable="false"/>
@@ -15,10 +15,10 @@
     		<column name="version" type="BIGINT">
     			<constraints nullable="false"/>
     		</column>
-    		<column name="to" type="varchar(256)">
+    		<column name="to_user" type="varchar(256)">
     			<constraints nullable="false"/>
     		</column>
-    		<column name="from" type="varchar(256)">
+    		<column name="from_user" type="varchar(256)">
     			<constraints nullable="false"/>
     		</column>
     		<column name="content" type="varchar(4096)">

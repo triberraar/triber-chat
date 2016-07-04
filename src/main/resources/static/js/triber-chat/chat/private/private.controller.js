@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('chat.private.controller', ['chat.private.service'])
-.controller('PrivateChatController', function(PrivateChatService) {
+.controller('PrivateChatController', function(PrivateChatService, Websocket, SecurityService) {
     var vm = this;
 
     vm.shouldShow = function() {
@@ -11,6 +11,16 @@ angular.module('chat.private.controller', ['chat.private.service'])
     vm.hide = PrivateChatService.hide;
 
     vm.user = function() {
-      return PrivateChatService.selectedUser;;
-    }
+      return PrivateChatService.selectedUser;
+    };
+
+    vm.chat = function() {
+        if(vm.message && vm.message !== '') {
+            Websocket.send('/app/message/private', {
+                content: vm.message,
+                to: PrivateChatService.selectedUser.username,
+                from: SecurityService.getUsername()
+            });
+        }
+    };
 });
