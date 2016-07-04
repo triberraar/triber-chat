@@ -1,9 +1,9 @@
 package be.tribersoft.triber.chat.message.service.api;
 
-import be.tribersoft.triber.chat.message.domain.api.Message;
+import be.tribersoft.triber.chat.message.domain.api.PublicMessage;
 
 public interface MessageService {
 
-	Message createPublic(String ownerUsername, String content);
+	PublicMessage createPublic(String ownerUsername, String content);
 
 }

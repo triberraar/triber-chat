@@ -6,7 +6,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.security.access.annotation.Secured;
 
-import be.tribersoft.triber.chat.message.domain.api.Message;
+import be.tribersoft.triber.chat.message.domain.api.PublicMessage;
 import be.tribersoft.triber.chat.message.domain.api.MessageFacade;
 import be.tribersoft.triber.chat.message.service.api.MessageService;
 
@@ -19,7 +19,7 @@ public class DefaultMessageService implements MessageService {
 
 	@Override
 	@Secured({ "ROLE_ADMIN", "ROLE_USER" })
-	public Message createPublic(String ownerUsername, String content) {
+	public PublicMessage createPublic(String ownerUsername, String content) {
 		return messageFacade.createPublic(ownerUsername, content);
 	}
 }

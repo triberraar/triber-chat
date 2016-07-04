@@ -18,4 +18,10 @@ public class DefaultMessageFacade implements MessageFacade {
 		defaultMessageRepository.save(messageEntity);
 		return messageEntity;
 	}
+
+	public PrivateMessageEntity createPrivate(String content, String to, String from) {
+		PrivateMessageEntity messageEntity = messageFactory.createPrivate(content, to, from);
+		defaultMessageRepository.save(messageEntity);
+		return messageEntity;
+	}
 }

@@ -2,7 +2,7 @@ package be.tribersoft.triber.chat.message.controller;
 
 import java.util.Date;
 
-import be.tribersoft.triber.chat.message.domain.api.Message;
+import be.tribersoft.triber.chat.message.domain.api.PublicMessage;
 
 public class MessageToJsonAdapter {
 
@@ -14,7 +14,7 @@ public class MessageToJsonAdapter {
 
 	}
 
-	public MessageToJsonAdapter(Message message) {
+	public MessageToJsonAdapter(PublicMessage message) {
 		this.content = message.getContent();
 		this.username = message.getOwnerUsername();
 		this.timestamp = message.getCreationDate();

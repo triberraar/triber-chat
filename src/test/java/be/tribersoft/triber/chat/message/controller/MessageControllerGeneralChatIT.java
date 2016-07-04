@@ -22,9 +22,8 @@ import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import be.tribersoft.triber.chat.common.AbstractWebsocketIT;
 import be.tribersoft.triber.chat.common.DateFactory;
 import be.tribersoft.triber.chat.common.TestAbstractStompSessionHandler;
-import be.tribersoft.triber.chat.message.domain.impl.AbstractMessageEntity;
-import be.tribersoft.triber.chat.message.domain.impl.MessageJpaRepository;
 import be.tribersoft.triber.chat.message.domain.impl.PublicMessageEntity;
+import be.tribersoft.triber.chat.message.domain.impl.PublicMessageJpaRepository;
 
 public class MessageControllerGeneralChatIT extends AbstractWebsocketIT {
 	private static final String USERNAME = "user";
@@ -32,7 +31,7 @@ public class MessageControllerGeneralChatIT extends AbstractWebsocketIT {
 	private static final String CONTENT = "content";
 
 	@Inject
-	private MessageJpaRepository messageJpaRepository;
+	private PublicMessageJpaRepository publicMessageJpaRepository;
 
 	@Before
 	public void setUp() {
@@ -83,7 +82,7 @@ public class MessageControllerGeneralChatIT extends AbstractWebsocketIT {
 			throw new AssertionError("", failure.get());
 		}
 
-		List<AbstractMessageEntity> savedMessages = messageJpaRepository.findAll();
+		List<PublicMessageEntity> savedMessages = publicMessageJpaRepository.findAll();
 		assertThat(savedMessages).hasSize(1);
 		assertThat(savedMessages.get(0)).isInstanceOf(PublicMessageEntity.class);
 		assertThat(savedMessages.get(0).getContent()).isEqualTo(CONTENT);

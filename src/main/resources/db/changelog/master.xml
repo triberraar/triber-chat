@@ -10,4 +10,5 @@
     <include file="/db/changelog/user.xml"/>
     <include file="/db/changelog/resetPassword.xml"/>
     <include file="/db/changelog/05_message.xml"/>
+    <include file="/db/changelog/06_private_message.xml"/>
 </databaseChangeLog>
