@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('chat.private.service', [])
-    .factory('PrivateChatService', function (Websocket, _, MessageConfig, SecurityService) {
+    .factory('PrivateChatService', function (Websocket, _, MessageConfig, SecurityService, NotificationService) {
         var show = false, selectedUser, messages= {};
 
         Websocket.subscribe('/user/topic/message/private', function(message) {
@@ -18,6 +18,11 @@ angular.module('chat.private.service', [])
             }
             messages[place].push(message);
             messages[place] = _.takeRight(messages[place], MessageConfig.numberOfMessages);
+            if(!selectedUser) {
+                NotificationService.addNotification({ key: 'privateMessage', message: 'You received private messages.', cssClass: 'fa fa-comment fa-fw', admin: false});
+            } else if(!message.own && message.to !== selectedUser.username) {
+                NotificationService.addNotification({ key: 'privateMessage', message: 'You received private messages.', cssClass: 'fa fa-comment fa-fw', admin: false});
+            }
         });
 
         var privateChatService = {

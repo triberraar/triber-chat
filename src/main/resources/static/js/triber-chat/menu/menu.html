@@ -4,24 +4,23 @@
     		<a ui-sref="chat.general"><i class="fa fa-home fa-2x"></i></a>
     	</div>
         <ul class="nav navbar-top-links navbar-right">
-        	<li ng-if="!menuCtrl.connected()"><a><i class="fa fa-circle-o-notch fa-spin"></i> Connecting</li></a>
+        	<li ng-if="!menuCtrl.connected()"><a><i class="fa fa-circle-o-notch fa-spin"></i> Connecting</a></li>
             <li uib-dropdown >
                 <a class="count-info" href uib-dropdown-toggle>
                     <i class="fa fa-bell"></i> <span class="label label-primary">{{menuCtrl.numberOfNotifications()}}</span>
                 </a>
                 <ul class="dropdown-alerts" uib-dropdown-menu >
-                    <li ng-if="menuCtrl.showAdmin() && menuCtrl.notification('unvalidatedUser')">
-                        <a ui-sref="user">
-                            <div>
-                                <i class="fa fa-user fa-fw"></i> {{menuCtrl.notification('unvalidatedUser')}}
+                    <li ng-repeat="notification in menuCtrl.notifications()">
+                            <div ng-click="menuCtrl.goToNotification(notification)">
+                                <i ng-class="notification.cssClass"></i> {{notification.message}}
                             </div>
-                        </a>
                     </li>
+
                     <!--  <li class="divider" ng-if="menuCtrl.showAdmin() && menuCtrl.notification('unvalidatedUser')"></li>-->
-                    <li ng-if="menuCtrl.numberOfNotifications() == 0">
+                    <li ng-if="menuCtrl.numberOfNotifications() === 0">
                     	<a>
                         	<div>
-                            	<i class="fa fa-comment fa-fw"></i> There are no notifications
+                            	<i class=""></i> There are no notifications
                         	</div>
                         </a>
                     </li>

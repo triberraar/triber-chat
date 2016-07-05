@@ -8,9 +8,8 @@ angular.module('notificationService', ['websocket', 'securityService', 'ngResour
 			}
 		});
 	})
-.factory('NotificationService', function(UnvalidatedUserResource, Websocket, $rootScope, SecurityService) {
+.factory('NotificationService', function(UnvalidatedUserResource, Websocket, $rootScope, SecurityService, _) {
 	var notifications = {};
-	var numberOfNotifications = 0;
 	
 	if(SecurityService.hasRole('ROLE_ADMIN')) {
 		Websocket.subscribe('/topic/notifications/registeredUser', checkUnvalidatedUsers);
@@ -20,34 +19,34 @@ angular.module('notificationService', ['websocket', 'securityService', 'ngResour
 	
 	function checkUnvalidatedUsers() {
 		UnvalidatedUserResource.existsUnvalidated().$promise.then(function() {
-			notificationService.addNotification('unvalidatedUser', 'There are unvalidated users.');
+			notificationService.addNotification({ key: 'unvalidatedUser',  message: 'There are unvalidated users.', cssClass: 'fa fa-user fa-fw', admin: true, link: 'user'});
 		}, function() {
 			notificationService.removeNotification('unvalidatedUser');
 		});
 	}
 	
 	var notificationService = {
-			addNotification : function(key, notification) {
-				if(!notifications[key]) {
-					numberOfNotifications++;
-				}
-				notifications[key] = notification;
+			addNotification : function(notification) {
+				notifications[notification.key] = notification;
 			},
 			removeNotification: function(key) {
 				if(notifications[key]) {
-					numberOfNotifications--;
 					notifications[key] = undefined;
 				}
 			},
 			checkUnvalidatedUsers: checkUnvalidatedUsers,
 			notifications : function() {
-				return notifications;
+				if(SecurityService.isAdmin()) {
+					return notifications;
+				} else {
+					return _.filter(notifications, function(notification){ return !notification.admin; });
+				}
+			},
+			numberOfNotifications: function() {
+				return _.size(notificationService.notifications());
 			},
 			notification: function(key) {
 				return notifications[key];
-			},
-			numberOfNotifications: function() {
-				return numberOfNotifications;
 			}
 	};
 	return notificationService;

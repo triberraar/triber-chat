@@ -13,6 +13,9 @@ angular.module('securityService', ['jwt', '_'])
 			getUsername: function() {
 				var decodedJwt = JWT.decode();
 				return decodedJwt ? decodedJwt.username : undefined;
+			},
+			isAdmin: function() {
+				return securityService.hasRole('ROLE_ADMIN');
 			}
 		};
 		return securityService;

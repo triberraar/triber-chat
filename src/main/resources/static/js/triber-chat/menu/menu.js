@@ -9,25 +9,21 @@ angular.module('menu', ['securityService', '_', 'notificationService', 'websocke
 			controllerAs: 'menuCtrl'
 		};
 	})
-	.controller('MenuController', function(SecurityService, _, NotificationService, Websocket, JWT, $window) {
+	.controller('MenuController', function(SecurityService, _, NotificationService, Websocket, JWT, $window, $state) {
 		var vm = this;
 		
-		vm.showAdmin = function() {
-			return SecurityService.hasRole('ROLE_ADMIN');
-		};
-		
-		vm.numberOfNotifications = function() {
-			return NotificationService.numberOfNotifications();
-		};
-		
-		vm.notification = function(key) {
-			return NotificationService.notification(key);
+		vm.numberOfNotifications = NotificationService.numberOfNotifications;
+
+		vm.notifications = NotificationService.notifications;
+
+		vm.goToNotification = function(notification) {
+			if(notification.link) {
+				$state.go(notification.link);
+			}
 		};
 
 		vm.init = function() {
-			if(SecurityService.hasRole('ROLE_ADMIN')) {
-				NotificationService.checkUnvalidatedUsers();
-			}
+
 		};
 		
 		vm.connected = function() {
