@@ -8,69 +8,27 @@
     </div>
 
     <div class="content" chat-slim-scroll>
-
-        <div class="left">
+        <div id="private-messages">
+        <div ng-repeat="message in privateChatCtrl.messages()" ng-class="{'left': message.own, 'right': !message.own}" >
             <div class="author-name">
-                Monica Jackson <small class="chat-date">
-                10:02 am
-            </small>
+                {{message.from}} <small class="chat-date">{{message.timestamp |
+                date:'d/M/yyyy H:mm:ss'}}</small>
             </div>
             <div class="chat-message active">
-                Lorem Ipsum is simply dummy text input.
-            </div>
-
-        </div>
-        <div class="right">
-            <div class="author-name">
-                Mick Smith
-                <small class="chat-date">
-                    11:24 am
-                </small>
-            </div>
-            <div class="chat-message">
-                Lorem Ipsum is simpl.
+                {{message.content}}
             </div>
         </div>
-        <div class="left">
-            <div class="author-name">
-                Alice Novak
-                <small class="chat-date">
-                    08:45 pm
-                </small>
             </div>
-            <div class="chat-message active">
-                Check this stock char.
-            </div>
-        </div>
-        <div class="right">
-            <div class="author-name">
-                Anna Lamson
-                <small class="chat-date">
-                    11:24 am
-                </small>
-            </div>
-            <div class="chat-message">
-                The standard chunk of Lorem Ipsum
-            </div>
-        </div>
-        <div class="left">
-            <div class="author-name">
-                Mick Lane
-                <small class="chat-date">
-                    08:45 pm
-                </small>
-            </div>
-            <div class="chat-message active">
-                I belive that. Lorem Ipsum is simply dummy text.
-            </div>
-        </div>
-
-
     </div>
     <div class="form-chat">
-        <div class="input-group input-group-sm"><input type="text" class="form-control"> <span class="input-group-btn"> <button
-                class="btn btn-primary" type="button">Send
-        </button> </span></div>
+        <form ng-submit="privateChatCtrl.chat()">
+            <div class="input-group input-group-sm">
+                <input type="text" class="form-control" ng-model="privateChatCtrl.message">
+                <span class="input-group-btn">
+                    <button class="btn btn-primary" type="submit" >Send</button>
+                </span>
+            </div>
+        </form>
     </div>
 
 </div>

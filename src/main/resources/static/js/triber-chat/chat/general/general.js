@@ -9,12 +9,12 @@ angular.module('generalChat', ['errorService', '_', 'chat.private.service'])
 		}
 	});
 })
-.factory('GeneralChatService', function($rootScope, _, Websocket) {
+.factory('GeneralChatService', function($rootScope, _, Websocket, MessageConfig) {
 	var messages = [];
 
 	Websocket.subscribe('/topic/message/general', function(message) {
 		messages.push(message);
-		messages = _.takeRight(messages, 10);
+		messages = _.takeRight(messages, MessageConfig.numberOfMessages);
 	});
 
 	var generalChatService = {
@@ -54,7 +54,7 @@ angular.module('generalChat', ['errorService', '_', 'chat.private.service'])
 	
 	return connectedUserService;
 })
-.controller('GeneralChatController', function($rootScope, _, ConnectedUsersResource,ErrorService, Websocket, GeneralChatService, ConnectedUserService,PrivateChatService) {
+.controller('GeneralChatController', function($rootScope, _, ConnectedUsersResource,ErrorService, Websocket, GeneralChatService, ConnectedUserService,PrivateChatService, SecurityService) {
 	var vm = this;
 	
 	vm.connected = function() {
@@ -77,6 +77,11 @@ angular.module('generalChat', ['errorService', '_', 'chat.private.service'])
 	};
 
 	vm.clickedUser = function(user) {
-		PrivateChatService.chatWithUser(user);
-	}
+		if(user.username === SecurityService.getUsername()) {
+			ErrorService.error('Can\'t chat with yourself');
+		} else {
+			PrivateChatService.chatWithUser(user);
+		}
+
+	};
 });

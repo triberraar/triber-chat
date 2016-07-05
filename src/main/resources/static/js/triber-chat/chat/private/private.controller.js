@@ -21,6 +21,9 @@ angular.module('chat.private.controller', ['chat.private.service'])
                 to: PrivateChatService.selectedUser.username,
                 from: SecurityService.getUsername()
             });
+            vm.message = '';
         }
     };
+
+    vm.messages = PrivateChatService.getMessagesFromSelectedUser;
 });

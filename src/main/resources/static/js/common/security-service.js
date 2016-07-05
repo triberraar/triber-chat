@@ -9,6 +9,10 @@ angular.module('securityService', ['jwt', '_'])
 			},
 			hasRole: function(role) {
 				return _.includes(securityService.getRoles(), role);
+			},
+			getUsername: function() {
+				var decodedJwt = JWT.decode();
+				return decodedJwt ? decodedJwt.username : undefined;
 			}
 		};
 		return securityService;

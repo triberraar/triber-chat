@@ -83,4 +83,7 @@ angular.module('triber-chat', dependencies)
 	}
 	
 	Websocket.connect();
+})
+.constant('MessageConfig', {
+	numberOfMessages: 10
 });
