@@ -4,7 +4,8 @@
 			<div class="row">
 				<div class="col-md-12 chat-user"
 					ng-repeat="user in generalChatCtrl.users()">
-					<a ng-click="generalChatCtrl.clickedUser(user)"><i class="fa fa-user fa-2x"></i> {{user.username}}</a>
+					<a ng-click="generalChatCtrl.clickedUser(user)"><i class="fa fa-user fa-2x"></i> {{user.username}} <span ng-if="generalChatCtrl.getNumberOfUnreadMessagesForUser(user)>0" class="badge">Messages: {{generalChatCtrl.getNumberOfUnreadMessagesForUser(user)}}</span></a>
+
 				</div>
 			</div>
 		</div>

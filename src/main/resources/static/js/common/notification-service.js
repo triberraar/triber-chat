@@ -31,7 +31,7 @@ angular.module('notificationService', ['websocket', 'securityService', 'ngResour
 			},
 			removeNotification: function(key) {
 				if(notifications[key]) {
-					notifications[key] = undefined;
+					delete notifications[key];
 				}
 			},
 			checkUnvalidatedUsers: checkUnvalidatedUsers,

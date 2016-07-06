@@ -14,13 +14,19 @@ angular.module('chat.private.service', [])
                 place = message.from;
             }
             if(!messages[place]) {
-                messages[place] = [];
+                messages[place] = { messages: [], unread: 0};
             }
-            messages[place].push(message);
-            messages[place] = _.takeRight(messages[place], MessageConfig.numberOfMessages);
-            if(!selectedUser) {
-                NotificationService.addNotification({ key: 'privateMessage', message: 'You received private messages.', cssClass: 'fa fa-comment fa-fw', admin: false});
-            } else if(!message.own && message.to !== selectedUser.username) {
+            messages[place].messages.push(message);
+            messages[place].messages = _.takeRight(messages[place].messages, MessageConfig.numberOfMessages);
+            if(!message.own && !selectedUser) {
+                messages[place].unread++;
+            } else if(!message.own && selectedUser && selectedUser.username !== message.from) {
+                messages[place].unread++;
+            }
+            var unreadMessagesExist = _.find(messages, function(message) {
+                return message.unread > 0;
+            });
+            if(unreadMessagesExist) {
                 NotificationService.addNotification({ key: 'privateMessage', message: 'You received private messages.', cssClass: 'fa fa-comment fa-fw', admin: false});
             }
         });
@@ -28,6 +34,15 @@ angular.module('chat.private.service', [])
         var privateChatService = {
 
             chatWithUser: function(user) {
+                if(messages[user.username]) {
+                    messages[user.username].unread = 0;
+                }
+                var unreadMessagesExist = _.find(messages, function(message) {
+                    return message.unread > 0;
+                });
+                if(!unreadMessagesExist) {
+                    NotificationService.removeNotification('privateMessage');
+                }
                 show = true;
                 selectedUser = user;
             },
@@ -42,9 +57,16 @@ angular.module('chat.private.service', [])
                 return selectedUser;
             },
             getMessagesFromSelectedUser: function() {
-                if(selectedUser) {
-                    return messages[selectedUser.username];
+                if(selectedUser && messages[selectedUser.username]) {
+                    return messages[selectedUser.username].messages;
                 }
+            },
+            getNumberOfUnreadMessagesForUser: function(user) {
+                if(messages[user.username]) {
+                    return messages[user.username].unread || 0;
+                }
+                return 0;
+
             }
         };
 

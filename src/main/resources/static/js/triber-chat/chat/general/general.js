@@ -82,6 +82,9 @@ angular.module('generalChat', ['errorService', '_', 'chat.private.service'])
 		} else {
 			PrivateChatService.chatWithUser(user);
 		}
+	};
 
+	vm.getNumberOfUnreadMessagesForUser = function(user) {
+		return PrivateChatService.getNumberOfUnreadMessagesForUser(user);
 	};
 });
