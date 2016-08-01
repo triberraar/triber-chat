@@ -1,10 +1,12 @@
 jdk:
 - oraclejdk8
-node_js:
-- "node"
+env:
+  - NODE_VERSION=6
 notifications:
   email: false
 install:
+- nvm install $NODE_VERSION
+- nvm use $NODE_VERSION
 - npm install
 - pip install --user codecov
 script:
