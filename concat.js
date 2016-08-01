@@ -21,6 +21,9 @@ inputGlobs.forEach(function(element) {
 var result = UglifyJS.minify(toMinifyFiles, {outSourceMap: 'triber-chat.min.js.map', mangle: false, compress: false});
 
 // save result
+if(!fs.existsSync('src/main/resources/static/js/dst')) {
+    fs.mkdirSync('src/main/resources/static/js/dst');
+}
 fs.writeFile('src/main/resources/static/js/dst/triber-chat.min.js', result.code);
 fs.writeFile('src/main/resources/static/js/dst/triber-chat.min.js.map', result.map);
 
