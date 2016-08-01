@@ -5,8 +5,8 @@ env:
 notifications:
   email: false
 install:
-- nvm install $NODE_VERSION
-- nvm use $NODE_VERSION
+- nvm install 6
+- nvm use 6
 - npm install
 - pip install --user codecov
 script:
