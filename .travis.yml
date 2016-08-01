@@ -1,5 +1,7 @@
 jdk:
 - oraclejdk8
+node_js:
+- "node"
 notifications:
   email: false
 install:
