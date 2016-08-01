@@ -42,38 +42,11 @@ public class MessageControllerPrivateChatIT extends AbstractWebsocketIT {
 	@Test
 	public void sendsMessageToToAndFrom() throws Exception {
 
-		final CountDownLatch latch = new CountDownLatch(2);
+		final CountDownLatch messageLatch = new CountDownLatch(2);
 		final AtomicReference<Throwable> failure = new AtomicReference<>();
+		final CountDownLatch toHandlerConnectionLatch = new CountDownLatch(1);
+		final CountDownLatch fromHandlerConnectionLatch = new CountDownLatch(1);
 
-		StompSessionHandler fromHandler = new TestAbstractStompSessionHandler(failure) {
-
-			@Override
-			public void afterConnected(final StompSession session, StompHeaders connectedHeaders) {
-				session.send("/app/message/private", new TestMessageFromJsonAdapter());
-				session.subscribe("/user/topic/message/private", new StompFrameHandler() {
-					@Override
-					public Type getPayloadType(StompHeaders headers) {
-						return PrivateMessageToJsonAdapter.class;
-					}
-
-					@Override
-					public void handleFrame(StompHeaders headers, Object payload) {
-						try {
-							PrivateMessageToJsonAdapter message = (PrivateMessageToJsonAdapter) payload;
-							assertThat(message.getContent()).isEqualTo(CONTENT);
-							assertThat(message.getTimestamp()).isEqualTo(NOW);
-							assertThat(message.getTo()).isEqualTo(TO);
-							assertThat(message.getFrom()).isEqualTo(FROM);
-						} catch (Throwable t) {
-							failure.set(t);
-						} finally {
-							session.disconnect();
-							latch.countDown();
-						}
-					}
-				});
-			}
-		};
 		StompSessionHandler toHandler = new TestAbstractStompSessionHandler(failure) {
 
 			@Override
@@ -96,18 +69,61 @@ public class MessageControllerPrivateChatIT extends AbstractWebsocketIT {
 							failure.set(t);
 						} finally {
 							session.disconnect();
-							latch.countDown();
+							messageLatch.countDown();
 						}
 					}
 				});
+				toHandlerConnectionLatch.countDown();
+			}
+
+		};
+
+		connect(toHandler, TO);
+
+		if (!toHandlerConnectionLatch.await(25, TimeUnit.SECONDS)) {
+			fail("to not connected");
+		}
+
+		StompSessionHandler fromHandler = new TestAbstractStompSessionHandler(failure) {
+			@Override
+			public void afterConnected(final StompSession session, StompHeaders connectedHeaders) {
+
+				session.subscribe("/user/topic/message/private", new StompFrameHandler() {
+					@Override
+					public Type getPayloadType(StompHeaders headers) {
+						return PrivateMessageToJsonAdapter.class;
+					}
+
+					@Override
+					public void handleFrame(StompHeaders headers, Object payload) {
+						try {
+							PrivateMessageToJsonAdapter message = (PrivateMessageToJsonAdapter) payload;
+							assertThat(message.getContent()).isEqualTo(CONTENT);
+							assertThat(message.getTimestamp()).isEqualTo(NOW);
+							assertThat(message.getTo()).isEqualTo(TO);
+							assertThat(message.getFrom()).isEqualTo(FROM);
+						} catch (Throwable t) {
+							failure.set(t);
+						} finally {
+							session.disconnect();
+							messageLatch.countDown();
+						}
+					}
+				});
+
+				fromHandlerConnectionLatch.countDown();
+
+				session.send("/app/message/private", new TestMessageFromJsonAdapter());
 			}
 		};
 
 		connect(fromHandler, FROM);
-		connect(toHandler, TO);
+		if (!fromHandlerConnectionLatch.await(25, TimeUnit.SECONDS)) {
+			fail("from not connected");
+		}
 
-		if (!latch.await(500, TimeUnit.SECONDS)) {
-			fail("timeout");
+		if (!messageLatch.await(25, TimeUnit.SECONDS)) {
+			fail("message latch timedout");
 		}
 		if (failure.get() != null) {
 			throw new AssertionError("", failure.get());
