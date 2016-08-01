@@ -9,3 +9,4 @@ npm-debug.log
 .README.md.html
 coverage
 coverage-frontend
+src/main/resources/static/js/dst

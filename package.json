@@ -3,15 +3,18 @@
   "description": "file to have heroku run bower aswell",
   "dependencies": {
     "bower": "1.7.9",
-    "karma": "^0.13.22"
+    "karma": "^0.13.22",
+    "uglify-js2": "^2.1.11"
   },
   "scripts": {
-    "postinstall": "bower install",
+    "postinstall": "bower install && npm run build",
+    "build": "node concat",
+    "build:watch": "onchange '**/*.js' -e '**/dst/*.js' -- npm run build",
     "lint": "eslint src/main/resources/static/js",
     "test_chrome": "./node_modules/.bin/karma start --single-run --colors --browsers Chrome",
-    "test_chrome_watch": "./node_modules/.bin/karma start --auto-watch --colors --browsers Chrome",
+    "test_chrome:watch": "./node_modules/.bin/karma start --auto-watch --colors --browsers Chrome",
     "test_phantomjs": "./node_modules/.bin/karma start --single-run --colors --browsers PhantomJS",
-    "proxy": "node proxy.js"
+    "proxy": "npm run build:watch & node proxy.js"
   },
   "devDependencies": {
     "bunyan": "^1.8.1",
@@ -27,6 +30,7 @@
     "karma-coveralls": "^1.1.2",
     "karma-jasmine": "^1.0.2",
     "karma-phantomjs-launcher": "^1.0.0",
-    "karma-story-reporter": "^0.3.1"
+    "karma-story-reporter": "^0.3.1",
+    "onchange": "^2.5.0"
   }
 }

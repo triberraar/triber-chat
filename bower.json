@@ -33,7 +33,7 @@
   },
   "resolutions": {
     "jquery": "~2.1.4",
-    "angular": "1.5.7",
+    "angular": "1.5.8",
     "lodash": "~4.6.1",
     "switchery": "~0.8.1"
   },
