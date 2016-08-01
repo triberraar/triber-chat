@@ -2,7 +2,7 @@
 
 /*eslint-disable*/
 var glob = require('glob');
-var UglifyJS = require('uglify-js2');
+var UglifyJS = require('uglify-js');
 var fs = require('fs');
 
 
@@ -18,7 +18,7 @@ inputGlobs.forEach(function(element) {
 });
 
 // minify files
-var result = UglifyJS.minify(toMinifyFiles, {outSourceMap: 'triber-chat.min.js.map', mangle: false});
+var result = UglifyJS.minify(toMinifyFiles, {outSourceMap: 'triber-chat.min.js.map', mangle: false, compress: false});
 
 // save result
 fs.writeFile('src/main/resources/static/js/dst/triber-chat.min.js', result.code);

@@ -1,11 +1,12 @@
 'use strict';
 
-describe('service', function() {
+describe('notificationService', function() {
 
     var notificationService, $httpBackend;
 
     var securityServiceMock = {
-        hasRole: function() {}
+        hasRole: function() {},
+        isAdmin: function() {return true; }
     }, websocketMock = {
         subscribe:function() {},
         onConnected: function() {}
@@ -87,16 +88,16 @@ describe('service', function() {
             notificationService = _NotificationService_;
         }));
         it('should add the notification and increase number of notification if notification does\'t exist already', function() {
-            notificationService.addNotification('key', 'value');
+            notificationService.addNotification({ key:'key', message:'value'});
 
-            expect(notificationService.notification('key')).toEqual('value');
+            expect(notificationService.notification('key')).toEqual({ key:'key', message:'value'});
             expect(notificationService.numberOfNotifications()).toEqual(1);
         });
         it('should do nothing if notification already exists', function() {
-            notificationService.addNotification('key', 'value');
-            notificationService.addNotification('key', 'value');
+            notificationService.addNotification({ key:'key', message:'value'});
+            notificationService.addNotification({ key:'key', message:'value'});
 
-            expect(notificationService.notification('key')).toEqual('value');
+            expect(notificationService.notification('key')).toEqual({ key:'key', message:'value'});
             expect(notificationService.numberOfNotifications()).toEqual(1);
         });
     });
@@ -105,7 +106,7 @@ describe('service', function() {
             notificationService = _NotificationService_;
         }));
         it('should remove the notification and decrease number of notifications if notification exists', function() {
-            notificationService.addNotification('key', 'value');
+            notificationService.addNotification({ key:'key', message:'value'});
             notificationService.removeNotification('key');
 
             expect(notificationService.notification('key')).toBeUndefined();
@@ -130,7 +131,7 @@ describe('service', function() {
 
             $httpBackend.flush();
 
-            expect(notificationService.notification('unvalidatedUser')).toEqual('There are unvalidated users.');
+            expect(notificationService.notification('unvalidatedUser')).toEqual({ key: 'unvalidatedUser',  message: 'There are unvalidated users.', cssClass: 'fa fa-user fa-fw', admin: true, link: 'user'});
         });
         it('should remove notification if no unvalidated user exists', function() {
             $httpBackend.expectGET('/user/unvalidated').respond(404);
@@ -148,10 +149,10 @@ describe('service', function() {
     });
     describe('notifications', function() {
         it('should return the notifications', function() {
-            notificationService.addNotification('key', 'value');
-            notificationService.addNotification('key2', 'value2');
+            notificationService.addNotification({ key:'key', message:'value'});
+            notificationService.addNotification({ key:'key2', message:'value2'});
 
-            expect(notificationService.notifications()).toEqual({key: 'value', key2: 'value2'});
+            expect(notificationService.notifications()).toEqual({key: { key:'key', message:'value'}, key2:{ key:'key2', message:'value2'}});
         });
     });
     describe('notification', function() {
@@ -159,9 +160,9 @@ describe('service', function() {
             notificationService = _NotificationService_;
         }));
         it('should return the notification with key', function() {
-            notificationService.addNotification('key', 'value');
+            notificationService.addNotification({ key:'key', message:'value'});
 
-            expect(notificationService.notification('key')).toEqual('value');
+            expect(notificationService.notification('key')).toEqual({ key:'key', message:'value'});
         });
     });
     describe('numberOfNotifications', function() {
@@ -170,10 +171,10 @@ describe('service', function() {
         }));
         it('should return the number of notifications', function() {
             expect(notificationService.numberOfNotifications()).toEqual(0);
-            notificationService.addNotification('key', 'value');
+            notificationService.addNotification({ key:'key', message:'value'});
 
             expect(notificationService.numberOfNotifications()).toEqual(1);
-            notificationService.addNotification('key2', 'value');
+            notificationService.addNotification({ key:'key2', message:'value'});
             expect(notificationService.numberOfNotifications()).toEqual(2);
         });
     });
