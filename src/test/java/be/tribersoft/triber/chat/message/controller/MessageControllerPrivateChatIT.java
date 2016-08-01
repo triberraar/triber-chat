@@ -106,7 +106,7 @@ public class MessageControllerPrivateChatIT extends AbstractWebsocketIT {
 		connect(fromHandler, FROM);
 		connect(toHandler, TO);
 
-		if (!latch.await(50, TimeUnit.SECONDS)) {
+		if (!latch.await(500, TimeUnit.SECONDS)) {
 			fail("timeout");
 		}
 		if (failure.get() != null) {
