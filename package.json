@@ -3,6 +3,7 @@
   "description": "file to have heroku run bower aswell",
   "dependencies": {
     "bower": "1.7.9",
+    "glob": "^7.0.5",
     "karma": "^0.13.22",
     "uglify-js2": "^2.1.11"
   },
