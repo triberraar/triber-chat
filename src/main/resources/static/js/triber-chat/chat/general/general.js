@@ -1,15 +1,7 @@
 'use strict';
 
-angular.module('generalChat', ['errorService', '_', 'chat.private.service'])
-.factory('ConnectedUsersResource', function($resource) {
-	return $resource('/user/connected', {}, {
-		all : {
-			method : 'GET',
-			isArray: true
-		}
-	});
-})
-.factory('GeneralChatService', function($rootScope, _, Websocket, MessageConfig) {
+angular.module('generalChat', ['_', 'connected-user.component'])
+.factory('GeneralChatService', function( _, Websocket, MessageConfig) {
 	var messages = [];
 
 	Websocket.subscribe('/topic/message/general', function(message) {
@@ -29,32 +21,7 @@ angular.module('generalChat', ['errorService', '_', 'chat.private.service'])
 	return generalChatService;
 	
 })
-.factory('ConnectedUserService', function($rootScope, ConnectedUsersResource, ErrorService, Websocket) {
-	var users = [];
-	var loadData = function() {
-		ConnectedUsersResource.all().$promise.then(function(data) {
-			users = data;
-		},function() {
-			ErrorService.error('Couldn\'t load connected users.');
-		});
-	};
-
-	Websocket.subscribe('/topic/user/connected', loadData);
-	Websocket.subscribe('/topic/user/disconnected', loadData);
-
-	Websocket.onConnected(loadData);
-	
-	loadData();
-	
-	var connectedUserService = {
-		getUsers: function() {
-			return users;
-		}
-	};
-	
-	return connectedUserService;
-})
-.controller('GeneralChatController', function($rootScope, _, ConnectedUsersResource,ErrorService, Websocket, GeneralChatService, ConnectedUserService,PrivateChatService, SecurityService) {
+.controller('GeneralChatController', function(Websocket, GeneralChatService) {
 	var vm = this;
 	
 	vm.connected = function() {
@@ -72,19 +39,4 @@ angular.module('generalChat', ['errorService', '_', 'chat.private.service'])
 		return GeneralChatService.getMessages();
 	};
 	
-	vm.users = function() {
-		return ConnectedUserService.getUsers();
-	};
-
-	vm.clickedUser = function(user) {
-		if(user.username === SecurityService.getUsername()) {
-			ErrorService.error('Can\'t chat with yourself');
-		} else {
-			PrivateChatService.chatWithUser(user);
-		}
-	};
-
-	vm.getNumberOfUnreadMessagesForUser = function(user) {
-		return PrivateChatService.getNumberOfUnreadMessagesForUser(user);
-	};
 });

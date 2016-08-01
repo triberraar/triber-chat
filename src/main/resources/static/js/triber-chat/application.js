@@ -19,7 +19,9 @@ var dependencies = [
                      'menu',
                      'notificationService',
                      'autoscroll',
-                     'chatSlimScroll'
+                     'chatSlimScroll',
+					 'Chat',
+					 'connected-user.component'
                      ];
 
 angular.module('triber-chat', dependencies)
@@ -41,12 +43,8 @@ angular.module('triber-chat', dependencies)
 			url:'/chat',
 			templateUrl: 'js/triber-chat/chat/chat.html',
 			controller: 'ChatController',
-			controllerAs: 'chatCtrl',
-			resolve: {
-				lazyLoad: function($ocLazyLoad) {
-					return $ocLazyLoad.load(['/js/triber-chat/chat/chat.js']);
-				}
-			}
+			controllerAs: 'chatCtrl'
+
 		})
 		.state('chat.general', {
 			url: '/general',
