@@ -2,7 +2,7 @@
 
 /*eslint-disable*/
 var glob = require('glob');
-var UglifyJS = require('uglify-js');
+var UglifyJS = require('uglify-js2');
 var fs = require('fs');
 
 
