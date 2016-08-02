@@ -7,7 +7,6 @@ var dependencies = [
     'ui.bootstrap',
     'toaster',
     'ngAnimate',
-    'oc.lazyLoad',
     'ngPasswordStrength',
     'vcRecaptcha',
     'angular-ladda',
@@ -20,8 +19,9 @@ var dependencies = [
     'notificationService',
     'autoscroll',
     'chatSlimScroll',
-    'Chat',
-    'connected-user.component'
+
+    'user.component',
+    'chat.component'
 ];
 
 angular.module('triber-chat', dependencies)
@@ -31,12 +31,7 @@ angular.module('triber-chat', dependencies)
         $stateProvider
             .state('user', {
                 url: '/user',
-                template: '<user></user>',
-                resolve: {
-                    lazyLoad: function ($ocLazyLoad) {
-                        return $ocLazyLoad.load(['/js/triber-chat/user/user.component.js']);
-                    }
-                }
+                template: '<user></user>'
             })
             .state('chat', {
                 abstract: true,
@@ -50,29 +45,12 @@ angular.module('triber-chat', dependencies)
                 url: '/general',
                 templateUrl: 'js/triber-chat/chat/general/general.html',
                 controller: 'GeneralChatController',
-                controllerAs: 'generalChatCtrl',
-                resolve: {
-                    lazyLoad: function ($ocLazyLoad) {
-                        return $ocLazyLoad.load(['/js/triber-chat/chat/general/general.js', '/js/triber-chat/chat/private/private.service.js', '/js/triber-chat/chat/private/private.component.js']);
-                    }
-                }
+                controllerAs: 'generalChatCtrl'
             })
             .state('chat.room', {
                 url: '/room',
                 templateUrl: 'js/triber-chat/chat/room/room.html'
             });
-//	$urlRouterProvider.otherwise('/home');
-//	$stateProvider.state('/home', {
-//		url : '/home',
-//		templateUrl : 'js/triber-chat/home/home.html',
-//		controller : 'HomeController',
-//		controllerAs : 'homeCtrl',
-//		resolve : {
-//			lazyLoad : function($ocLazyLoad) {
-//				return $ocLazyLoad.load( '/js/triber-chat/home/home.js');
-//			}
-//		}
-//	});
 
     })
     .run(function (JWT, $window, Websocket) {

@@ -26,5 +26,5 @@ function UserRepository($http, ErrorService, UserCriteriaService) {
     return UserRepository;
 }
 
-angular.module('user.repository', [ 'errorService', 'user.criteria.service'])
+angular.module('user.repository', [ 'ng', 'errorService', 'user.criteria.service'])
     .factory('UserRepository', UserRepository);

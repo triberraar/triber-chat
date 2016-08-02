@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('connected-user.service', ['connected-user.repository'])
+angular.module('connected-user.service', ['connected-user.repository', 'websocket'])
 .factory('ConnectedUserService', function(ConnectedUserRepository, Websocket) {
 
     var loadData = function() {

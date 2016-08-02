@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('chat.private.service', [])
+angular.module('chat.private.service', ['websocket', '_', 'securityService', 'notificationService'])
     .factory('PrivateChatService', function (Websocket, _, MessageConfig, SecurityService, NotificationService) {
         var show = false, selectedUser, messages= {};
 

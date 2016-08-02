@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('connected-user.controller', ['connected-user.service', 'chat.private.service'])
+angular.module('connected-user.controller', ['errorService', 'connected-user.service', 'chat.private.service', 'securityService'])
     .controller('ConnectedUserController', function(ErrorService, ConnectedUserService, PrivateChatService, SecurityService) {
         var vm = this;
 

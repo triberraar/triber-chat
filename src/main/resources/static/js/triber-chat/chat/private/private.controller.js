@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('chat.private.controller', ['chat.private.service'])
+angular.module('chat.private.controller', ['chat.private.service', 'websocket', 'errorService'])
 .controller('PrivateChatController', function(PrivateChatService, Websocket, SecurityService) {
     var vm = this;
 

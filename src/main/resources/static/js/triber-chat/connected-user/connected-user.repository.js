@@ -15,5 +15,5 @@ function ConnectedUserRepository($http, ErrorService) {
     return connectedUserRepository;
 }
 
-angular.module('connected-user.repository', [ 'errorService'])
+angular.module('connected-user.repository', ['ng', 'errorService'])
     .factory('ConnectedUserRepository', ConnectedUserRepository);

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('menu', ['securityService', '_', 'notificationService', 'websocket', 'jwt'])
+angular.module('menu', ['securityService', '_', 'notificationService', 'websocket', 'jwt', 'ng', 'ui.router.state'])
 	.directive('menu', function() {
 		return {
 			replace: true,
