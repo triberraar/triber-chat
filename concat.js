@@ -25,7 +25,7 @@ if(!fs.existsSync('src/main/resources/static/js/dst')) {
     fs.mkdirSync('src/main/resources/static/js/dst');
 }
 fs.writeFile('src/main/resources/static/js/dst/triber-chat.min.js', result.code);
-fs.writeFile('src/main/resources/static/js/dst/triber-chat.min.js.map', result.map);
+fs.writeFile('src/main/resources/static/js/dst/triber-chat.min.js.map', result.map.replace(/src\/main\/resources\/static/g, '../..'));
 
 /*eslint-disable*/
 console.log('done concat');
