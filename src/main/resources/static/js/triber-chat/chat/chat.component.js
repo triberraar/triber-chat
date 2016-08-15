@@ -1,20 +1,8 @@
 'use strict';
 
-angular.module('chat.component', ['ui.router.state', 'chat.private.component', 'chat.general.component'])
-.controller('ChatController', function($state) {
-	var vm=this;
-	
-	vm.init = function() {
-		vm.generalActive = false;
-		vm.roomActive = false;
-		if($state.is('chat.general')) {
-			vm.generalActive = true;
-		}
-		if($state.is('chat.room')) {
-			vm.roomActive = true;
-		}
-	};
-	
-	vm.init();
-	
-});
+angular.module('chat.component', ['chat.controller', 'chat.private.component', 'chat.general.component'])
+		.component('chat', {
+			templateUrl: 'js/triber-chat/chat/chat.html',
+			controller: 'ChatController',
+			controllerAs: 'chatCtrl'
+		});
