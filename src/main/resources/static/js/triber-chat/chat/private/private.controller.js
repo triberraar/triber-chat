@@ -15,7 +15,7 @@ angular.module('chat.private.controller', ['chat.private.service', 'websocket', 
     };
 
     vm.chat = function() {
-        if(vm.message && vm.message !== '') {
+        if(angular.isDefined( vm.message) && vm.message.trim() !== '') {
             Websocket.send('/app/message/private', {
                 content: vm.message,
                 to: PrivateChatService.selectedUser.username,
