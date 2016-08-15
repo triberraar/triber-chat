@@ -43,9 +43,7 @@ angular.module('triber-chat', dependencies)
             })
             .state('chat.general', {
                 url: '/general',
-                templateUrl: 'js/triber-chat/chat/general/general.html',
-                controller: 'GeneralChatController',
-                controllerAs: 'generalChatCtrl'
+                template: '<general-chat></general-chat>'
             })
             .state('chat.room', {
                 url: '/room',
