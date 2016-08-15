@@ -2,7 +2,7 @@
 
 describe('chat.general.controller', function() {
 
-    var rootScope, $controller, controller;
+    var $controller, controller;
 
     var websocketMock = {
         connected: function() {
@@ -17,16 +17,12 @@ describe('chat.general.controller', function() {
 
     beforeEach(module('chat.general.controller'));
 
-    beforeEach(inject(function(_$controller_, _$rootScope_) {
-        rootScope = _$rootScope_;
+    beforeEach(inject(function(_$controller_) {
         $controller = _$controller_;
     }));
 
     var createController = function() {
-        var scope = rootScope.$new();
         return $controller('GeneralChatController', {
-            $rootScope: rootScope,
-            $scope: scope,
             Websocket: websocketMock,
             GeneralChatService: generalChatServiceMock
         });
