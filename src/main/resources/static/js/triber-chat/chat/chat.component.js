@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('chat.component', ['ui.router.state', 'chat.private.component', 'generalChat'])
+angular.module('chat.component', ['ui.router.state', 'chat.private.component', 'chat.general.component'])
 .controller('ChatController', function($state) {
 	var vm=this;
 	
