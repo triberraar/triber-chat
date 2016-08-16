@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('menu', ['securityService', '_', 'notificationService', 'websocket', 'jwt', 'ng', 'ui.router.state'])
+angular.module('menu', ['notificationService', 'websocket', 'jwt', 'ng', 'ui.router.state'])
 	.directive('menu', function() {
 		return {
 			replace: true,
@@ -9,7 +9,7 @@ angular.module('menu', ['securityService', '_', 'notificationService', 'websocke
 			controllerAs: 'menuCtrl'
 		};
 	})
-	.controller('MenuController', function(SecurityService, _, NotificationService, Websocket, JWT, $window, $state) {
+	.controller('MenuController', function( NotificationService, Websocket, JWT, $window, $state) {
 		var vm = this;
 		
 		vm.numberOfNotifications = NotificationService.numberOfNotifications;
@@ -22,10 +22,6 @@ angular.module('menu', ['securityService', '_', 'notificationService', 'websocke
 			}
 		};
 
-		vm.init = function() {
-
-		};
-		
 		vm.connected = function() {
 			return Websocket.connected();
 		};
@@ -34,7 +30,4 @@ angular.module('menu', ['securityService', '_', 'notificationService', 'websocke
 			JWT.clear();
 			$window.location.href = '/';
 		};
-		
-		
-		vm.init();
 	});
