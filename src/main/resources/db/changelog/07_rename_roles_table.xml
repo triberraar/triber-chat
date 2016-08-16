@@ -7,9 +7,9 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.0.xsd
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
-    <include file="/db/changelog/user.xml"/>
-    <include file="/db/changelog/resetPassword.xml"/>
-    <include file="/db/changelog/05_message.xml"/>
-    <include file="/db/changelog/06_private_message.xml"/>
-    <include file="/db/changelog/07_rename_roles_table.xml"/>
+    <changeSet id="rename roles (hibernate)" author="tribersoft">
+    	<renameTable newTableName="triber_user_roles" oldTableName="user_entity_roles"/>
+    	<renameColumn tableName="triber_user_roles" oldColumnName="user_entity_id" newColumnName="triber_user_id"/>
+    </changeSet>
+    
 </databaseChangeLog>

@@ -8,8 +8,8 @@ import javax.inject.Named;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.mysema.query.types.ExpressionUtils;
-import com.mysema.query.types.Predicate;
+import com.querydsl.core.types.ExpressionUtils;
+import com.querydsl.core.types.Predicate;
 
 @Named
 public class PredicateFactory {
