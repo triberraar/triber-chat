@@ -56,6 +56,9 @@ angular.module('chat.private.service', ['websocket', '_', 'securityService', 'no
             get selectedUser() {
                 return selectedUser;
             },
+            get _messages() {
+                return messages;
+            },
             getMessagesFromSelectedUser: function() {
                 if(selectedUser && messages[selectedUser.username]) {
                     return messages[selectedUser.username].messages;
