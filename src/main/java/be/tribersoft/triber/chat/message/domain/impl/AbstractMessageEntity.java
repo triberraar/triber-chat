@@ -17,11 +17,11 @@ import org.hibernate.annotations.GenericGenerator;
 
 import be.tribersoft.triber.chat.common.DateFactory;
 import be.tribersoft.triber.chat.common.jpa.CryptoConverter;
-import be.tribersoft.triber.chat.message.domain.api.Message;
+import be.tribersoft.triber.chat.message.domain.api.MessageMessage;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class AbstractMessageEntity implements Message {
+public abstract class AbstractMessageEntity implements MessageMessage {
 	@Id
 	@GeneratedValue(generator = "system-uuid")
 	@GenericGenerator(name = "system-uuid", strategy = "uuid2")
@@ -31,9 +31,6 @@ public abstract class AbstractMessageEntity implements Message {
 	@Version
 	@Column(nullable = false)
 	private Long version;
-
-	@Column(nullable = false)
-	protected String ownerUsername;
 
 	@Convert(converter = CryptoConverter.class)
 	@Column(length = 2048, nullable = false)
@@ -52,13 +49,8 @@ public abstract class AbstractMessageEntity implements Message {
 		return content;
 	}
 
-	@Override
-	public String getOwnerUsername() {
-		return ownerUsername;
-	}
-
-	@Override
 	public Date getCreationDate() {
 		return creationDate;
 	}
+
 }

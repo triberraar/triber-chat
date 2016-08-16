@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('menu', ['securityService', '_', 'notificationService', 'websocket', 'jwt'])
+angular.module('menu', ['notificationService', 'websocket', 'jwt', 'ng', 'ui.router.state'])
 	.directive('menu', function() {
 		return {
 			replace: true,
@@ -9,27 +9,19 @@ angular.module('menu', ['securityService', '_', 'notificationService', 'websocke
 			controllerAs: 'menuCtrl'
 		};
 	})
-	.controller('MenuController', function(SecurityService, _, NotificationService, Websocket, JWT, $window) {
+	.controller('MenuController', function( NotificationService, Websocket, JWT, $window, $state) {
 		var vm = this;
 		
-		vm.showAdmin = function() {
-			return SecurityService.hasRole('ROLE_ADMIN');
-		};
-		
-		vm.numberOfNotifications = function() {
-			return NotificationService.numberOfNotifications();
-		};
-		
-		vm.notification = function(key) {
-			return NotificationService.notification(key);
-		};
+		vm.numberOfNotifications = NotificationService.numberOfNotifications;
 
-		vm.init = function() {
-			if(SecurityService.hasRole('ROLE_ADMIN')) {
-				NotificationService.checkUnvalidatedUsers();
+		vm.notifications = NotificationService.notifications;
+
+		vm.goToNotification = function(notification) {
+			if(notification.link) {
+				$state.go(notification.link);
 			}
 		};
-		
+
 		vm.connected = function() {
 			return Websocket.connected();
 		};
@@ -38,7 +30,4 @@ angular.module('menu', ['securityService', '_', 'notificationService', 'websocke
 			JWT.clear();
 			$window.location.href = '/';
 		};
-		
-		
-		vm.init();
 	});

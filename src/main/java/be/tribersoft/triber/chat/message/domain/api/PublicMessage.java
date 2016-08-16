@@ -7,7 +7,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotEmpty;
 
-public interface Message extends MessageMessage {
+public interface PublicMessage extends MessageMessage {
 
 	@NotEmpty(message = "message.validation.owner.username.empty")
 	@Length(max = 256, min = 4, message = "message.validation.owner.username.length")
@@ -15,5 +15,4 @@ public interface Message extends MessageMessage {
 
 	@NotNull(message = "message.validation.creation.date.null")
 	Date getCreationDate();
-
 }

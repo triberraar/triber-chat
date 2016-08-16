@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('user.result.controller', ['errorService', 'successService', 'user.repository', 'user.resource'])
+angular.module('user.result.controller', ['user.resource', 'errorService', 'successService', 'user.repository'])
     .controller('UserResultController', function (UserResource, ErrorService, SuccessService, UserRepository) {
         var vm = this;
 

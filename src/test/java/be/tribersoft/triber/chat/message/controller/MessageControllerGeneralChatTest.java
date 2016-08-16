@@ -13,7 +13,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import be.tribersoft.triber.chat.message.domain.api.Message;
+import be.tribersoft.triber.chat.message.domain.api.PublicMessage;
 import be.tribersoft.triber.chat.message.service.api.MessageService;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -29,7 +29,7 @@ public class MessageControllerGeneralChatTest {
 	@Mock
 	private MessageService messageService;
 	@Mock
-	private Message message;
+	private PublicMessage message;
 	@Mock
 	private MessageFromJsonAdapter inputMessage;
 	@Mock

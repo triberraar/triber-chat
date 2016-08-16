@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('user.criteria.controller', ['user.repository', 'user.criteria.service'])
-    .controller('UserCriteriaController', function ($rootScope, $scope, UserRepository, UserCriteriaService) {
+    .controller('UserCriteriaController', function ( UserRepository, UserCriteriaService) {
         var vm = this;
 
         var init = function () {

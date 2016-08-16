@@ -9,3 +9,7 @@
 .home {
 	padding: 20px 30px
 }
+
+.chat-private {
+  z-index: 5;
+}
