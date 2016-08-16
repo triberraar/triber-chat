@@ -4,7 +4,7 @@
   "dependencies": {
     "bower": "1.7.9",
     "glob": "^7.0.5",
-    "karma": "^0.13.22",
+    "karma": "^1.2.0",
     "uglify-js": "^2.7.0"
   },
   "scripts": {
@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "bunyan": "^1.8.1",
-    "eslint": "^2.13.1",
+    "eslint": "^3.3.1",
     "eslint-config-angular": "^0.5.0",
     "eslint-plugin-angular": "^1.1.1",
     "eslint-plugin-jasmine": "^1.8.1",
