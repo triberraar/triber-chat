@@ -70,7 +70,7 @@ describe('menu', function() {
             menuController.logout();
 
             expect(JWTMock.clear).toHaveBeenCalled();
-            expect($windowMock.location.href).toEqual('/')
+            expect($windowMock.location.href).toEqual('/');
         });
     });
 });
