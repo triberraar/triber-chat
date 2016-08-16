@@ -19,7 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.querydsl.QPageRequest;
 
-import com.mysema.query.types.Predicate;
+import com.querydsl.core.types.Predicate;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DefaultUserRepositoryFindallTest {
