@@ -53,6 +53,7 @@ describe('register', function () {
 
                 expect(warningServiceMock.warn).toHaveBeenCalled();
                 expect(warningServiceMock.warn).toHaveBeenCalledWith('Please correct the register form.');
+                expect(registerController.submitAttempted).toEqual(true);
             });
             it('should display success when registration goes successful in the backend', function() {
                 spyOn(successServiceMock, 'success');
@@ -67,6 +68,7 @@ describe('register', function () {
                 expect(successServiceMock.success).toHaveBeenCalled();
                 expect(successServiceMock.success).toHaveBeenCalledWith('Registration successful, you will receive an email.');
                 expect(registerController.registering).toEqual(false);
+                expect(registerController.submitAttempted).toEqual(true);
             });
             it('should handle error when registration fails', function() {
                 spyOn(vcRecaptchaServiceMock, 'reload');
@@ -86,6 +88,7 @@ describe('register', function () {
                 expect(registerController.recaptcha).toBeUndefined();
                 expect(errorServiceMock.error).toHaveBeenCalled();
                 expect(errorServiceMock.error).toHaveBeenCalledWith('error1<br>error2<br>');
+                expect(registerController.submitAttempted).toEqual(true);
             });
 
             afterEach(function() {

@@ -13,6 +13,7 @@ angular.module('resetPassword', ['passwordCompare', 'ngResource', 'warningServic
 	})
 	.controller('ResetPasswordController', function(ResetPasswordResource, WarningService, SuccessService, ErrorService) {
 		var vm = this;
+		vm.submitAttempted = false;
 		
 		vm.resetPassword = function() {
 			vm.submitAttempted = true;
@@ -36,6 +37,7 @@ angular.module('resetPassword', ['passwordCompare', 'ngResource', 'warningServic
 	})
 	.controller('ConfirmResetPasswordController', function($state, $stateParams, ResetPasswordResource, WarningService, ErrorService, SuccessService) {
 		var vm = this;
+		vm.submitAttempted = false;
 		
 		vm.confirmResetPassword = function() {
 			vm.submitAttempted = true;
