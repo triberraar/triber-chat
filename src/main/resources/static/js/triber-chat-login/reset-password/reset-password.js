@@ -1,13 +1,6 @@
 'use strict';
 
-var jsFiles = [
-               '/js/common/password-compare.js',
-               'js/common/warning-service.js',
-               'js/common/error-service.js',
-               'js/common/success-service.js'
-           ];
-
-angular.module('resetPassword', [jsFiles])
+angular.module('resetPassword', ['passwordCompare', 'ngResource', 'warningService', 'errorService', 'successService', 'ui.router.state'])
 	.factory('ResetPasswordResource', function($resource) {
 		return $resource('/reset-password/:resetPasswordId', {}, {
 			reset : {
@@ -20,6 +13,7 @@ angular.module('resetPassword', [jsFiles])
 	})
 	.controller('ResetPasswordController', function(ResetPasswordResource, WarningService, SuccessService, ErrorService) {
 		var vm = this;
+		vm.submitAttempted = false;
 		
 		vm.resetPassword = function() {
 			vm.submitAttempted = true;
@@ -43,6 +37,7 @@ angular.module('resetPassword', [jsFiles])
 	})
 	.controller('ConfirmResetPasswordController', function($state, $stateParams, ResetPasswordResource, WarningService, ErrorService, SuccessService) {
 		var vm = this;
+		vm.submitAttempted = false;
 		
 		vm.confirmResetPassword = function() {
 			vm.submitAttempted = true;

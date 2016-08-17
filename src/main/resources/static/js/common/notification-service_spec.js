@@ -82,6 +82,11 @@ describe('notificationService', function() {
             expect(securityServiceMock.hasRole).toHaveBeenCalledWith('ROLE_ADMIN');
             expect(websocketMock.subscribe).not.toHaveBeenCalled();
         });
+
+        afterEach(function() {
+            $httpBackend.verifyNoOutstandingExpectation();
+            $httpBackend.verifyNoOutstandingRequest();
+        });
     });
     describe('addNotification', function() {
         beforeEach(inject(function(_NotificationService_) {

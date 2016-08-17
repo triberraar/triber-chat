@@ -1,13 +1,6 @@
 'use strict';
 
-var jsFiles = [
-    '/js/common/password-compare.js',
-    'js/common/warning-service.js',
-    'js/common/error-service.js',
-    'js/common/success-service.js'
-];
-
-angular.module('register', ['vcRecaptcha', jsFiles])
+angular.module('register', ['passwordCompare', 'vcRecaptcha', 'ngResource', 'warningService', 'errorService', 'successService'])
 .factory('RegisterResource', function($resource) {
 	return $resource('/register', {}, {
 		register : {
