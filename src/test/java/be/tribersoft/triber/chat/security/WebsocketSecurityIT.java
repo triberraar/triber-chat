@@ -14,9 +14,9 @@ import javax.inject.Inject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.context.embedded.LocalServerPort;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.HttpStatus;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompHeaders;
@@ -24,7 +24,6 @@ import org.springframework.messaging.simp.stomp.StompSession;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -40,10 +39,8 @@ import be.tribersoft.triber.chat.common.TestAbstractStompSessionHandler;
 import be.tribersoft.triber.chat.user.domain.api.UserRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
-@WebAppConfiguration
 @TestPropertySource(value = "classpath:/application-test.properties")
-@IntegrationTest("server.port:0")
+@SpringBootTest(classes = Application.class, webEnvironment = WebEnvironment.RANDOM_PORT)
 public class WebsocketSecurityIT {
 	@Inject
 	private TokenHandler tokenHandler;
@@ -51,7 +48,7 @@ public class WebsocketSecurityIT {
 	private UserRepository userRepository;
 
 	private SockJsClient sockJsClient;
-	@Value("${local.server.port}")
+	@LocalServerPort
 	private int port;
 
 	@Before

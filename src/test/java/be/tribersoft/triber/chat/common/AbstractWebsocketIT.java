@@ -7,14 +7,13 @@ import javax.inject.Inject;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.boot.context.embedded.LocalServerPort;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
@@ -28,10 +27,8 @@ import be.tribersoft.triber.chat.security.TokenHandler;
 import be.tribersoft.triber.chat.user.domain.api.UserRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = Application.class)
-@WebAppConfiguration
 @TestPropertySource(value = "classpath:/application-test.properties")
-@IntegrationTest("server.port:0")
+@SpringBootTest(classes = Application.class, webEnvironment = WebEnvironment.RANDOM_PORT)
 public abstract class AbstractWebsocketIT {
 
 	@Inject
@@ -40,7 +37,7 @@ public abstract class AbstractWebsocketIT {
 	private UserRepository userRepository;
 
 	private SockJsClient sockJsClient;
-	@Value("${local.server.port}")
+	@LocalServerPort
 	private int port;
 
 	@Before
