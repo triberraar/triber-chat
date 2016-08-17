@@ -17,14 +17,12 @@ describe('login', function() {
             warn: function() {}
         };
 
-
         beforeEach(module('login'));
 
         beforeEach(inject(function(_$controller_, _$httpBackend_) {
             $controller = _$controller_;
             $httpBackend = _$httpBackend_;
         }));
-
 
         function createController() {
            loginController = $controller('LoginController', {
@@ -75,6 +73,7 @@ describe('login', function() {
                 expect(errorServiceMock.clear).toHaveBeenCalled();
                 expect(warningServiceMock.warn).toHaveBeenCalled();
                 expect(warningServiceMock.warn).toHaveBeenCalledWith('Please correct the login form.');
+                expect(loginController.submitAttempted).toEqual(true);
             });
             it('should save the new token and redirect to chat when login is successful', function() {
                 spyOn(JWTMock, 'save');
@@ -86,6 +85,7 @@ describe('login', function() {
                 expect(JWTMock.save).toHaveBeenCalled();
                 expect(JWTMock.save).toHaveBeenCalledWith('token');
                 expect($windowMock.location.href).toEqual('/chat.html');
+                expect(loginController.submitAttempted).toEqual(true);
             });
             it('should handle error when login is not successful', function() {
                 spyOn(errorServiceMock, 'error');
@@ -97,6 +97,7 @@ describe('login', function() {
 
                 expect(errorServiceMock.error).toHaveBeenCalled();
                 expect(errorServiceMock.error).toHaveBeenCalledWith('Login failed, please correct the login form and try again.', 0, 'loginFailedToastId' );
+                expect(loginController.submitAttempted).toEqual(true);
             });
 
             afterEach(function() {
