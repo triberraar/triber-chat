@@ -1,12 +1,6 @@
 'use strict';
 
-var jsFiles = [
-               'js/common/warning-service.js',
-               'js/common/error-service.js',
-               'js/common/success-service.js'
-];
-
-angular.module('activateRegistration', ['vcRecaptcha', jsFiles])
+angular.module('activateRegistration', ['ngResource', 'ui.router.state', 'warningService', 'errorService', 'successService'])
 .factory('ActivateUserResource', function($resource) {
 	return $resource('/user/:userId/activate', {}, {
 		register : {

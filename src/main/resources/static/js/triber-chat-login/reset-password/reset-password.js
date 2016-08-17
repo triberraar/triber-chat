@@ -1,13 +1,6 @@
 'use strict';
 
-var jsFiles = [
-               '/js/common/password-compare.js',
-               'js/common/warning-service.js',
-               'js/common/error-service.js',
-               'js/common/success-service.js'
-           ];
-
-angular.module('resetPassword', [jsFiles])
+angular.module('resetPassword', ['passwordCompare', 'ngResource', 'warningService', 'errorService', 'successService', 'ui.router.state'])
 	.factory('ResetPasswordResource', function($resource) {
 		return $resource('/reset-password/:resetPasswordId', {}, {
 			reset : {

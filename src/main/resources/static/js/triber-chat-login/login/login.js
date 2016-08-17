@@ -1,13 +1,6 @@
 'use strict';
 
-var jsFiles = [ 
-                '/js/common/jwt.js', 
-                '/js/common/local-storage.js',
-                'js/common/warning-service.js',
-                'js/common/error-service.js'
-];
-
-angular.module('login', [ 'ngResource', 'jwt', jsFiles ])
+angular.module('login', [ 'ngResource', 'ng', 'jwt', 'warningService', 'errorService' ])
 .factory('LoginResource', function($resource) {
 	return $resource('/login', {}, {
 		login : {
