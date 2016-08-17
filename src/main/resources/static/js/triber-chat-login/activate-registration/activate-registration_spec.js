@@ -35,7 +35,7 @@ describe('activateRegistration', function() {
            });
            activateRegistrationController.activateRegistrationForm = {
 
-           }
+           };
        });
 
        describe('init', function() {
@@ -52,6 +52,7 @@ describe('activateRegistration', function() {
 
                expect(warningServiceMock.warn).toHaveBeenCalled();
                expect(warningServiceMock.warn).toHaveBeenCalledWith('Please correct the activate form.');
+               expect(activateRegistrationController.submitAttempted).toEqual(true);
            });
            it('should display succes when registration activated in backend', function() {
                $httpBackend.expectPUT('/user/userId/activate').respond(200);
@@ -66,6 +67,7 @@ describe('activateRegistration', function() {
                expect(successServiceMock.success).toHaveBeenCalledWith('You are activated');
                expect($stateMock.go).toHaveBeenCalled();
                expect($stateMock.go).toHaveBeenCalledWith('login');
+               expect(activateRegistrationController.submitAttempted).toEqual(true);
 
            });
            it('should handle error when registration activation failed in backend', function() {
@@ -78,6 +80,7 @@ describe('activateRegistration', function() {
 
                expect(errorServiceMock.error).toHaveBeenCalled();
                expect(errorServiceMock.error).toHaveBeenCalledWith('errorCode');
+               expect(activateRegistrationController.submitAttempted).toEqual(true);
            });
 
            afterEach(function() {
