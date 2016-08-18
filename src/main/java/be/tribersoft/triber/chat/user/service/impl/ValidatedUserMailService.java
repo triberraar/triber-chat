@@ -7,11 +7,12 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.velocity.app.VelocityEngine;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
-import org.springframework.ui.velocity.VelocityEngineUtils;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+
+import freemarker.template.Configuration;
 
 @Named
 public class ValidatedUserMailService {
@@ -19,7 +20,7 @@ public class ValidatedUserMailService {
 	@Inject
 	private JavaMailSender mailSender;
 	@Inject
-	private VelocityEngine velocityEngine;
+	private Configuration freemarkerConfiguration;
 
 	public void sendMail(String username, String email) {
 
@@ -32,7 +33,7 @@ public class ValidatedUserMailService {
 				message.setSubject("Triber chat: account validated");
 				Map<String, Object> model = new HashMap<>();
 				model.put("username", username);
-				String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/validate-user.vm", "UTF-8", model);
+				String text = FreeMarkerTemplateUtils.processTemplateIntoString(freemarkerConfiguration.getTemplate("validate-user.vm"), model);
 				message.setText(text, true);
 			}
 		};

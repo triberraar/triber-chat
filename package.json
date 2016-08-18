@@ -4,7 +4,6 @@
   "dependencies": {
     "bower": "1.7.9",
     "glob": "^7.0.5",
-    "karma": "^1.2.0",
     "uglify-js": "^2.7.0"
   },
   "scripts": {
@@ -26,6 +25,7 @@
     "express": "^4.14.0",
     "http-proxy": "^1.14.0",
     "jasmine-core": "^2.4.1",
+    "karma": "^1.2.0",
     "karma-chrome-launcher": "^1.0.1",
     "karma-coverage": "^1.0.0",
     "karma-coveralls": "^1.1.2",
