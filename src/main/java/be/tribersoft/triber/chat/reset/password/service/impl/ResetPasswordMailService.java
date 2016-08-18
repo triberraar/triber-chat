@@ -7,12 +7,13 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.mail.internet.MimeMessage;
 
-import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
-import org.springframework.ui.velocity.VelocityEngineUtils;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
+
+import freemarker.template.Configuration;
 
 @Named
 public class ResetPasswordMailService {
@@ -20,7 +21,7 @@ public class ResetPasswordMailService {
 	@Inject
 	private JavaMailSender mailSender;
 	@Inject
-	private VelocityEngine velocityEngine;
+	private Configuration freemarkerConfiguration;
 	@Value("${mail.sender.server.address}")
 	private String serverAddress;
 
@@ -36,7 +37,7 @@ public class ResetPasswordMailService {
 				Map<String, Object> model = new HashMap<>();
 				model.put("username", username);
 				model.put("resetPasswordLink", serverAddress + "/#/reset-password/" + resetPasswordId);
-				String text = VelocityEngineUtils.mergeTemplateIntoString(velocityEngine, "templates/reset-password.vm", "UTF-8", model);
+				String text = FreeMarkerTemplateUtils.processTemplateIntoString(freemarkerConfiguration.getTemplate("reset-password.vm"), model);
 				message.setText(text, true);
 			}
 		};
