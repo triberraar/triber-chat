@@ -17,3 +17,29 @@ Written with help of Spring boot, Spring security, ....
 [![bitHound Dev Dependencies](https://www.bithound.io/github/triberraar/triber-chat/badges/devDependencies.svg?style=flat-square)](https://www.bithound.io/github/triberraar/triber-chat/develop/dependencies/npm)
 
 Written in AngularJs 1.5
+
+## Configuration
+The following spring environment variables are used:
+* CAPTCHA_SECRET: the secret from the google recaptcha service
+* CRYPTO_IV: cryptography IV, should be 16 characters
+* CRYPTO_SECRET: cryptography IV, should be 16 characters
+* SECURITY_JWT_SECRET: the secret for the jwt token
+* SPRING_DATASOURCE_URL: url of the datasource, mysql or postgres
+* SPRING_DATASOURCE_USERNAME: username of the datasource
+* SPRING_DATASOURCE_PASSWORD: password of the datasource
+* SPRING_MAIL_PASSWORD: password of the mail service
+* SPRING_MAIL_USERNAME: username of the mail service
+* MAIL_SENDER_SERVER_ADDRESS: the web address to be used in the mails send out, should be the address where this app is hosted
+
+SPRING_MAIL_PASSWORD
+
+## How to run
+There are a few ways this app can be run
+
+### Straigth with java
+Like every Spring app this can be run just by executing java: java -jar *.jar
+
+### With Docker
+A docker file is provided. Build it like every docker file, with docker build --build-arg version=<version> -t <your tag> . See configuration for what properties to provide. Here version is the version of specified in the pom file and tag is your tag.
+
+A docker compose file is also provided. It boots the app and the database, run with docker-compose up.  Fill in the environment file (.env). 
