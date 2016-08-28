@@ -40,6 +40,6 @@ There are a few ways this app can be run
 Like every Spring app this can be run just by executing java: java -jar *.jar
 
 ### With Docker
-A docker file is provided. Build it like every docker file, with docker build --build-arg version=<version> -t <your tag> . See configuration for what properties to provide. Here version is the version of specified in the pom file and tag is your tag.
+A docker file is provided. Build it like every docker file, with docker build -t <your tag> . See configuration for what properties to provide.
 
 A docker compose file is also provided. It boots the app and the database, run with docker-compose up.  Fill in the environment file (.env). 
