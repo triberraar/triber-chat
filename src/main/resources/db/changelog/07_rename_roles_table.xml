@@ -9,7 +9,7 @@
 
     <changeSet id="rename roles (hibernate)" author="tribersoft">
     	<renameTable newTableName="triber_user_roles" oldTableName="user_entity_roles"/>
-    	<renameColumn tableName="triber_user_roles" oldColumnName="user_entity_id" newColumnName="triber_user_id"/>
+    	<renameColumn tableName="triber_user_roles" oldColumnName="user_entity_id" newColumnName="triber_user_id" columnDataType="varchar(256)"/>
     </changeSet>
     
 </databaseChangeLog>

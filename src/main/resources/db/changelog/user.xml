@@ -45,8 +45,8 @@
     		<column name="password" value="$2a$10$MENm5lVP/GPtt8tGievarO.3hvk7Ofao6aK45F6oD6CTEWj03ebvO"></column>
     		<column name="username" value="admin"></column>
     		<column name="email" value="admin@admin.com"></column>
-    		<column name="activated" value="true"></column>
-    		<column name="validated" value="true"></column>
+    		<column name="activated" valueBoolean="true" ></column>
+    		<column name="validated" valueBoolean="true"></column>
     	</insert>
     	<insert tableName="triber_user">
     		<column name="id" value="2"></column>
@@ -54,8 +54,8 @@
     		<column name="password" value="$2a$10$0y5Pl/5Z8Qqafa8ukdvxCOgG5jLY4Xc0ZTU2zfTmKORqyoPaduViS"></column>
     		<column name="username" value="user"></column>
     		<column name="email" value="user2@user.com"></column>
-    		<column name="activated" value="true"></column>
-    		<column name="validated" value="true"></column>
+    		<column name="activated" valueBoolean="true"></column>
+    		<column name="validated" valueBoolean="true"></column>
     	</insert>
     	<insert tableName="triber_user">
     		<column name="id" value="3"></column>
@@ -63,8 +63,8 @@
     		<column name="password" value="$2a$10$MENm5lVP/GPtt8tGievarO.3hvk7Ofao6aK45F6oD6CTEWj03ebvO"></column>
     		<column name="username" value="unvalidated"></column>
     		<column name="email" value="unvalidated@user.com"></column>
-    		<column name="activated" value="true"></column>
-    		<column name="validated" value="false"></column>
+    		<column name="activated" valueBoolean="true"></column>
+    		<column name="validated" valueBoolean="false"></column>
     	</insert>
     	<insert tableName="user_entity_roles">
     		<column name="user_entity_id" value="1"></column>

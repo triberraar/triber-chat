@@ -10,3 +10,4 @@ npm-debug.log
 coverage
 coverage-frontend
 src/main/resources/static/js/dst
+.env
