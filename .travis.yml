@@ -18,7 +18,7 @@ script:
 after_success:
 - bash <(curl -s https://codecov.io/bash) -f ./target/site/jacoco-ut/jacoco.xml -f
   ./target/site/jacoco-it/jacoco.xml
-- if [ ! -z "$TRAVIS_TAG" ] && [ "$TRAVIS_BRANCH" == "master" ]; then
+- if [ ! -z "$TRAVIS_TAG" ] && [ "$TRAVIS_BRANCH" == "develop" ]; then
     docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
     docker build -t triberraar/triber-chat:latest -t triberraar/triber-chat:$TRAVIS_TAG .
     docker push triberraar/triber-chat
