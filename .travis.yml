@@ -28,7 +28,7 @@ deploy:
   provider: releases
   api_key:
     secure: afimhQIfyTS7jBo8lTfOKfF2oVBJ4Z8Ko3rEcpe5cxiVu5ZsgA5LZluA4WAlrYhjKWNc5wnDrQ9PA+xrqRs1Y34M7h1JXr601hWj80FGMiI9UA4RDV6JYJN4doi8o+MLLVUVqsCa0q/4nKcDUApjZrJstJw/JEkd+YUeTkd+2h400yFqGmXWXZAyhnXZ8Y/SNhAQ+aNhjGuZOORCy4KXZ6XlWQZU9V8Av3gjkKqbQz3akHVe+UYqZ/MulDTvomm7+5eNtyePxGQQ7Sp34tMkIOoXfVzVazoQXqmxFinz09XVmBxWtIDJY/xQ3agOlet1KOqR4e/E6fQpTaRGN1rmMrl2zwPKDeqF5AtwLd9laxWsZYc3549unFbIQjdMLATgN4CQLP6T+IORG0zv2MbEiwdYOqOcgfOWNV/Bt0OoRecf2167Cdt9peMbnnp80WYXlRNHnBdKqsr/Zha3nfg/fnq2PUdzr1U70K4TjtmgfQ74XAdXvPqU8Qa1TkF7Jpe1HnQaKH1QrEVQ77WxwNTS4Vf6WumrcOeZxSDWZ3B2mANvJznGHXz519EYGw6qOEy6Mvr85VkRMXaIIM9NY0FEMiDEoTQMAHHChCC26eTTih4MVc5AGs8A2NwAISqLe3MvZ81i2xOY4gzlqW4Jxb9+I/LOhrFf96bXeYHX/I9oJEY=
-  file: target/triber-chat-0.0.1-SNAPSHOT.jar
+  file: target/triber-chat-*.jar
   skip_cleanup: true
   on:
     repo: triberraar/triber-chat
