@@ -10,7 +10,7 @@ notifications:
 install:
 - pip install --user codecov
 script:
-- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.login=$SONAR_TOKEN
+- mvn verify
 after_success:
 - bash <(curl -s https://codecov.io/bash) -f ./target/site/jacoco-ut/jacoco.xml -f
   ./target/site/jacoco-it/jacoco.xml
