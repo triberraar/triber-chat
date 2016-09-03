@@ -1,3 +1,6 @@
+# 0.0.3
+* removed frontend
+
 # 0.0.2
 * added expose to docker
 

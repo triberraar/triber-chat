@@ -11,10 +11,6 @@ Written with help of Spring boot, Spring security, ....
 ## frontend
 [![Coveralls test coverage](https://img.shields.io/coveralls/triberraar/triber-chat/develop.svg)](https://coveralls.io/github/triberraar/triber-chat?branch=develop)
 [![Codacy code quality](https://img.shields.io/codacy/a94181c1ecb643dc9a6686dba37960c3/develop.svg)](https://www.codacy.com/app/geertolaerts/triber-chat/dashboard)
-[![bitHound Code](https://www.bithound.io/github/triberraar/triber-chat/badges/code.svg?style=flat-square)](https://www.bithound.io/github/triberraar/triber-chat)
-[![bitHound Overalll Score](https://www.bithound.io/github/triberraar/triber-chat/badges/score.svg?style=flat-square)](https://www.bithound.io/github/triberraar/triber-chat)
-[![bitHound Dependencies](https://www.bithound.io/github/triberraar/triber-chat/badges/dependencies.svg?style=flat-square)](https://www.bithound.io/github/triberraar/triber-chat/develop/dependencies/npm)
-[![bitHound Dev Dependencies](https://www.bithound.io/github/triberraar/triber-chat/badges/devDependencies.svg?style=flat-square)](https://www.bithound.io/github/triberraar/triber-chat/develop/dependencies/npm)
 
 Written in AngularJs 1.5
 
@@ -30,8 +26,6 @@ The following spring environment variables are used:
 * SPRING_MAIL_PASSWORD: password of the mail service
 * SPRING_MAIL_USERNAME: username of the mail service
 * MAIL_SENDER_SERVER_ADDRESS: the web address to be used in the mails send out, should be the address where this app is hosted
-
-SPRING_MAIL_PASSWORD
 
 ## How to run
 There are a few ways this app can be run
