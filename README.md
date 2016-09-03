@@ -1,12 +1,13 @@
 # triber-chat [![Travis build status](https://img.shields.io/travis/triberraar/triber-chat/develop.svg)](https://travis-ci.org/triberraar/triber-chat)
+
+[![Codacy code quality](https://img.shields.io/codacy/a94181c1ecb643dc9a6686dba37960c3/develop.svg)](https://www.codacy.com/app/geertolaerts/triber-chat/dashboard)
+[![Codecov test coverage](https://img.shields.io/codecov/c/github/triberraar/triber-chat/develop.svg)](https://codecov.io/github/triberraar/triber-chat?branch=develop)
+
 A chat application written in Java and Javascript. See a running example at [triber-chat](http://triber-chat.triberraar.be/).
 
 Uses both rest and websockets (using stomp over sockjs).
 
 The front-end is in this [triber-chat-ui](https://github.com/triberraar/triber-chat-ui) repository.
-
-[![Codacy code quality](https://img.shields.io/codacy/a94181c1ecb643dc9a6686dba37960c3/develop.svg)](https://www.codacy.com/app/geertolaerts/triber-chat/dashboard)
-[![Codecov test coverage](https://img.shields.io/codecov/c/github/triberraar/triber-chat/develop.svg)](https://codecov.io/github/triberraar/triber-chat?branch=develop)
 
 Written with help of Spring boot, Spring security, ....
 
@@ -33,5 +34,3 @@ The following spring environment variables are used:
 * SPRING_MAIL_PASSWORD: password of the mail service
 * SPRING_MAIL_USERNAME: username of the mail service
 * MAIL_SENDER_SERVER_ADDRESS: the web address to be used in the mails send out, should be the address where this app is hosted
-
-You can pass these variables to the spring app, docker image or docker compose.
