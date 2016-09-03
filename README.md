@@ -1,18 +1,25 @@
 # triber-chat [![Travis build status](https://img.shields.io/travis/triberraar/triber-chat/develop.svg)](https://travis-ci.org/triberraar/triber-chat)
-A chat application written in Java and Javascript. See a running example at [triber-chat](https://triber-chat.herokuapp.com/).
+A chat application written in Java and Javascript. See a running example at [triber-chat](http://triber-chat.triberraar.be/).
 
 Uses both rest and websockets (using stomp over sockjs).
-## backend
+
+The front-end is in this [triber-chat-ui](https://github.com/triberraar/triber-chat-ui) repository.
+
 [![Codacy code quality](https://img.shields.io/codacy/a94181c1ecb643dc9a6686dba37960c3/develop.svg)](https://www.codacy.com/app/geertolaerts/triber-chat/dashboard)
 [![Codecov test coverage](https://img.shields.io/codecov/c/github/triberraar/triber-chat/develop.svg)](https://codecov.io/github/triberraar/triber-chat?branch=develop)
 
 Written with help of Spring boot, Spring security, ....
 
-## frontend
-[![Coveralls test coverage](https://img.shields.io/coveralls/triberraar/triber-chat/develop.svg)](https://coveralls.io/github/triberraar/triber-chat?branch=develop)
-[![Codacy code quality](https://img.shields.io/codacy/a94181c1ecb643dc9a6686dba37960c3/develop.svg)](https://www.codacy.com/app/geertolaerts/triber-chat/dashboard)
+## How to run
+There are a few ways this app can be run
 
-Written in AngularJs 1.5
+### Straigth with java
+Like every Spring app this can be run just by executing java: java -jar *.jar
+
+### With Docker
+A docker file is provided. Build it like every docker file, with docker build -t <your tag> . See configuration for what properties to provide.
+
+A docker compose file is also provided. It boots the app and the database, run with docker-compose up.  Fill in the environment file (.env). 
 
 ## Configuration
 The following spring environment variables are used:
@@ -27,13 +34,4 @@ The following spring environment variables are used:
 * SPRING_MAIL_USERNAME: username of the mail service
 * MAIL_SENDER_SERVER_ADDRESS: the web address to be used in the mails send out, should be the address where this app is hosted
 
-## How to run
-There are a few ways this app can be run
-
-### Straigth with java
-Like every Spring app this can be run just by executing java: java -jar *.jar
-
-### With Docker
-A docker file is provided. Build it like every docker file, with docker build -t <your tag> . See configuration for what properties to provide.
-
-A docker compose file is also provided. It boots the app and the database, run with docker-compose up.  Fill in the environment file (.env). 
+You can pass these variables to the spring app, docker image or docker compose.
