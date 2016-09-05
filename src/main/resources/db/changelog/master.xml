@@ -12,4 +12,5 @@
     <include file="/db/changelog/05_message.xml"/>
     <include file="/db/changelog/06_private_message.xml"/>
     <include file="/db/changelog/07_rename_roles_table.xml"/>
+    <include file="/db/changelog/08_room.xml"/>
 </databaseChangeLog>
