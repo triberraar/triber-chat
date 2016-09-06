@@ -6,7 +6,7 @@ import javax.transaction.Transactional;
 
 import be.tribersoft.triber.chat.room.domain.api.Room;
 import be.tribersoft.triber.chat.room.domain.api.RoomFacade;
-import be.tribersoft.triber.chat.room.service.ap.RoomService;
+import be.tribersoft.triber.chat.room.service.api.RoomService;
 
 @Named
 @Transactional

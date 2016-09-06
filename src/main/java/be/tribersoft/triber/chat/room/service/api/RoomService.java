@@ -1,4 +1,4 @@
-package be.tribersoft.triber.chat.room.service.ap;
+package be.tribersoft.triber.chat.room.service.api;
 
 import be.tribersoft.triber.chat.room.domain.api.Room;
 
