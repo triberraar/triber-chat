@@ -6,4 +6,6 @@ public interface RoomService {
 
 	Room create(String owner, String name);
 
+	Room invite(String roomId, String participant);
+
 }

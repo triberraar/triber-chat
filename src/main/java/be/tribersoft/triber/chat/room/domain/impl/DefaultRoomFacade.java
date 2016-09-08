@@ -23,4 +23,13 @@ public class DefaultRoomFacade implements RoomFacade {
 		return roomEntity;
 	}
 
+	@Override
+	public RoomEntity invite(String roomId, String participant) {
+		RoomEntity roomEntity = defaultRoomRepository.getById(roomId);
+
+		roomEntity.addParticipant(participant);
+
+		return roomEntity;
+	}
+
 }

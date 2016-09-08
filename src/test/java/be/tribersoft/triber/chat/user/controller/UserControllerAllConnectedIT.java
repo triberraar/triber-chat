@@ -3,15 +3,30 @@ package be.tribersoft.triber.chat.user.controller;
 import static com.jayway.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.is;
 
+import java.util.concurrent.ConcurrentHashMap;
+
+import javax.inject.Inject;
+
+import org.junit.Before;
 import org.junit.Test;
+import org.mockito.internal.util.reflection.Whitebox;
 import org.springframework.http.HttpStatus;
 
 import com.jayway.restassured.response.Header;
 
 import be.tribersoft.triber.chat.common.AbstractWebsocketRestIT;
+import be.tribersoft.triber.chat.user.domain.api.ConnectedUsersRepository;
 
 public class UserControllerAllConnectedIT extends AbstractWebsocketRestIT {
 	private static final String URL = "/user/connected";
+
+	@Inject
+	private ConnectedUsersRepository connectedUsersRepository;
+
+	@Before
+	public void setUp() {
+		Whitebox.setInternalState(connectedUsersRepository, "concurrentUsers", new ConcurrentHashMap<>());
+	}
 
 	@Test
 	public void returnsAllConnectedUsers() throws InterruptedException {

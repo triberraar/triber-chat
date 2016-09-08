@@ -3,6 +3,7 @@ TRUNCATE TABLE triber_user
 TRUNCATE TABLE triber_user_roles
 TRUNCATE TABLE reset_password
 TRUNCATE TABLE public_message
+TRUNCATE TABLE room
 
 INSERT INTO triber_user(id, version,password, username, email, activated, validated) VALUES('1',0, '$2a$10$MENm5lVP/GPtt8tGievarO.3hvk7Ofao6aK45F6oD6CTEWj03ebvO', 'admin', 'admin@admin.com', true, true)
 INSERT INTO triber_user_roles(triber_user_id, roles) VALUES(1, 'ROLE_USER')

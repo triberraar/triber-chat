@@ -45,4 +45,9 @@ public class DefaultConnectedUsersRepository implements ConnectedUsersRepository
 		return concurrentUsers.values().stream().map(users -> users.get(0)).sorted(comparator).collect(Collectors.toList());
 	}
 
+	@Override
+	public synchronized boolean exists(String username) {
+		return concurrentUsers.values().stream().anyMatch(users -> users.get(0).getUsername().equals(username));
+	}
+
 }

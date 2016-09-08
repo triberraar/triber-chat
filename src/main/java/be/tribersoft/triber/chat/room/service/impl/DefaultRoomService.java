@@ -19,4 +19,9 @@ public class DefaultRoomService implements RoomService {
 	public Room create(String owner, String name) {
 		return roomFacade.create(owner, name);
 	}
+
+	@Override
+	public Room invite(String roomId, String participant) {
+		return roomFacade.invite(roomId, participant);
+	}
 }

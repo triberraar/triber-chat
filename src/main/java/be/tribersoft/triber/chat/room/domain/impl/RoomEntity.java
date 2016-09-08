@@ -38,6 +38,9 @@ public class RoomEntity implements Room {
 	@Column(name = "participant")
 	private Set<String> participants = new HashSet<>();
 
+	protected RoomEntity() {
+	}
+
 	public RoomEntity(String owner, String name) {
 		this.owner = owner;
 		this.name = name;
@@ -56,5 +59,14 @@ public class RoomEntity implements Room {
 	@Override
 	public Set<String> getParticipants() {
 		return participants;
+	}
+
+	@Override
+	public String getId() {
+		return id;
+	}
+
+	public void addParticipant(String participant) {
+		participants.add(participant);
 	}
 }

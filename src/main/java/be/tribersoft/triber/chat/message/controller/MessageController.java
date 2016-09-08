@@ -3,6 +3,7 @@ package be.tribersoft.triber.chat.message.controller;
 import java.security.Principal;
 
 import javax.inject.Inject;
+import javax.validation.Valid;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
@@ -23,13 +24,13 @@ public class MessageController {
 	private MessageValidator messageValidator;
 
 	@MessageMapping("/message/general")
-	public MessageToJsonAdapter generalChat(MessageFromJsonAdapter inputMessage, Principal principal) {
+	public MessageToJsonAdapter generalChat(@Valid MessageFromJsonAdapter inputMessage, Principal principal) {
 		PublicMessage message = messageService.createPublic(principal.getName(), inputMessage.getContent());
 		return new MessageToJsonAdapter(message);
 	}
 
 	@MessageMapping("/message/private")
-	public void privateChat(PrivateMessageFromJsonAdapter inputMessage, Principal principal) {
+	public void privateChat(@Valid PrivateMessageFromJsonAdapter inputMessage, Principal principal) {
 		messageValidator.validatePrivate(inputMessage, principal);
 
 		PrivateMessage message = messageService.createPrivate(inputMessage.getContent(), inputMessage.getTo(), inputMessage.getFrom());

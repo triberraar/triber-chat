@@ -10,4 +10,6 @@ public interface ConnectedUsersRepository {
 
 	List<User> findAll();
 
+	boolean exists(String username);
+
 }

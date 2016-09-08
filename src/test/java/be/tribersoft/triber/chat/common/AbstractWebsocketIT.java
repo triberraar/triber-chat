@@ -13,6 +13,8 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 import org.springframework.messaging.simp.stomp.StompSessionHandler;
 import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.jdbc.Sql;
+import org.springframework.test.context.jdbc.Sql.ExecutionPhase;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
@@ -29,6 +31,7 @@ import be.tribersoft.triber.chat.user.domain.api.UserRepository;
 @RunWith(SpringJUnit4ClassRunner.class)
 @TestPropertySource(value = "classpath:/application-test.properties")
 @SpringBootTest(classes = Application.class, webEnvironment = WebEnvironment.RANDOM_PORT)
+@Sql(executionPhase = ExecutionPhase.BEFORE_TEST_METHOD, scripts = "classpath:db/clean.sql")
 public abstract class AbstractWebsocketIT {
 
 	@Inject

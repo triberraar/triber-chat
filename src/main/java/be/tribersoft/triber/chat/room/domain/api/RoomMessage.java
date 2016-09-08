@@ -9,7 +9,4 @@ public interface RoomMessage {
 	@Length(max = 256, min = 4, message = "room.validation.name.length")
 	String getName();
 
-	@NotEmpty(message = "room.validation.owner.empty")
-	@Length(max = 256, min = 1, message = "room.validation.owner.length")
-	String getOwner();
 }
