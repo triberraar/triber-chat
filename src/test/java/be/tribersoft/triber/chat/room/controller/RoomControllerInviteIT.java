@@ -41,13 +41,13 @@ public class RoomControllerInviteIT extends AbstractWebsocketIT {
 
 	@Test
 	public void createsRoom() throws InterruptedException {
-		final CountDownLatch latch = new CountDownLatch(1);
+		final CountDownLatch latch = new CountDownLatch(2);
 		final AtomicReference<Throwable> failure = new AtomicReference<>();
 
 		StompSessionHandler participantHandler = new TestAbstractStompSessionHandler(failure) {
 			@Override
 			public void afterConnected(final StompSession session, StompHeaders connectedHeaders) {
-				session.subscribe("/user/topic/room/invitation", new StompFrameHandler() {
+				session.subscribe("/user/topic/room/status", new StompFrameHandler() {
 					@Override
 					public Type getPayloadType(StompHeaders headers) {
 						return RoomToJsonAdapter.class;
@@ -58,6 +58,7 @@ public class RoomControllerInviteIT extends AbstractWebsocketIT {
 						try {
 							RoomToJsonAdapter message = (RoomToJsonAdapter) payload;
 							assertThat(message.getName()).isEqualTo(ROOM);
+							assertThat(message.getOwner()).isEqualTo(OWNER);
 							assertThat(message.getParticipants()).hasSize(1).contains(USERNAME);
 						} catch (Throwable t) {
 							failure.set(t);
@@ -74,7 +75,27 @@ public class RoomControllerInviteIT extends AbstractWebsocketIT {
 		StompSessionHandler ownerHandler = new TestAbstractStompSessionHandler(failure) {
 			@Override
 			public void afterConnected(final StompSession session, StompHeaders connectedHeaders) {
+				session.subscribe("/user/topic/room/status", new StompFrameHandler() {
+					@Override
+					public Type getPayloadType(StompHeaders headers) {
+						return RoomToJsonAdapter.class;
+					}
 
+					@Override
+					public void handleFrame(StompHeaders headers, Object payload) {
+						try {
+							RoomToJsonAdapter message = (RoomToJsonAdapter) payload;
+							assertThat(message.getName()).isEqualTo(ROOM);
+							assertThat(message.getOwner()).isEqualTo(OWNER);
+							assertThat(message.getParticipants()).hasSize(1).contains(USERNAME);
+						} catch (Throwable t) {
+							failure.set(t);
+						} finally {
+							session.disconnect();
+							latch.countDown();
+						}
+					}
+				});
 				session.send("/app/room/invite", new TestRoomInvitationFromJsonAdapter());
 			}
 		};

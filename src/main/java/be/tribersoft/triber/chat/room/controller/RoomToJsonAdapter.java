@@ -9,6 +9,7 @@ public class RoomToJsonAdapter {
 	private String name;
 	private String id;
 	private Set<String> participants;
+	private String owner;
 
 	protected RoomToJsonAdapter() {
 	}
@@ -17,6 +18,7 @@ public class RoomToJsonAdapter {
 		this.name = room.getName();
 		this.id = room.getId();
 		this.participants = room.getParticipants();
+		this.owner = room.getOwner();
 	}
 
 	public String getName() {
@@ -29,5 +31,9 @@ public class RoomToJsonAdapter {
 
 	public Set<String> getParticipants() {
 		return participants;
+	}
+
+	public String getOwner() {
+		return owner;
 	}
 }

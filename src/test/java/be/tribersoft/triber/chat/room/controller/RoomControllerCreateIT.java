@@ -38,7 +38,7 @@ public class RoomControllerCreateIT extends AbstractWebsocketIT {
 		StompSessionHandler handler = new TestAbstractStompSessionHandler(null) {
 			@Override
 			public void afterConnected(final StompSession session, StompHeaders connectedHeaders) {
-				session.subscribe("/user/topic/room/created", new StompFrameHandler() {
+				session.subscribe("/user/topic/room/status", new StompFrameHandler() {
 					@Override
 					public Type getPayloadType(StompHeaders headers) {
 						return RoomToJsonAdapter.class;
@@ -49,6 +49,7 @@ public class RoomControllerCreateIT extends AbstractWebsocketIT {
 						try {
 							RoomToJsonAdapter message = (RoomToJsonAdapter) payload;
 							assertThat(message.getName()).isEqualTo(NAME);
+							assertThat(message.getOwner()).isEqualTo(USERNAME);
 						} catch (Throwable t) {
 							failure.set(t);
 						} finally {

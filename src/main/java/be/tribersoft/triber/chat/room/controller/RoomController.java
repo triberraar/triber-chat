@@ -28,7 +28,7 @@ public class RoomController {
 	public void create(@Valid RoomFromJsonAdapter roomFromJsonAdapter, Principal principal) {
 		Room room = roomService.create(principal.getName(), roomFromJsonAdapter.getName());
 
-		messagingTemplate.convertAndSendToUser(principal.getName(), "/topic/room/created", new RoomToJsonAdapter(room));
+		sendToEveryoneInRoom(room);
 	}
 
 	@MessageMapping("/room/invite")
@@ -37,6 +37,11 @@ public class RoomController {
 
 		Room room = roomService.invite(roomInvitationFromJsonAdapter.getId(), roomInvitationFromJsonAdapter.getParticipant());
 
-		messagingTemplate.convertAndSendToUser(roomInvitationFromJsonAdapter.getParticipant(), "/topic/room/invitation", new RoomToJsonAdapter(room));
+		sendToEveryoneInRoom(room);
+	}
+
+	private void sendToEveryoneInRoom(Room room) {
+		messagingTemplate.convertAndSendToUser(room.getOwner(), "/topic/room/status", new RoomToJsonAdapter(room));
+		room.getParticipants().stream().forEach((participant) -> messagingTemplate.convertAndSendToUser(participant, "/topic/room/status", new RoomToJsonAdapter(room)));
 	}
 }
