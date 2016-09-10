@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.security.Principal;
+import java.util.Arrays;
 import java.util.HashSet;
 
 import org.junit.Before;
@@ -16,8 +17,8 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 
+import be.tribersoft.triber.chat.common.WebSocketService;
 import be.tribersoft.triber.chat.room.domain.api.Room;
 import be.tribersoft.triber.chat.room.service.api.RoomService;
 
@@ -36,7 +37,7 @@ public class RoomControllerInviteTest {
 	private RoomService roomService;
 
 	@Mock
-	private SimpMessagingTemplate messagingTemplate;
+	private WebSocketService webSocketService;
 
 	@Mock
 	private RoomValidator roomValidator;
@@ -61,7 +62,8 @@ public class RoomControllerInviteTest {
 		when(roomService.invite(ID, PARTICIPANT)).thenReturn(room);
 		when(room.getId()).thenReturn(ID);
 		when(room.getName()).thenReturn(NAME);
-		when(room.getParticipants()).thenReturn(new HashSet<>());
+		when(room.getParticipants()).thenReturn(new HashSet<>(Arrays.asList(PARTICIPANT)));
+		when(room.getOwner()).thenReturn(USERNAME);
 	}
 
 	@Test
@@ -69,10 +71,14 @@ public class RoomControllerInviteTest {
 		roomController.invite(roomInvitationFromJsonAdapter, principal);
 
 		verify(roomValidator).validateInvitation(roomInvitationFromJsonAdapter, principal);
-		verify(messagingTemplate).convertAndSendToUser(eq(PARTICIPANT), eq("/topic/room/invitation"), jsonCaptor.capture());
+		verify(webSocketService).sendToUser(eq(USERNAME), eq("/topic/room/status"), jsonCaptor.capture());
 		assertThat(jsonCaptor.getValue().getId()).isEqualTo(ID);
 		assertThat(jsonCaptor.getValue().getName()).isEqualTo(NAME);
-		assertThat(jsonCaptor.getValue().getParticipants()).isEmpty();
+		assertThat(jsonCaptor.getValue().getParticipants()).hasSize(1).contains(PARTICIPANT);
+		verify(webSocketService).sendToUser(eq(PARTICIPANT), eq("/topic/room/status"), jsonCaptor.capture());
+		assertThat(jsonCaptor.getValue().getId()).isEqualTo(ID);
+		assertThat(jsonCaptor.getValue().getName()).isEqualTo(NAME);
+		assertThat(jsonCaptor.getValue().getParticipants()).hasSize(1).contains(PARTICIPANT);
 	}
 
 }

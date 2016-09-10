@@ -16,8 +16,8 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 
+import be.tribersoft.triber.chat.common.WebSocketService;
 import be.tribersoft.triber.chat.room.domain.api.Room;
 import be.tribersoft.triber.chat.room.service.api.RoomService;
 
@@ -35,7 +35,7 @@ public class RoomControllerCreateTest {
 	private RoomService roomService;
 
 	@Mock
-	private SimpMessagingTemplate messagingTemplate;
+	private WebSocketService webSocketService;
 
 	@Mock
 	private RoomFromJsonAdapter roomFromJsonAdapter;
@@ -57,13 +57,14 @@ public class RoomControllerCreateTest {
 		when(room.getId()).thenReturn(ID);
 		when(room.getName()).thenReturn(NAME);
 		when(room.getParticipants()).thenReturn(new HashSet<>());
+		when(room.getOwner()).thenReturn(USERNAME);
 	}
 
 	@Test
 	public void shouldCreateRoomAndAnswer() {
 		roomController.create(roomFromJsonAdapter, principal);
 
-		verify(messagingTemplate).convertAndSendToUser(eq(USERNAME), eq("/topic/room/created"), jsonCaptor.capture());
+		verify(webSocketService).sendToUser(eq(USERNAME), eq("/topic/room/status"), jsonCaptor.capture());
 		assertThat(jsonCaptor.getValue().getId()).isEqualTo(ID);
 		assertThat(jsonCaptor.getValue().getName()).isEqualTo(NAME);
 		assertThat(jsonCaptor.getValue().getParticipants()).isEmpty();

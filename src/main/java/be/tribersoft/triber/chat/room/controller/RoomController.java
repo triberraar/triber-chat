@@ -6,9 +6,9 @@ import javax.inject.Inject;
 import javax.validation.Valid;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
+import be.tribersoft.triber.chat.common.WebSocketService;
 import be.tribersoft.triber.chat.room.domain.api.Room;
 import be.tribersoft.triber.chat.room.service.api.RoomService;
 
@@ -22,7 +22,7 @@ public class RoomController {
 	private RoomValidator roomValidator;
 
 	@Inject
-	private SimpMessagingTemplate messagingTemplate;
+	private WebSocketService webSocketService;
 
 	@MessageMapping("/room/create")
 	public void create(@Valid RoomFromJsonAdapter roomFromJsonAdapter, Principal principal) {
@@ -41,7 +41,7 @@ public class RoomController {
 	}
 
 	private void sendToEveryoneInRoom(Room room) {
-		messagingTemplate.convertAndSendToUser(room.getOwner(), "/topic/room/status", new RoomToJsonAdapter(room));
-		room.getParticipants().stream().forEach((participant) -> messagingTemplate.convertAndSendToUser(participant, "/topic/room/status", new RoomToJsonAdapter(room)));
+		webSocketService.sendToUser(room.getOwner(), "/topic/room/status", new RoomToJsonAdapter(room));
+		room.getParticipants().stream().forEach((participant) -> webSocketService.sendToUser(participant, "/topic/room/status", new RoomToJsonAdapter(room)));
 	}
 }

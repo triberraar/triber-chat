@@ -16,8 +16,8 @@ import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 
+import be.tribersoft.triber.chat.common.WebSocketService;
 import be.tribersoft.triber.chat.message.domain.api.PrivateMessage;
 import be.tribersoft.triber.chat.message.service.api.MessageService;
 
@@ -43,7 +43,7 @@ public class MessageControllerPrivateChatTest {
 	@Captor
 	private ArgumentCaptor<PrivateMessageToJsonAdapter> messageCaptor;
 	@Mock
-	private SimpMessagingTemplate messagingTemplate;
+	private WebSocketService webSocketService;
 	@Mock
 	private MessageValidator messageValidator;
 
@@ -65,12 +65,12 @@ public class MessageControllerPrivateChatTest {
 		messageController.privateChat(inputMessage, principal);
 
 		verify(messageValidator).validatePrivate(inputMessage, principal);
-		verify(messagingTemplate).convertAndSendToUser(eq(FROM), eq("/topic/message/private"), messageCaptor.capture());
+		verify(webSocketService).sendToUser(eq(FROM), eq("/topic/message/private"), messageCaptor.capture());
 		assertThat(messageCaptor.getValue().getContent()).isEqualTo(CONTENT);
 		assertThat(messageCaptor.getValue().getFrom()).isEqualTo(FROM);
 		assertThat(messageCaptor.getValue().getTimestamp()).isEqualTo(CREATION_DATE);
 		assertThat(messageCaptor.getValue().getTo()).isEqualTo(TO);
-		verify(messagingTemplate).convertAndSendToUser(eq(TO), eq("/topic/message/private"), messageCaptor.capture());
+		verify(webSocketService).sendToUser(eq(TO), eq("/topic/message/private"), messageCaptor.capture());
 		assertThat(messageCaptor.getValue().getContent()).isEqualTo(CONTENT);
 		assertThat(messageCaptor.getValue().getFrom()).isEqualTo(FROM);
 		assertThat(messageCaptor.getValue().getTimestamp()).isEqualTo(CREATION_DATE);

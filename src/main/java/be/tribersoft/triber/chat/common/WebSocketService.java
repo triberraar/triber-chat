@@ -14,4 +14,8 @@ public class WebSocketService {
 	public void send(String channel, Object message) {
 		template.convertAndSend(channel, message);
 	}
+
+	public void sendToUser(String user, String channel, Object message) {
+		template.convertAndSendToUser(user, channel, message);
+	}
 }
