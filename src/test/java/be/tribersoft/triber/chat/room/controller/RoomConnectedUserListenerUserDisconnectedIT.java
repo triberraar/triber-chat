@@ -73,9 +73,6 @@ public class RoomConnectedUserListenerUserDisconnectedIT extends AbstractWebsock
 			}
 		};
 		StompSessionHandler userHandler = new TestAbstractStompSessionHandler(userFailure) {
-			boolean deleted = false;
-			boolean status = false;
-
 			@Override
 			public void afterConnected(final StompSession session, StompHeaders connectedHeaders) {
 
@@ -87,7 +84,6 @@ public class RoomConnectedUserListenerUserDisconnectedIT extends AbstractWebsock
 
 					@Override
 					public void handleFrame(StompHeaders headers, Object payload) {
-						deleted = true;
 						try {
 							RoomToJsonAdapter message = (RoomToJsonAdapter) payload;
 							assertThat(message.getName()).isEqualTo(ADMIN_ROOM);
@@ -108,7 +104,6 @@ public class RoomConnectedUserListenerUserDisconnectedIT extends AbstractWebsock
 
 					@Override
 					public void handleFrame(StompHeaders headers, Object payload) {
-						status = true;
 						try {
 							RoomToJsonAdapter message = (RoomToJsonAdapter) payload;
 							assertThat(message.getName()).isEqualTo(UNVALIDATED_ROOM);
