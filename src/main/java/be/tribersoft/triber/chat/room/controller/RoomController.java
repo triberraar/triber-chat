@@ -42,6 +42,6 @@ public class RoomController {
 
 	private void sendToEveryoneInRoom(Room room) {
 		webSocketService.sendToUser(room.getOwner(), "/topic/room/status", new RoomToJsonAdapter(room));
-		room.getParticipants().stream().forEach((participant) -> webSocketService.sendToUser(participant, "/topic/room/status", new RoomToJsonAdapter(room)));
+		room.getParticipants().forEach((participant) -> webSocketService.sendToUser(participant, "/topic/room/status", new RoomToJsonAdapter(room)));
 	}
 }

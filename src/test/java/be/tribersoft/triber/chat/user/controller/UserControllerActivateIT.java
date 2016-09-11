@@ -3,8 +3,6 @@ package be.tribersoft.triber.chat.user.controller;
 import static com.jayway.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Optional;
 
 import javax.inject.Inject;
@@ -13,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 
+import com.google.common.collect.Sets;
 import com.jayway.restassured.http.ContentType;
 import com.jayway.restassured.response.Header;
 
@@ -33,7 +32,7 @@ public class UserControllerActivateIT extends AbstractRestIT {
 
 	@Before
 	public void setUp() {
-		user = new UserEntity("not activated", PASSWORD, "notactivated@mail", new HashSet<>(Arrays.asList(Role.ROLE_USER)));
+		user = new UserEntity("not activated", PASSWORD, "notactivated@mail", Sets.newHashSet(Role.ROLE_USER));
 		userJpaRepository.save(user);
 	}
 

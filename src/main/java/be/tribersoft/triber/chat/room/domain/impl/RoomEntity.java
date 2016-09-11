@@ -69,4 +69,8 @@ public class RoomEntity implements Room {
 	public void addParticipant(String participant) {
 		participants.add(participant);
 	}
+
+	public void removeParticipant(String participant) {
+		participants.remove(participant);
+	}
 }

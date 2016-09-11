@@ -7,6 +7,7 @@ import javax.inject.Named;
 
 import be.tribersoft.triber.chat.room.domain.api.CanNotInviteBecauseNotOwnerException;
 import be.tribersoft.triber.chat.room.domain.api.CanNotInviteBecauseParticipantNotOnlineException;
+import be.tribersoft.triber.chat.room.domain.api.CanNotInviteOwnerException;
 import be.tribersoft.triber.chat.room.domain.api.Room;
 import be.tribersoft.triber.chat.room.domain.api.RoomRepository;
 import be.tribersoft.triber.chat.user.domain.api.ConnectedUsersRepository;
@@ -27,8 +28,12 @@ public class RoomValidator {
 			throw new CanNotInviteBecauseNotOwnerException();
 		}
 
-		if (!connectedUsersRepository.exists(principal.getName())) {
+		if (!connectedUsersRepository.exists(roomInvitationFromJsonAdapter.getParticipant())) {
 			throw new CanNotInviteBecauseParticipantNotOnlineException();
+		}
+
+		if (room.getOwner().equals(roomInvitationFromJsonAdapter.getParticipant())) {
+			throw new CanNotInviteOwnerException();
 		}
 	}
 

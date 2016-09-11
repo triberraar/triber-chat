@@ -1,5 +1,7 @@
 package be.tribersoft.triber.chat.room.service.impl;
 
+import java.util.Set;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.transaction.Transactional;
@@ -23,5 +25,10 @@ public class DefaultRoomService implements RoomService {
 	@Override
 	public Room invite(String roomId, String participant) {
 		return roomFacade.invite(roomId, participant);
+	}
+
+	@Override
+	public Set<? extends Room> removeUserFromAllRooms(String username) {
+		return roomFacade.removeUserFromAllRooms(username);
 	}
 }

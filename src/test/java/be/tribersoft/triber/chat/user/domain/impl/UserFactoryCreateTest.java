@@ -3,15 +3,14 @@ package be.tribersoft.triber.chat.user.domain.impl;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-import java.util.Arrays;
-import java.util.HashSet;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.google.common.collect.Sets;
 
 import be.tribersoft.triber.chat.user.domain.api.Role;
 import be.tribersoft.triber.chat.user.domain.api.UserMessage;
@@ -41,7 +40,7 @@ public class UserFactoryCreateTest {
 
 		assertThat(userEntity.getEmail()).isEqualTo(EMAIL);
 		assertThat(new BCryptPasswordEncoder().matches(PASSWORD, userEntity.getPassword())).isTrue();
-		assertThat(userEntity.getRoles()).isEqualTo(new HashSet<>(Arrays.asList(Role.ROLE_USER)));
+		assertThat(userEntity.getRoles()).isEqualTo(Sets.newHashSet(Role.ROLE_USER));
 		assertThat(userEntity.getUsername()).isEqualTo(USERNAME);
 		assertThat(userEntity.isActivated()).isFalse();
 		assertThat(userEntity.isValidated()).isFalse();

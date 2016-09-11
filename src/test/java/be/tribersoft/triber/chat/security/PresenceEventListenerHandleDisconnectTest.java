@@ -3,9 +3,6 @@ package be.tribersoft.triber.chat.security;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.util.Arrays;
-import java.util.HashSet;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,6 +11,8 @@ import org.mockito.Mock;
 import org.mockito.internal.util.reflection.Whitebox;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
+
+import com.google.common.collect.Sets;
 
 import be.tribersoft.triber.chat.user.domain.api.User;
 import be.tribersoft.triber.chat.user.service.api.ConnectedUserListener;
@@ -40,7 +39,7 @@ public class PresenceEventListenerHandleDisconnectTest {
 		when(event.getUser()).thenReturn(securityUserAuthentication);
 		when(securityUserAuthentication.getDetails()).thenReturn(securityUser);
 		when(securityUser.getUser()).thenReturn(user);
-		Whitebox.setInternalState(presenceEventListener, "connectedUserListeners", new HashSet<>(Arrays.asList(connectedUserListener1, connectedUserListener2)));
+		Whitebox.setInternalState(presenceEventListener, "connectedUserListeners", Sets.newHashSet(connectedUserListener1, connectedUserListener2));
 	}
 
 	@Test

@@ -3,8 +3,6 @@ package be.tribersoft.triber.chat.register.controller;
 import static com.jayway.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.Optional;
 
 import javax.inject.Inject;
@@ -13,6 +11,7 @@ import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.google.common.collect.Sets;
 import com.jayway.restassured.http.ContentType;
 
 import be.tribersoft.triber.chat.common.AbstractRestIT;
@@ -52,7 +51,7 @@ public class RegisterControllerIT extends AbstractRestIT {
 		assertThat(user).isPresent();
 		assertThat(user.get().getEmail()).isEqualTo(EMAIL);
 		assertThat(new BCryptPasswordEncoder().matches(PASSWORD, user.get().getPassword())).isTrue();
-		assertThat(user.get().getRoles()).isEqualTo(new HashSet<>(Arrays.asList(Role.ROLE_USER)));
+		assertThat(user.get().getRoles()).isEqualTo(Sets.newHashSet(Role.ROLE_USER));
 		assertThat(user.get().getUsername()).isEqualTo(USERNAME);
 		assertThat(user.get().isActivated()).isFalse();
 		assertThat(user.get().isValidated()).isFalse();

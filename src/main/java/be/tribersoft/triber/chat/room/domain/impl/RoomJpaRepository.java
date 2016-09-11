@@ -1,7 +1,12 @@
 package be.tribersoft.triber.chat.room.domain.impl;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Set;
 
-public interface RoomJpaRepository extends JpaRepository<RoomEntity, String> {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.querydsl.QueryDslPredicateExecutor;
+
+public interface RoomJpaRepository extends JpaRepository<RoomEntity, String>, QueryDslPredicateExecutor<RoomEntity> {
+
+	public Set<RoomEntity> findByOwner(String owner);
 
 }

@@ -35,7 +35,7 @@ public class RoomControllerCreateIT extends AbstractWebsocketIT {
 		final CountDownLatch latch = new CountDownLatch(1);
 		final AtomicReference<Throwable> failure = new AtomicReference<>();
 
-		StompSessionHandler handler = new TestAbstractStompSessionHandler(null) {
+		StompSessionHandler handler = new TestAbstractStompSessionHandler(failure) {
 			@Override
 			public void afterConnected(final StompSession session, StompHeaders connectedHeaders) {
 				session.subscribe("/user/topic/room/status", new StompFrameHandler() {

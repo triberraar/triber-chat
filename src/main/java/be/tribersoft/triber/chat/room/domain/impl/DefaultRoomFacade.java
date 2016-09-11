@@ -1,5 +1,8 @@
 package be.tribersoft.triber.chat.room.domain.impl;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -30,6 +33,20 @@ public class DefaultRoomFacade implements RoomFacade {
 		roomEntity.addParticipant(participant);
 
 		return roomEntity;
+	}
+
+	@Override
+	public Set<RoomEntity> removeUserFromAllRooms(String username) {
+		Set<RoomEntity> ownedRooms = defaultRoomRepository.findByOwner(username);
+		defaultRoomRepository.delete(ownedRooms);
+
+		Set<RoomEntity> participatedRooms = defaultRoomRepository.findByParticipant(username);
+		participatedRooms.forEach(particpatedRoom -> particpatedRoom.removeParticipant(username));
+
+		Set<RoomEntity> returnValue = new HashSet<>();
+		returnValue.addAll(ownedRooms);
+		returnValue.addAll(participatedRooms);
+		return returnValue;
 	}
 
 }

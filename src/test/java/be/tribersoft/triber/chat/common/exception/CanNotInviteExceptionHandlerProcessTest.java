@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import be.tribersoft.triber.chat.room.domain.api.CanNotInviteBecauseNotOwnerException;
 import be.tribersoft.triber.chat.room.domain.api.CanNotInviteBecauseParticipantNotOnlineException;
+import be.tribersoft.triber.chat.room.domain.api.CanNotInviteOwnerException;
 
-public class CanNotInviteHandlerProcessTest {
+public class CanNotInviteExceptionHandlerProcessTest {
 
 	private CanNotInviteExceptionHandler handler = new CanNotInviteExceptionHandler();
 
@@ -43,6 +44,23 @@ public class CanNotInviteHandlerProcessTest {
 	@Test
 	public void canNotInviteBecauseParticipantNotOnlineExceptionResultsInBadRequest() throws NoSuchMethodException, SecurityException {
 		ResponseStatus result = AnnotationUtils.findAnnotation(CanNotInviteExceptionHandler.class.getMethod("process", CanNotInviteBecauseParticipantNotOnlineException.class), ResponseStatus.class);
+
+		assertThat(result).isNotNull();
+		assertThat(result.code()).isEqualTo(HttpStatus.BAD_REQUEST);
+	}
+
+	@Test
+	public void wrapsCanNotInviteOwnerException() {
+		CanNotInviteOwnerException exception = new CanNotInviteOwnerException();
+
+		ErrorToJsonAdapter result = handler.process(exception);
+
+		assertThat(result.getErrorCode()).isEqualTo("can.not.invite.owner");
+	}
+
+	@Test
+	public void canNotInviteOwnerExceptionExceptionResultsInBadRequest() throws NoSuchMethodException, SecurityException {
+		ResponseStatus result = AnnotationUtils.findAnnotation(CanNotInviteExceptionHandler.class.getMethod("process", CanNotInviteOwnerException.class), ResponseStatus.class);
 
 		assertThat(result).isNotNull();
 		assertThat(result.code()).isEqualTo(HttpStatus.BAD_REQUEST);

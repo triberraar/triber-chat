@@ -3,9 +3,7 @@ package be.tribersoft.triber.chat.reset.password.controller;
 import static com.jayway.restassured.RestAssured.given;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Arrays;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Optional;
 
 import javax.inject.Inject;
@@ -15,6 +13,7 @@ import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.google.common.collect.Sets;
 import com.jayway.restassured.http.ContentType;
 
 import be.tribersoft.triber.chat.common.AbstractRestIT;
@@ -44,7 +43,7 @@ public class ResetPasswordControllerConfirmIT extends AbstractRestIT {
 
 	@Before
 	public void setUp() {
-		userEntity = new UserEntity("resetpassword user", PASSWORD, EMAIL, new HashSet<>(Arrays.asList(Role.ROLE_USER)));
+		userEntity = new UserEntity("resetpassword user", PASSWORD, EMAIL, Sets.newHashSet(Role.ROLE_USER));
 		userEntity.activate(PASSWORD);
 		userJpaRepository.save(userEntity);
 		resetPasswordEntity = new ResetPasswordEntity(userEntity.getId());

@@ -3,14 +3,13 @@ package be.tribersoft.triber.chat.security;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
-import java.util.Arrays;
-import java.util.HashSet;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import com.google.common.collect.Sets;
 
 import be.tribersoft.triber.chat.user.domain.api.Role;
 import be.tribersoft.triber.chat.user.domain.api.User;
@@ -23,7 +22,7 @@ public class SecurityUserGetAuthoritiesTest {
 
 	@Before
 	public void setUp() {
-		when(user.getRoles()).thenReturn(new HashSet<>(Arrays.asList(Role.ROLE_USER)));
+		when(user.getRoles()).thenReturn(Sets.newHashSet(Role.ROLE_USER));
 	}
 
 	@Test

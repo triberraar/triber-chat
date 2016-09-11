@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import be.tribersoft.triber.chat.room.domain.api.CanNotInviteBecauseNotOwnerException;
 import be.tribersoft.triber.chat.room.domain.api.CanNotInviteBecauseParticipantNotOnlineException;
+import be.tribersoft.triber.chat.room.domain.api.CanNotInviteOwnerException;
 
 @ControllerAdvice
 public class CanNotInviteExceptionHandler {
@@ -22,6 +23,13 @@ public class CanNotInviteExceptionHandler {
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ResponseBody
 	public ErrorToJsonAdapter process(CanNotInviteBecauseNotOwnerException ex) {
+		return new ErrorToJsonAdapter(ex.getErrorCode());
+	}
+
+	@ExceptionHandler(CanNotInviteOwnerException.class)
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ResponseBody
+	public ErrorToJsonAdapter process(CanNotInviteOwnerException ex) {
 		return new ErrorToJsonAdapter(ex.getErrorCode());
 	}
 }

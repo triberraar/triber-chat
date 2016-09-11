@@ -1,7 +1,12 @@
 package be.tribersoft.triber.chat.room.domain.impl;
 
+import java.util.Set;
+
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import com.google.common.collect.Sets;
+import com.querydsl.core.types.dsl.BooleanExpression;
 
 import be.tribersoft.triber.chat.room.domain.api.RoomNotFoundException;
 import be.tribersoft.triber.chat.room.domain.api.RoomRepository;
@@ -24,4 +29,20 @@ public class DefaultRoomRepository implements RoomRepository {
 		}
 		return roomEntity;
 	}
+
+	@Override
+	public Set<RoomEntity> findByParticipant(String participant) {
+		BooleanExpression predicate = QRoomEntity.roomEntity.participants.contains(participant);
+		return Sets.newHashSet(roomJpaRepository.findAll(predicate));
+	}
+
+	@Override
+	public Set<RoomEntity> findByOwner(String owner) {
+		return roomJpaRepository.findByOwner(owner);
+	}
+
+	public void delete(Set<RoomEntity> ownedRooms) {
+		roomJpaRepository.delete(ownedRooms);
+	}
+
 }
