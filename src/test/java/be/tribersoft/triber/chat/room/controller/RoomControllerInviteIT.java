@@ -63,7 +63,6 @@ public class RoomControllerInviteIT extends AbstractWebsocketIT {
 						} catch (Throwable t) {
 							failure.set(t);
 						} finally {
-							session.disconnect();
 							latch.countDown();
 						}
 					}
@@ -91,7 +90,6 @@ public class RoomControllerInviteIT extends AbstractWebsocketIT {
 						} catch (Throwable t) {
 							failure.set(t);
 						} finally {
-							session.disconnect();
 							latch.countDown();
 						}
 					}
