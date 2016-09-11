@@ -21,6 +21,9 @@
     		<column name="owner" type="varchar(256)">
     			<constraints nullable="false"/>
     		</column>
+    		<column name="current_state" type="varchar(256)">
+    			<constraints nullable="false"/>
+    		</column>
     	</createTable>
     	<createTable tableName="room_participants">
     		<column name="room_id" type="varchar(256)"></column>

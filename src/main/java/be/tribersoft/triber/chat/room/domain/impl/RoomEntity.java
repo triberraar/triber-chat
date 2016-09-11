@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -38,12 +40,17 @@ public class RoomEntity implements Room {
 	@Column(name = "participant")
 	private Set<String> participants = new HashSet<>();
 
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
+	private RoomState currentState;
+
 	protected RoomEntity() {
 	}
 
 	public RoomEntity(String owner, String name) {
 		this.owner = owner;
 		this.name = name;
+		this.currentState = RoomState.ACTIVE;
 	}
 
 	@Override
@@ -73,4 +80,18 @@ public class RoomEntity implements Room {
 	public void removeParticipant(String participant) {
 		participants.remove(participant);
 	}
+
+	public void inactivate() {
+		currentState.inactivate();
+		currentState = RoomState.INACTIVE;
+	}
+
+	public boolean isActive() {
+		return currentState.isActive();
+	}
+
+	public boolean isInactive() {
+		return currentState.isInactive();
+	}
+
 }

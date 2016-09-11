@@ -5,6 +5,7 @@ import static org.junit.Assert.fail;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
@@ -163,10 +164,20 @@ public class RoomConnectedUserListenerUserDisconnectedIT extends AbstractWebsock
 		}
 
 		List<RoomEntity> savedRooms = roomJpaRepository.findAll();
-		assertThat(savedRooms).hasSize(1);
-		assertThat(savedRooms.get(0).getName()).isEqualTo(UNVALIDATED_ROOM);
-		assertThat(savedRooms.get(0).getParticipants()).hasSize(1).contains(USER);
-		assertThat(savedRooms.get(0).getOwner()).isEqualTo(UNVALIDATED);
+		assertThat(savedRooms).hasSize(2);
+		Set<RoomEntity> unvalidatedRooms = roomJpaRepository.findByOwner(UNVALIDATED);
+		assertThat(unvalidatedRooms).hasSize(1);
+		RoomEntity foundUnvalidatedRoom = unvalidatedRooms.iterator().next();
+		assertThat(foundUnvalidatedRoom.getName()).isEqualTo(UNVALIDATED_ROOM);
+		assertThat(foundUnvalidatedRoom.getOwner()).isEqualTo(UNVALIDATED);
+		assertThat(foundUnvalidatedRoom.getParticipants()).hasSize(1).contains(USER);
+		assertThat(foundUnvalidatedRoom.isActive()).isTrue();
+		Set<RoomEntity> foundAdminRooms = roomJpaRepository.findByOwner(ADMIN);
+		assertThat(foundAdminRooms).hasSize(1);
+		RoomEntity foundAdminRoom = foundAdminRooms.iterator().next();
+		assertThat(foundAdminRoom.getName()).isEqualTo(ADMIN_ROOM);
+		assertThat(foundAdminRoom.getOwner()).isEqualTo(ADMIN);
+		assertThat(foundAdminRoom.isInactive()).isTrue();
 	}
 
 }

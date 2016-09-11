@@ -39,7 +39,8 @@ public class DefaultRoomFacadeRemoveUserFromAllRoomsTest {
 	public void deletesRoomsWhereUserIsOwnerAndRemovesUserFromParticipantsInOtherRooms() {
 		Set<RoomEntity> result = defaultRoomFacade.removeUserFromAllRooms(USER);
 
-		verify(defaultRoomRepository).delete(Sets.newHashSet(ownerRoom1, ownerRoom2));
+		verify(ownerRoom1).inactivate();
+		verify(ownerRoom2).inactivate();
 		verify(participantRoom1).removeParticipant(USER);
 		verify(participantRoom2).removeParticipant(USER);
 		assertThat(result).hasSize(4).contains(ownerRoom1, ownerRoom2, participantRoom1, participantRoom2);

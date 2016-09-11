@@ -38,7 +38,7 @@ public class DefaultRoomFacade implements RoomFacade {
 	@Override
 	public Set<RoomEntity> removeUserFromAllRooms(String username) {
 		Set<RoomEntity> ownedRooms = defaultRoomRepository.findByOwner(username);
-		defaultRoomRepository.delete(ownedRooms);
+		ownedRooms.forEach(ownedRoom -> ownedRoom.inactivate());
 
 		Set<RoomEntity> participatedRooms = defaultRoomRepository.findByParticipant(username);
 		participatedRooms.forEach(particpatedRoom -> particpatedRoom.removeParticipant(username));

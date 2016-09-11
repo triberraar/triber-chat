@@ -41,8 +41,4 @@ public class DefaultRoomRepository implements RoomRepository {
 		return roomJpaRepository.findByOwner(owner);
 	}
 
-	public void delete(Set<RoomEntity> ownedRooms) {
-		roomJpaRepository.delete(ownedRooms);
-	}
-
 }
